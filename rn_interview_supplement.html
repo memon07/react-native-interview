@@ -1,0 +1,2179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RN Staff Interview — Missing Pieces Supplement</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Epilogue:wght@300;400;500;600;700;800&family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0c0c0e;
+  --bg2: #111116;
+  --bg3: #16161d;
+  --surface: #1c1c26;
+  --surface2: #22222e;
+  --border: #2e2e3e;
+  --border2: #3a3a50;
+  --gold: #d4a843;
+  --gold2: #f0c96a;
+  --gold-pale: rgba(212,168,67,0.08);
+  --crimson: #c43b3b;
+  --crimson-pale: rgba(196,59,59,0.08);
+  --teal: #2ab5a0;
+  --teal-pale: rgba(42,181,160,0.08);
+  --violet: #7c5cbf;
+  --violet-pale: rgba(124,92,191,0.08);
+  --sage: #5a9e6f;
+  --sage-pale: rgba(90,158,111,0.08);
+  --text: #e8e6e0;
+  --text2: #a09d96;
+  --text3: #5a5860;
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans: 'Epilogue', sans-serif;
+  --mono: 'Fira Code', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  font-size: 14px;
+  overflow-x: hidden;
+}
+
+/* ── NOISE TEXTURE ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ── COVER ── */
+.cover {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  background: var(--bg);
+  position: relative;
+  overflow: hidden;
+}
+
+.cover-lines {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(212,168,67,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212,168,67,0.04) 1px, transparent 1px);
+  background-size: 80px 80px;
+}
+
+.cover-glow {
+  position: absolute;
+  width: 700px; height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212,168,67,0.06) 0%, transparent 70%);
+  top: -200px; right: -200px;
+  pointer-events: none;
+}
+
+.cover-glow2 {
+  position: absolute;
+  width: 400px; height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(124,92,191,0.08) 0%, transparent 70%);
+  bottom: 10%; left: -100px;
+  pointer-events: none;
+}
+
+.cover-inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 80px 60px;
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+}
+
+.cover-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.cover-tag::before {
+  content: '';
+  width: 40px; height: 1px;
+  background: var(--gold);
+  opacity: 0.5;
+}
+
+.cover-title {
+  font-family: var(--serif);
+  font-size: clamp(36px, 5vw, 68px);
+  line-height: 1.05;
+  font-weight: 900;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.cover-title em {
+  font-style: italic;
+  color: var(--gold2);
+}
+
+.cover-sub {
+  font-size: 16px;
+  color: var(--text2);
+  font-weight: 300;
+  margin-top: 20px;
+  max-width: 600px;
+  line-height: 1.6;
+}
+
+.cover-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 40px;
+}
+.pill {
+  padding: 6px 16px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  border: 1px solid;
+}
+.pill-gold { border-color: rgba(212,168,67,0.4); color: var(--gold2); background: var(--gold-pale); }
+.pill-crimson { border-color: rgba(196,59,59,0.4); color: #e07070; background: var(--crimson-pale); }
+.pill-teal { border-color: rgba(42,181,160,0.4); color: var(--teal); background: var(--teal-pale); }
+.pill-violet { border-color: rgba(124,92,191,0.4); color: #a080e0; background: var(--violet-pale); }
+.pill-sage { border-color: rgba(90,158,111,0.4); color: var(--sage); background: var(--sage-pale); }
+
+.cover-footer {
+  padding: 20px 80px;
+  border-top: 1px solid var(--border);
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text3);
+  letter-spacing: 0.08em;
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+.cover-footer span { color: var(--text2); }
+
+/* ── NAV ── */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(12,12,14,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 80px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.nav::-webkit-scrollbar { display: none; }
+
+.nav-item {
+  padding: 14px 16px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--text3);
+  text-decoration: none;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+}
+.nav-item:hover { color: var(--text); border-bottom-color: var(--gold); }
+
+/* ── SECTION WRAPPER ── */
+.section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 80px 80px;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+  margin-bottom: 56px;
+}
+
+.section-num {
+  font-family: var(--serif);
+  font-size: 80px;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--border2);
+  min-width: 60px;
+  font-style: italic;
+}
+
+.section-title-block {}
+
+.section-kicker {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.2;
+}
+.section-title em {
+  font-style: italic;
+  color: var(--gold2);
+}
+
+.section-desc {
+  color: var(--text2);
+  font-size: 13px;
+  margin-top: 10px;
+  max-width: 640px;
+  line-height: 1.7;
+}
+
+h2 {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 48px 0 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+h2:first-of-type { margin-top: 0; }
+
+h3 {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gold2);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 28px 0 10px;
+}
+
+p { color: var(--text2); margin-bottom: 12px; font-size: 13.5px; }
+p strong { color: var(--text); font-weight: 600; }
+
+ul, ol { padding-left: 20px; margin-bottom: 14px; }
+li { color: var(--text2); font-size: 13.5px; margin-bottom: 6px; line-height: 1.65; }
+li strong { color: var(--text); }
+ul li::marker { color: var(--gold); }
+ol li::marker { color: var(--gold); font-weight: 700; font-family: var(--mono); font-size: 11px; }
+
+code {
+  font-family: var(--mono);
+  font-size: 12px;
+  background: rgba(212,168,67,0.1);
+  color: var(--gold2);
+  padding: 2px 7px;
+  border-radius: 4px;
+  border: 1px solid rgba(212,168,67,0.2);
+}
+
+pre {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 24px;
+  overflow-x: auto;
+  margin: 16px 0;
+  position: relative;
+}
+pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #c5c0b5;
+  font-size: 12.5px;
+  line-height: 1.75;
+}
+.pre-lang {
+  position: absolute;
+  top: 10px; right: 14px;
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.c-kw { color: #ff7b72; }
+.c-fn { color: #c8a4ff; }
+.c-str { color: #a5d6ff; }
+.c-cm { color: #6a7080; font-style: italic; }
+.c-num { color: #79c0ff; }
+.c-type { color: #ffa657; }
+
+/* ── TABLES ── */
+.table-wrap {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 20px 0;
+}
+table { width: 100%; border-collapse: collapse; }
+thead th {
+  background: var(--surface);
+  color: var(--text);
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-family: var(--mono);
+}
+td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text2);
+  font-size: 13px;
+  vertical-align: top;
+}
+tr:last-child td { border-bottom: none; }
+tr:nth-child(even) td { background: rgba(255,255,255,0.012); }
+td strong { color: var(--text); }
+
+/* ── CALLOUTS ── */
+.callout {
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin: 20px 0;
+  border-left: 3px solid;
+  display: flex;
+  gap: 14px;
+}
+.callout-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.callout-body { font-size: 13px; color: var(--text2); line-height: 1.7; }
+.callout-body strong { color: var(--text); }
+.callout-title { font-weight: 700; color: var(--text); margin-bottom: 4px; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; font-family: var(--mono); }
+
+.callout-gold { background: var(--gold-pale); border-color: var(--gold); }
+.callout-crimson { background: var(--crimson-pale); border-color: var(--crimson); }
+.callout-teal { background: var(--teal-pale); border-color: var(--teal); }
+.callout-violet { background: var(--violet-pale); border-color: var(--violet); }
+.callout-sage { background: var(--sage-pale); border-color: var(--sage); }
+
+/* ── DSA PROBLEM CARDS ── */
+.problem-grid {
+  display: grid;
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.problem-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.problem-card:hover { border-color: var(--border2); }
+
+.problem-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.difficulty {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  padding: 3px 8px;
+  border-radius: 100px;
+}
+.diff-easy { background: rgba(90,158,111,0.2); color: var(--sage); border: 1px solid rgba(90,158,111,0.3); }
+.diff-medium { background: rgba(212,168,67,0.2); color: var(--gold2); border: 1px solid rgba(212,168,67,0.3); }
+.diff-hard { background: rgba(196,59,59,0.2); color: #e07070; border: 1px solid rgba(196,59,59,0.3); }
+
+.problem-title {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--text);
+  flex: 1;
+}
+
+.problem-tag {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text3);
+  letter-spacing: 0.06em;
+}
+
+.problem-body {
+  padding: 16px 18px;
+}
+
+.problem-meta {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.meta-item {
+  font-size: 11px;
+  color: var(--text3);
+  font-family: var(--mono);
+}
+.meta-item strong { color: var(--text2); }
+
+/* ── SYSTEM DESIGN ── */
+.sd-framework {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 20px 0;
+}
+
+.sd-step {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+}
+.sd-step:last-child { border-bottom: none; }
+
+.sd-num {
+  font-family: var(--serif);
+  font-size: 32px;
+  font-weight: 900;
+  font-style: italic;
+  color: var(--border2);
+  padding: 20px 24px;
+  min-width: 70px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  border-right: 1px solid var(--border);
+  background: var(--bg2);
+}
+
+.sd-content {
+  padding: 20px 24px;
+  flex: 1;
+}
+
+.sd-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+
+.sd-title {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.sd-body {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.7;
+}
+
+.sd-timing {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--crimson);
+  margin-top: 6px;
+  letter-spacing: 0.04em;
+}
+
+/* ── STAR CARDS ── */
+.star-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin: 20px 0;
+  overflow: hidden;
+}
+
+.star-card-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.star-card-title {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.star-lp-badge {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  padding: 4px 10px;
+  border-radius: 100px;
+  background: var(--violet-pale);
+  border: 1px solid rgba(124,92,191,0.4);
+  color: #a080e0;
+}
+
+.star-blocks {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--border);
+}
+
+.star-block {
+  padding: 18px 20px;
+  border-right: 1px solid var(--border);
+}
+.star-block:last-child { border-right: none; }
+
+.star-letter {
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 900;
+  font-style: italic;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.s-s { color: var(--gold); }
+.s-t { color: var(--teal); }
+.s-a { color: var(--violet); }
+.s-r { color: var(--sage); }
+
+.star-block-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 8px;
+}
+
+.star-block-content {
+  font-size: 12.5px;
+  color: var(--text2);
+  line-height: 1.65;
+}
+
+.star-block-content strong {
+  color: var(--text);
+  display: block;
+  margin-bottom: 3px;
+}
+
+/* ── Q&A BANK ── */
+.qa-item {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin: 16px 0;
+  overflow: hidden;
+}
+
+.qa-question {
+  padding: 16px 20px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.qa-q-icon {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gold);
+  background: var(--gold-pale);
+  border: 1px solid rgba(212,168,67,0.3);
+  width: 26px; height: 26px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 6px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.qa-q-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.qa-answer {
+  padding: 16px 20px;
+}
+
+.qa-answer p { margin-bottom: 8px; }
+.qa-answer p:last-child { margin-bottom: 0; }
+
+/* ── NEGOTIATION ── */
+.neg-phase {
+  display: flex;
+  gap: 0;
+  margin: 12px 0;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.neg-step-num {
+  background: var(--surface);
+  padding: 16px 20px;
+  font-family: var(--serif);
+  font-size: 24px;
+  font-weight: 900;
+  font-style: italic;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 60px;
+  border-right: 1px solid var(--border);
+}
+
+.neg-body {
+  padding: 16px 20px;
+  flex: 1;
+}
+
+.neg-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 5px;
+}
+
+.neg-title {
+  font-weight: 700;
+  color: var(--text);
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.neg-content { font-size: 13px; color: var(--text2); line-height: 1.65; }
+.neg-content strong { color: var(--text); }
+
+/* ── SCRIPT BOXES ── */
+.script-box {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-left: 3px solid var(--teal);
+  border-radius: 0 8px 8px 0;
+  padding: 14px 18px;
+  margin: 12px 0;
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.7;
+  font-style: italic;
+}
+
+.script-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--teal);
+  font-style: normal;
+  margin-bottom: 6px;
+  display: block;
+}
+
+/* ── QUESTIONS TO ASK ── */
+.q-ask-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 20px 0;
+}
+
+.q-ask-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 20px;
+  transition: border-color 0.2s;
+}
+.q-ask-card:hover { border-color: var(--border2); }
+
+.q-ask-category {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.cat-gold { color: var(--gold); }
+.cat-teal { color: var(--teal); }
+.cat-violet { color: #a080e0; }
+.cat-crimson { color: #e07070; }
+.cat-sage { color: var(--sage); }
+
+.q-ask-card ul { padding-left: 0; list-style: none; }
+.q-ask-card li {
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.6;
+  padding-left: 16px;
+  position: relative;
+}
+.q-ask-card li:last-child { border-bottom: none; }
+.q-ask-card li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--text3);
+  font-size: 12px;
+}
+
+/* ── TECH Q&A LEVEL BADGES ── */
+.level-badge {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  padding: 2px 8px;
+  border-radius: 100px;
+  font-weight: 700;
+}
+.level-senior { background: rgba(42,181,160,0.15); color: var(--teal); border: 1px solid rgba(42,181,160,0.3); }
+.level-staff { background: rgba(212,168,67,0.15); color: var(--gold2); border: 1px solid rgba(212,168,67,0.3); }
+.level-principal { background: rgba(196,59,59,0.15); color: #e07070; border: 1px solid rgba(196,59,59,0.3); }
+
+/* ── BROWNFIELD ── */
+.migration-track {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 20px 0;
+}
+
+.migration-phase {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+}
+.migration-phase:last-child { border-bottom: none; }
+
+.phase-label {
+  background: var(--bg2);
+  padding: 20px;
+  min-width: 130px;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.phase-tag {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.phase-name {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.phase-content {
+  padding: 20px 24px;
+  flex: 1;
+}
+
+.phase-content ul { margin: 0; }
+
+/* ── BACK TO TOP ── */
+.back-top {
+  position: fixed;
+  bottom: 32px; right: 32px;
+  width: 44px; height: 44px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text2);
+  text-decoration: none;
+  font-size: 18px;
+  transition: all 0.2s;
+  z-index: 50;
+}
+.back-top:hover {
+  background: var(--gold-pale);
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+/* ── DIVIDER ── */
+.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 32px 0;
+}
+
+/* ── FOOTER ── */
+footer {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 80px;
+  text-align: center;
+}
+
+footer p {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text3);
+  letter-spacing: 0.06em;
+}
+
+@media (max-width: 768px) {
+  .cover-inner, .section, .nav, .cover-footer, footer { padding-left: 24px; padding-right: 24px; }
+  .star-blocks { grid-template-columns: 1fr 1fr; }
+  .q-ask-grid { grid-template-columns: 1fr; }
+  .section-header { flex-direction: column; gap: 12px; }
+  .section-num { font-size: 48px; }
+  .sd-step { flex-direction: column; }
+  .sd-num { min-width: auto; border-right: none; border-bottom: 1px solid var(--border); padding: 12px 20px; font-size: 22px; flex-direction: row; gap: 8px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ COVER ══ -->
+<div class="cover">
+  <div class="cover-lines"></div>
+  <div class="cover-glow"></div>
+  <div class="cover-glow2"></div>
+  <div class="cover-inner">
+    <div class="cover-tag">React Native Staff/Principal · Interview Supplement · 2026</div>
+    <div class="cover-title">The <em>Missing</em><br>Pieces</div>
+    <p class="cover-sub">Everything your existing prep documents didn't cover — DSA problem sets, worked system design examples, written STAR stories, 40+ technical Q&A, negotiation scripts, and questions to ask your interviewers.</p>
+    <div class="cover-pills">
+      <span class="pill pill-gold">DSA Problem Bank</span>
+      <span class="pill pill-teal">System Design Worked Examples</span>
+      <span class="pill pill-violet">Behavioral STAR Stories</span>
+      <span class="pill pill-crimson">40+ Technical Q&A</span>
+      <span class="pill pill-gold">Salary Negotiation Scripts</span>
+      <span class="pill pill-sage">Questions to Ask Interviewers</span>
+      <span class="pill pill-teal">Brownfield Migration Depth</span>
+    </div>
+  </div>
+  <div class="cover-footer">
+    <span>Supplement to: rn_engineering_reference_2025 · rn-staff-manual-2026 · rn_interview_field_manual</span>
+    <span>6 Missing Areas Covered</span>
+    <span>2026 Edition</span>
+  </div>
+</div>
+
+<!-- ══ NAV ══ -->
+<nav class="nav">
+  <a href="#dsa" class="nav-item">01 — DSA Problems</a>
+  <a href="#sysdesign" class="nav-item">02 — System Design</a>
+  <a href="#behavioral" class="nav-item">03 — STAR Stories</a>
+  <a href="#qna" class="nav-item">04 — Technical Q&A</a>
+  <a href="#negotiation" class="nav-item">05 — Negotiation</a>
+  <a href="#questions-to-ask" class="nav-item">06 — Questions to Ask</a>
+  <a href="#brownfield" class="nav-item">07 — Brownfield Depth</a>
+</nav>
+
+
+<!-- ══════════════════════════════════════════════
+     SECTION 1 — DSA
+══════════════════════════════════════════════ -->
+<section class="section" id="dsa">
+  <div class="section-header">
+    <div class="section-num">01</div>
+    <div class="section-title-block">
+      <div class="section-kicker">Missing Area 1 of 6</div>
+      <div class="section-title">DSA <em>Problem Bank</em></div>
+      <p class="section-desc">Curated LeetCode problems with patterns, timing targets, and model approaches — specifically tagged for Meta, Amazon, and Google mobile rounds. Your existing docs listed topics but gave zero actual problems.</p>
+    </div>
+  </div>
+
+  <div class="callout callout-gold">
+    <div class="callout-icon">⚡</div>
+    <div class="callout-body">
+      <div class="callout-title">FAANG Timing Targets</div>
+      Easy: ≤10 min &nbsp;·&nbsp; Medium: ≤25 min cold &nbsp;·&nbsp; Hard: ≤45 min &nbsp;·&nbsp; All in TypeScript. If you can't hit these cold, you're not ready to apply. Mock with a timer on.
+    </div>
+  </div>
+
+  <h2>Arrays & Sliding Window</h2>
+
+  <div class="problem-grid">
+    <div class="problem-card">
+      <div class="problem-header">
+        <span class="difficulty diff-medium">Medium</span>
+        <span class="problem-title">Longest Substring Without Repeating Characters</span>
+        <span class="problem-tag">Meta · LC#3</span>
+      </div>
+      <div class="problem-body">
+        <div class="problem-meta">
+          <span class="meta-item">Pattern: <strong>Sliding Window + Set</strong></span>
+          <span class="meta-item">Time: <strong>O(n)</strong></span>
+          <span class="meta-item">Target: <strong>≤15 min</strong></span>
+        </div>
+        <p><strong>Why it's asked at Meta:</strong> Tests core sliding-window intuition. Appears frequently in Meta phone screens.</p>
+        <pre><span class="pre-lang">TypeScript</span><code><span class="c-kw">function</span> <span class="c-fn">lengthOfLongestSubstring</span>(s: <span class="c-type">string</span>): <span class="c-type">number</span> {
+  <span class="c-kw">const</span> seen = <span class="c-kw">new</span> <span class="c-fn">Map</span>&lt;<span class="c-type">string</span>, <span class="c-type">number</span>&gt;();
+  <span class="c-kw">let</span> left = <span class="c-num">0</span>, max = <span class="c-num">0</span>;
+  <span class="c-kw">for</span> (<span class="c-kw">let</span> right = <span class="c-num">0</span>; right &lt; s.length; right++) {
+    <span class="c-kw">if</span> (seen.has(s[right]) &amp;&amp; seen.<span class="c-fn">get</span>(s[right])! &gt;= left) {
+      left = seen.<span class="c-fn">get</span>(s[right])! + <span class="c-num">1</span>; <span class="c-cm">// shrink window</span>
+    }
+    seen.<span class="c-fn">set</span>(s[right], right);
+    max = <span class="c-fn">Math.max</span>(max, right - left + <span class="c-num">1</span>);
+  }
+  <span class="c-kw">return</span> max;
+}</code></pre>
+        <p style="font-size:12px;color:var(--text3);">Key insight: store the <em>index</em> in the map, not just membership — lets you jump left pointer in O(1).</p>
+      </div>
+    </div>
+
+    <div class="problem-card">
+      <div class="problem-header">
+        <span class="difficulty diff-medium">Medium</span>
+        <span class="problem-title">Minimum Window Substring</span>
+        <span class="problem-tag">Amazon · LC#76</span>
+      </div>
+      <div class="problem-body">
+        <div class="problem-meta">
+          <span class="meta-item">Pattern: <strong>Sliding Window + Frequency Map</strong></span>
+          <span class="meta-item">Time: <strong>O(n)</strong></span>
+          <span class="meta-item">Target: <strong>≤25 min</strong></span>
+        </div>
+        <p><strong>Why it's asked at Amazon:</strong> Tests "have/need" counting pattern. Classic Amazon OA problem.</p>
+        <pre><span class="pre-lang">TypeScript</span><code><span class="c-kw">function</span> <span class="c-fn">minWindow</span>(s: <span class="c-type">string</span>, t: <span class="c-type">string</span>): <span class="c-type">string</span> {
+  <span class="c-kw">const</span> need = <span class="c-kw">new</span> <span class="c-fn">Map</span>&lt;<span class="c-type">string</span>, <span class="c-type">number</span>&gt;();
+  <span class="c-kw">for</span> (<span class="c-kw">const</span> c <span class="c-kw">of</span> t) need.<span class="c-fn">set</span>(c, (need.<span class="c-fn">get</span>(c) ?? <span class="c-num">0</span>) + <span class="c-num">1</span>);
+  <span class="c-kw">let</span> have = <span class="c-num">0</span>, total = need.size;
+  <span class="c-kw">const</span> window = <span class="c-kw">new</span> <span class="c-fn">Map</span>&lt;<span class="c-type">string</span>, <span class="c-type">number</span>&gt;();
+  <span class="c-kw">let</span> [left, res, resLen] = [<span class="c-num">0</span>, <span class="c-str">""</span>, <span class="c-type">Infinity</span>];
+  <span class="c-kw">for</span> (<span class="c-kw">let</span> r = <span class="c-num">0</span>; r &lt; s.length; r++) {
+    window.<span class="c-fn">set</span>(s[r], (window.<span class="c-fn">get</span>(s[r]) ?? <span class="c-num">0</span>) + <span class="c-num">1</span>);
+    <span class="c-kw">if</span> (need.has(s[r]) &amp;&amp; window.<span class="c-fn">get</span>(s[r]) === need.<span class="c-fn">get</span>(s[r])) have++;
+    <span class="c-kw">while</span> (have === total) {
+      <span class="c-kw">if</span> (r - left + <span class="c-num">1</span> &lt; resLen) { res = s.<span class="c-fn">slice</span>(left, r + <span class="c-num">1</span>); resLen = r - left + <span class="c-num">1</span>; }
+      window.<span class="c-fn">set</span>(s[left], window.<span class="c-fn">get</span>(s[left])! - <span class="c-num">1</span>);
+      <span class="c-kw">if</span> (need.has(s[left]) &amp;&amp; window.<span class="c-fn">get</span>(s[left])! &lt; need.<span class="c-fn">get</span>(s[left])!) have--;
+      left++;
+    }
+  }
+  <span class="c-kw">return</span> res;
+}</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <h2>Trees & Graphs (High Frequency)</h2>
+
+  <div class="problem-grid">
+    <div class="problem-card">
+      <div class="problem-header">
+        <span class="difficulty diff-medium">Medium</span>
+        <span class="problem-title">Binary Tree Level Order Traversal</span>
+        <span class="problem-tag">All FAANG · LC#102</span>
+      </div>
+      <div class="problem-body">
+        <div class="problem-meta">
+          <span class="meta-item">Pattern: <strong>BFS + Queue</strong></span>
+          <span class="meta-item">Time: <strong>O(n)</strong></span>
+          <span class="meta-item">Target: <strong>≤12 min</strong></span>
+        </div>
+        <p>Master template — dozens of variants (zigzag, right side view, max width) all follow this exact queue-drain pattern.</p>
+        <pre><span class="pre-lang">TypeScript</span><code><span class="c-kw">function</span> <span class="c-fn">levelOrder</span>(root: <span class="c-type">TreeNode</span> | <span class="c-kw">null</span>): <span class="c-type">number</span>[][] {
+  <span class="c-kw">if</span> (!root) <span class="c-kw">return</span> [];
+  <span class="c-kw">const</span> result: <span class="c-type">number</span>[][] = [], queue: <span class="c-type">TreeNode</span>[] = [root];
+  <span class="c-kw">while</span> (queue.length) {
+    <span class="c-kw">const</span> level: <span class="c-type">number</span>[] = [];
+    <span class="c-kw">let</span> size = queue.length; <span class="c-cm">// snapshot size BEFORE draining</span>
+    <span class="c-kw">while</span> (size--) {
+      <span class="c-kw">const</span> node = queue.<span class="c-fn">shift</span>()!;
+      level.<span class="c-fn">push</span>(node.val);
+      <span class="c-kw">if</span> (node.left) queue.<span class="c-fn">push</span>(node.left);
+      <span class="c-kw">if</span> (node.right) queue.<span class="c-fn">push</span>(node.right);
+    }
+    result.<span class="c-fn">push</span>(level);
+  }
+  <span class="c-kw">return</span> result;
+}</code></pre>
+      </div>
+    </div>
+
+    <div class="problem-card">
+      <div class="problem-header">
+        <span class="difficulty diff-medium">Medium</span>
+        <span class="problem-title">Number of Islands</span>
+        <span class="problem-tag">All FAANG · LC#200</span>
+      </div>
+      <div class="problem-body">
+        <div class="problem-meta">
+          <span class="meta-item">Pattern: <strong>Graph DFS / BFS flood-fill</strong></span>
+          <span class="meta-item">Time: <strong>O(m×n)</strong></span>
+          <span class="meta-item">Target: <strong>≤15 min</strong></span>
+        </div>
+        <p>Master of the flood-fill pattern. Comes up in disguise: count connected components, find largest island, etc.</p>
+        <pre><span class="pre-lang">TypeScript</span><code><span class="c-kw">function</span> <span class="c-fn">numIslands</span>(grid: <span class="c-type">string</span>[][]): <span class="c-type">number</span> {
+  <span class="c-kw">let</span> count = <span class="c-num">0</span>;
+  <span class="c-kw">const</span> <span class="c-fn">dfs</span> = (r: <span class="c-type">number</span>, c: <span class="c-type">number</span>) => {
+    <span class="c-kw">if</span> (r &lt; <span class="c-num">0</span> || r >= grid.length || c &lt; <span class="c-num">0</span> || c >= grid[<span class="c-num">0</span>].length
+        || grid[r][c] !== <span class="c-str">'1'</span>) <span class="c-kw">return</span>;
+    grid[r][c] = <span class="c-str">'#'</span>; <span class="c-cm">// mark visited in-place</span>
+    [[-<span class="c-num">1</span>,<span class="c-num">0</span>],[<span class="c-num">1</span>,<span class="c-num">0</span>],[<span class="c-num">0</span>,-<span class="c-num">1</span>],[<span class="c-num">0</span>,<span class="c-num">1</span>]].<span class="c-fn">forEach</span>(([dr,dc]) => <span class="c-fn">dfs</span>(r+dr, c+dc));
+  };
+  <span class="c-kw">for</span> (<span class="c-kw">let</span> r = <span class="c-num">0</span>; r &lt; grid.length; r++)
+    <span class="c-kw">for</span> (<span class="c-kw">let</span> c = <span class="c-num">0</span>; c &lt; grid[<span class="c-num">0</span>].length; c++)
+      <span class="c-kw">if</span> (grid[r][c] === <span class="c-str">'1'</span>) { <span class="c-fn">dfs</span>(r, c); count++; }
+  <span class="c-kw">return</span> count;
+}</code></pre>
+      </div>
+    </div>
+
+    <div class="problem-card">
+      <div class="problem-header">
+        <span class="difficulty diff-hard">Hard</span>
+        <span class="problem-title">Word Ladder</span>
+        <span class="problem-tag">Google · LC#127</span>
+      </div>
+      <div class="problem-body">
+        <div class="problem-meta">
+          <span class="meta-item">Pattern: <strong>BFS shortest path on implicit graph</strong></span>
+          <span class="meta-item">Time: <strong>O(M²×N)</strong></span>
+          <span class="meta-item">Target: <strong>≤35 min</strong></span>
+        </div>
+        <p><strong>Key insight:</strong> Model each word as a node; edges exist when words differ by one letter. Shortest path = BFS. The trick is generating neighbors via wildcard buckets, not comparing all pairs.</p>
+        <pre><span class="pre-lang">TypeScript</span><code><span class="c-kw">function</span> <span class="c-fn">ladderLength</span>(begin: <span class="c-type">string</span>, end: <span class="c-type">string</span>, wordList: <span class="c-type">string</span>[]): <span class="c-type">number</span> {
+  <span class="c-kw">const</span> wordSet = <span class="c-kw">new</span> <span class="c-fn">Set</span>(wordList);
+  <span class="c-kw">if</span> (!wordSet.has(end)) <span class="c-kw">return</span> <span class="c-num">0</span>;
+  <span class="c-kw">const</span> queue: [<span class="c-type">string</span>, <span class="c-type">number</span>][] = [[begin, <span class="c-num">1</span>]];
+  <span class="c-kw">const</span> visited = <span class="c-kw">new</span> <span class="c-fn">Set</span>([begin]);
+  <span class="c-kw">while</span> (queue.length) {
+    <span class="c-kw">const</span> [word, dist] = queue.<span class="c-fn">shift</span>()!;
+    <span class="c-kw">for</span> (<span class="c-kw">let</span> i = <span class="c-num">0</span>; i &lt; word.length; i++) {
+      <span class="c-kw">for</span> (<span class="c-kw">let</span> c = <span class="c-num">97</span>; c &lt;= <span class="c-num">122</span>; c++) {
+        <span class="c-kw">const</span> next = word.<span class="c-fn">slice</span>(<span class="c-num">0</span>,i) + <span class="c-type">String</span>.<span class="c-fn">fromCharCode</span>(c) + word.<span class="c-fn">slice</span>(i+<span class="c-num">1</span>);
+        <span class="c-kw">if</span> (next === end) <span class="c-kw">return</span> dist + <span class="c-num">1</span>;
+        <span class="c-kw">if</span> (wordSet.has(next) &amp;&amp; !visited.has(next)) {
+          visited.<span class="c-fn">add</span>(next); queue.<span class="c-fn">push</span>([next, dist + <span class="c-num">1</span>]);
+        }
+      }
+    }
+  }
+  <span class="c-kw">return</span> <span class="c-num">0</span>;
+}</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <h2>Dynamic Programming</h2>
+  <div class="problem-grid">
+    <div class="problem-card">
+      <div class="problem-header">
+        <span class="difficulty diff-medium">Medium</span>
+        <span class="problem-title">Coin Change</span>
+        <span class="problem-tag">Amazon · LC#322</span>
+      </div>
+      <div class="problem-body">
+        <div class="problem-meta">
+          <span class="meta-item">Pattern: <strong>Bottom-Up DP (unbounded knapsack)</strong></span>
+          <span class="meta-item">Time: <strong>O(amount × coins)</strong></span>
+          <span class="meta-item">Target: <strong>≤20 min</strong></span>
+        </div>
+        <pre><span class="pre-lang">TypeScript</span><code><span class="c-kw">function</span> <span class="c-fn">coinChange</span>(coins: <span class="c-type">number</span>[], amount: <span class="c-type">number</span>): <span class="c-type">number</span> {
+  <span class="c-kw">const</span> dp = <span class="c-kw">new</span> <span class="c-type">Array</span>(amount + <span class="c-num">1</span>).<span class="c-fn">fill</span>(<span class="c-type">Infinity</span>);
+  dp[<span class="c-num">0</span>] = <span class="c-num">0</span>;
+  <span class="c-kw">for</span> (<span class="c-kw">const</span> coin <span class="c-kw">of</span> coins)
+    <span class="c-kw">for</span> (<span class="c-kw">let</span> a = coin; a &lt;= amount; a++)
+      dp[a] = <span class="c-fn">Math.min</span>(dp[a], dp[a - coin] + <span class="c-num">1</span>);
+  <span class="c-kw">return</span> dp[amount] === <span class="c-type">Infinity</span> ? -<span class="c-num">1</span> : dp[amount];
+}</code></pre>
+        <p style="font-size:12px;color:var(--text3);">Fill dp[0]=0, everything else Infinity. For each coin, update forward. Classic "fewest coins" pattern.</p>
+      </div>
+    </div>
+
+    <div class="problem-card">
+      <div class="problem-header">
+        <span class="difficulty diff-hard">Hard</span>
+        <span class="problem-title">Longest Increasing Subsequence</span>
+        <span class="problem-tag">Google · LC#300 (O(n log n) variant)</span>
+      </div>
+      <div class="problem-body">
+        <div class="problem-meta">
+          <span class="meta-item">Pattern: <strong>Patience Sorting / Binary Search</strong></span>
+          <span class="meta-item">Time: <strong>O(n log n)</strong></span>
+          <span class="meta-item">Target: <strong>≤35 min</strong></span>
+        </div>
+        <p><strong>Interviewer signal:</strong> if you only know O(n²) DP, that's ok for Medium. Knowing the O(n log n) tails approach separates Staff candidates.</p>
+        <pre><span class="pre-lang">TypeScript</span><code><span class="c-kw">function</span> <span class="c-fn">lengthOfLIS</span>(nums: <span class="c-type">number</span>[]): <span class="c-type">number</span> {
+  <span class="c-kw">const</span> tails: <span class="c-type">number</span>[] = [];
+  <span class="c-kw">for</span> (<span class="c-kw">const</span> n <span class="c-kw">of</span> nums) {
+    <span class="c-kw">let</span> lo = <span class="c-num">0</span>, hi = tails.length;
+    <span class="c-kw">while</span> (lo &lt; hi) {
+      <span class="c-kw">const</span> mid = (lo + hi) &gt;&gt; <span class="c-num">1</span>;
+      tails[mid] &lt; n ? lo = mid + <span class="c-num">1</span> : hi = mid;
+    }
+    tails[lo] = n;
+  }
+  <span class="c-kw">return</span> tails.length;
+}</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout callout-crimson">
+    <div class="callout-icon">🎯</div>
+    <div class="callout-body">
+      <div class="callout-title">RN-Specific Coding Context (Meta AI Round, 2025)</div>
+      Meta introduced AI-assisted coding in 2025. You code in their environment with Copilot-style suggestions enabled. <strong>Practice with Cursor or GitHub Copilot under timed conditions.</strong> The evaluator watches whether you verify generated code, catch subtle bugs, and drive the solution — not just accept suggestions. Knowing what the AI is likely to get wrong (off-by-one in binary search, wrong base case in DP) is itself a signal of depth. Google does not permit AI tools — practice both modes.
+    </div>
+  </div>
+
+  <h2>Quick-Reference: Pattern → Problems</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Pattern</th><th>Key LeetCode Problems</th><th>Companies</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Two Pointer</strong></td><td>15 (3Sum), 11 (Container), 42 (Trapping Rain)</td><td>All</td></tr>
+        <tr><td><strong>Sliding Window</strong></td><td>3, 76, 424, 567</td><td>Meta, Amazon</td></tr>
+        <tr><td><strong>BFS / Graph</strong></td><td>200, 127, 310, 994, 133</td><td>All</td></tr>
+        <tr><td><strong>DFS / Backtracking</strong></td><td>78 (Subsets), 46 (Permutations), 79 (Word Search)</td><td>Google, Meta</td></tr>
+        <tr><td><strong>Binary Search</strong></td><td>33, 153, 4 (Median), 300 (n log n LIS)</td><td>Google</td></tr>
+        <tr><td><strong>Heap / Top-K</strong></td><td>215, 347, 295 (Median Stream)</td><td>Amazon, Google</td></tr>
+        <tr><td><strong>DP</strong></td><td>322, 300, 1143 (LCS), 312 (Burst Balloons)</td><td>Amazon, Google</td></tr>
+        <tr><td><strong>Trie</strong></td><td>208, 212 (Word Search II), 820</td><td>Google</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     SECTION 2 — SYSTEM DESIGN
+══════════════════════════════════════════════ -->
+<section class="section" id="sysdesign">
+  <div class="section-header">
+    <div class="section-num">02</div>
+    <div class="section-title-block">
+      <div class="section-kicker">Missing Area 2 of 6</div>
+      <div class="section-title">Mobile System Design <em>Worked Examples</em></div>
+      <p class="section-desc">Your docs mentioned system design but gave only one-line prompts. Here: a reusable framework + two fully worked examples (News Feed & Messaging) you can walk through in 45 minutes flat.</p>
+    </div>
+  </div>
+
+  <h2>The 7-Step Mobile System Design Framework</h2>
+  <p>Apply this every time. The interviewer is scoring you on <em>structure</em> as much as technical depth. Announce each step as you begin it.</p>
+
+  <div class="sd-framework">
+    <div class="sd-step">
+      <div class="sd-num">1</div>
+      <div class="sd-content">
+        <div class="sd-label">Step One</div>
+        <div class="sd-title">Clarify Scope & Constraints</div>
+        <div class="sd-body">Ask before drawing anything. DAU? Platforms (iOS/Android/Web)? Offline required? Read-heavy or write-heavy? Real-time or eventual? Video/images? Target latency? If they say "design Instagram," ask which feature — don't boil the ocean.</div>
+        <div class="sd-timing">⏱ 3–4 minutes</div>
+      </div>
+    </div>
+    <div class="sd-step">
+      <div class="sd-num">2</div>
+      <div class="sd-content">
+        <div class="sd-label">Step Two</div>
+        <div class="sd-title">Define Client API Contract</div>
+        <div class="sd-body">Sketch the endpoints/events the mobile client needs: <code>GET /feed?cursor=&lt;token&gt;</code>, <code>POST /post</code>, <code>WS /messages</code>. This grounds everything that follows. Define your pagination strategy (cursor vs offset — always cursor at scale).</div>
+        <div class="sd-timing">⏱ 4–5 minutes</div>
+      </div>
+    </div>
+    <div class="sd-step">
+      <div class="sd-num">3</div>
+      <div class="sd-content">
+        <div class="sd-label">Step Three</div>
+        <div class="sd-title">Data Model & Local Schema</div>
+        <div class="sd-body">What does the client store? Define local DB schema (WatermelonDB / SQLite tables), MMKV keys for ephemeral state, and what gets evicted. For offline: what's the write-ahead log? How are conflicts resolved (last-write-wins vs CRDT)?</div>
+        <div class="sd-timing">⏱ 5 minutes</div>
+      </div>
+    </div>
+    <div class="sd-step">
+      <div class="sd-num">4</div>
+      <div class="sd-content">
+        <div class="sd-label">Step Four</div>
+        <div class="sd-title">Network Layer & Caching</div>
+        <div class="sd-body">React Query / SWR for data fetching? CDN for media (CloudFront)? Cache headers (stale-while-revalidate)? Prefetch strategy — what do you fetch before the user needs it? How do you handle partial failures (retry policy, exponential backoff)?</div>
+        <div class="sd-timing">⏱ 5 minutes</div>
+      </div>
+    </div>
+    <div class="sd-step">
+      <div class="sd-num">5</div>
+      <div class="sd-content">
+        <div class="sd-label">Step Five</div>
+        <div class="sd-title">Real-time & Push Notifications</div>
+        <div class="sd-body">WebSockets vs SSE vs polling — state your choice and tradeoffs. For push: APNs + FCM via a notification service (SNS, OneSignal). Deep linking from notification to screen: Expo Router <code>expo-notifications</code> + <code>getInitialNotification</code> pattern.</div>
+        <div class="sd-timing">⏱ 4 minutes</div>
+      </div>
+    </div>
+    <div class="sd-step">
+      <div class="sd-num">6</div>
+      <div class="sd-content">
+        <div class="sd-label">Step Six</div>
+        <div class="sd-title">Performance & Rendering</div>
+        <div class="sd-body">FlashList for lists. Image: progressive loading with blurhash placeholder → WebP/AVIF. Prefetch 3 items ahead. Virtualization window. Reanimated for gesture-driven transitions. Memory budget: what do you drop when in background (<code>AppState</code>)?</div>
+        <div class="sd-timing">⏱ 4 minutes</div>
+      </div>
+    </div>
+    <div class="sd-step">
+      <div class="sd-num">7</div>
+      <div class="sd-content">
+        <div class="sd-label">Step Seven</div>
+        <div class="sd-title">Observability, Security & OTA</div>
+        <div class="sd-body">Sentry for crashes + custom error boundaries. Analytics events for funnel tracking. Feature flags (LaunchDarkly/Statsig) for safe rollout. OTA (EAS Update) with kill-switch. MMKV encrypted for PII. SSL pinning for auth endpoints. Play Integrity for payment flows.</div>
+        <div class="sd-timing">⏱ 3–4 minutes</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout callout-teal">
+    <div class="callout-icon">💡</div>
+    <div class="callout-body">
+      <div class="callout-title">Time Budget</div>
+      Total = 30–32 min of content + ~10 min for interviewer questions. If you're running long, drop step 7 to bullet points. Never sacrifice steps 1–3 — scoping and data model are where interviewers form their opinion.
+    </div>
+  </div>
+
+  <h2>Worked Example 1: Design a News Feed (Instagram/Twitter)</h2>
+
+  <h3>Scope Assumptions (you negotiate these in the interview)</h3>
+  <ul>
+    <li>50M DAU, read-heavy (100:1 read/write ratio), iOS + Android</li>
+    <li>Offline: show cached feed for up to 48h. New posts need connectivity.</li>
+    <li>Media: images only (no video for this scope)</li>
+    <li>Real-time: new post indicators, not live feed injection</li>
+  </ul>
+
+  <h3>API Contract</h3>
+  <pre><code><span class="c-cm">// Feed</span>
+GET  /feed?cursor=&lt;opaque_token&gt;&amp;limit=20
+     → { items: Post[], nextCursor: string | null, ttl: number }
+
+<span class="c-cm">// Post creation</span>
+POST /posts  { mediaUrls: string[], caption: string }
+             → { postId: string, status: "processing" }
+
+<span class="c-cm">// Media upload (presigned S3)</span>
+POST /media/presign { mimeType: string }
+     → { uploadUrl: string, cdnUrl: string }</code></pre>
+
+  <h3>Local Data Model (WatermelonDB)</h3>
+  <pre><code><span class="c-cm">// posts table</span>
+postId: string (indexed), authorId, createdAt (indexed),
+caption, mediaUrls: JSON, localStatus: 'synced'|'pending'|'failed',
+seenAt: number | null   <span class="c-cm">// for "new posts" badge</span>
+
+<span class="c-cm">// feed_cursor: MMKV</span>
+<span class="c-str">'feed:cursor'</span>   → opaque server cursor string
+<span class="c-str">'feed:lastSync'</span> → epoch ms</code></pre>
+
+  <h3>Image Loading Pipeline</h3>
+  <ol>
+    <li>Store <code>blurhash</code> string alongside CDN URL in the Post model</li>
+    <li>Render <code>&lt;ExpoBlurHash&gt;</code> immediately from local DB — zero network latency</li>
+    <li><code>expo-image</code> fetches WebP from CloudFront with <code>cachePolicy="disk"</code></li>
+    <li>Prefetch next 5 images in FlashList's <code>onViewableItemsChanged</code></li>
+    <li>On low memory (<code>AppState → background</code>): call <code>Image.clearMemoryCache()</code></li>
+  </ol>
+
+  <h3>Offline Strategy</h3>
+  <ul>
+    <li><strong>Read path:</strong> Query WatermelonDB first. If <code>lastSync</code> &lt; 48h, show cached feed with staleness banner.</li>
+    <li><strong>Write path:</strong> Write to local DB with <code>localStatus: 'pending'</code>. Optimistically show in feed. Background sync queue retries on connectivity restore (<code>NetInfo.addEventListener</code>).</li>
+    <li><strong>Conflict:</strong> Server is authoritative for published posts. Last-write-wins for draft edits.</li>
+  </ul>
+
+  <hr class="divider">
+
+  <h2>Worked Example 2: Design a Chat / Messaging Feature</h2>
+
+  <h3>Scope Assumptions</h3>
+  <ul>
+    <li>1:1 and group chat (≤250 members), 10M DAU</li>
+    <li>Offline: queue messages, deliver on reconnect. Show sent/delivered/read receipts.</li>
+    <li>Real-time: WebSocket for active sessions, push for backgrounded users</li>
+  </ul>
+
+  <h3>Message Status State Machine</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Status</th><th>Trigger</th><th>UI</th></tr></thead>
+      <tbody>
+        <tr><td><code>pending</code></td><td>User taps Send (no connectivity)</td><td>⏳ grey clock</td></tr>
+        <tr><td><code>sent</code></td><td>Server ACK received via WS</td><td>✓ single grey tick</td></tr>
+        <tr><td><code>delivered</code></td><td>Recipient device WS ACK</td><td>✓✓ double grey tick</td></tr>
+        <tr><td><code>read</code></td><td>Recipient opens conversation</td><td>✓✓ double blue tick</td></tr>
+        <tr><td><code>failed</code></td><td>3 retries exhausted</td><td>⚠ red retry button</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>WebSocket Architecture</h3>
+  <pre><code><span class="c-cm">// Connect on app foreground, disconnect on background after 30s</span>
+<span class="c-kw">const</span> ws = <span class="c-kw">new</span> <span class="c-fn">WebSocket</span>(<span class="c-str">`wss://chat.api/ws?token=${jwt}`</span>);
+
+<span class="c-cm">// Message envelope</span>
+{
+  type: <span class="c-str">'message'</span> | <span class="c-str">'ack'</span> | <span class="c-str">'typing'</span> | <span class="c-str">'read'</span>,
+  clientId: uuid(),     <span class="c-cm">// idempotency key — server deduplicates</span>
+  conversationId,
+  payload: { text, mediaUrl? },
+  timestamp: Date.now()
+}
+
+<span class="c-cm">// Reconnection: exponential backoff 1s→2s→4s→8s cap 30s</span>
+<span class="c-cm">// On reconnect: send lastSeenMessageId per conversation to get missed msgs</span></code></pre>
+
+  <h3>Push Notification Deep Link Pattern</h3>
+  <pre><code><span class="c-cm">// In notification payload</span>
+{ deepLink: <span class="c-str">"myapp://chat/conversation/&lt;id&gt;"</span> }
+
+<span class="c-cm">// Expo Router handler (app/_layout.tsx)</span>
+<span class="c-kw">const</span> lastNotification = <span class="c-fn">useLastNotificationResponse</span>();
+<span class="c-fn">useEffect</span>(() => {
+  <span class="c-kw">if</span> (lastNotification?.notification.request.content.data.deepLink) {
+    router.<span class="c-fn">push</span>(lastNotification.notification.request.content.data.deepLink);
+  }
+}, [lastNotification]);</code></pre>
+
+  <div class="callout callout-violet">
+    <div class="callout-icon">🧠</div>
+    <div class="callout-body">
+      <div class="callout-title">Staff-Level Differentiator</div>
+      Junior candidates describe what to build. Senior candidates articulate tradeoffs. Staff candidates proactively identify the hardest problems: <strong>"The trickiest part here is reconciling the optimistic local state with server-assigned message IDs — if the WS drops mid-send, you can get duplicate phantom messages. I'd use a clientId as the dedup key and merge on server ACK."</strong> Say something like this unprompted.
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     SECTION 3 — BEHAVIORAL STAR STORIES
+══════════════════════════════════════════════ -->
+<section class="section" id="behavioral">
+  <div class="section-header">
+    <div class="section-num">03</div>
+    <div class="section-title-block">
+      <div class="section-kicker">Missing Area 3 of 6</div>
+      <div class="section-title">Behavioral <em>STAR Stories</em></div>
+      <p class="section-desc">Your docs explained the STAR framework but contained zero written stories. Here are 5 fully structured templates across the 7 dimensions interviewers test. Fill in your specifics where marked in brackets.</p>
+    </div>
+  </div>
+
+  <div class="callout callout-gold">
+    <div class="callout-icon">📌</div>
+    <div class="callout-body">
+      <div class="callout-title">Ground Rules</div>
+      Always say <strong>I</strong>, never <strong>we</strong>. Keep each story to 2 minutes max. <strong>R (Result) must have a number</strong>: crash rate, hours saved, engineers unblocked, revenue impact, release date. If you don't have a number, estimate and say "approximately." Interviewers are lenient with estimates but harsh with vague outcomes.
+    </div>
+  </div>
+
+  <h2>Story 1 — Ownership / Taking Initiative</h2>
+  <p><em>Maps to: Amazon "Ownership" LP, Google "Googleyness," Meta "Impact"</em></p>
+
+  <div class="star-card">
+    <div class="star-card-header">
+      <div class="star-card-title">"Discovered and fixed a performance regression nobody owned"</div>
+      <span class="star-lp-badge">LP: Ownership</span>
+    </div>
+    <div class="star-blocks">
+      <div class="star-block">
+        <div class="star-letter s-s">S</div>
+        <div class="star-block-label">Situation</div>
+        <div class="star-block-content">
+          <strong>Template:</strong>
+          At [Company], I noticed our cold start time on P95 Android had silently regressed from 2.1s to 4.8s after upgrading to RN [version]. No ticket existed, no alert had fired. This wasn't in my sprint scope.
+        </div>
+      </div>
+      <div class="star-block">
+        <div class="star-letter s-t">T</div>
+        <div class="star-block-label">Task</div>
+        <div class="star-block-content">
+          <strong>Template:</strong>
+          I decided to own the investigation and fix, even though it meant delaying my assigned work. I got informal buy-in from my manager that this was worth a 3-day detour.
+        </div>
+      </div>
+      <div class="star-block">
+        <div class="star-letter s-a">A</div>
+        <div class="star-block-label">Action</div>
+        <div class="star-block-content">
+          <strong>Template:</strong>
+          Used Perfetto to trace startup. Found a ContentProvider auto-initializing [SDK] synchronously on the main thread. Replaced with AndroidX App Startup initializer, moved to background thread. Wrote the fix + PR review guide.
+        </div>
+      </div>
+      <div class="star-block">
+        <div class="star-letter s-r">R</div>
+        <div class="star-block-label">Result</div>
+        <div class="star-block-content">
+          <strong>Template:</strong>
+          Cold start P95 dropped from 4.8s to <strong>2.3s</strong>. Added a CI performance budget gate preventing future regressions. Documented in our runbook — used by 2 other teams within 6 months.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2>Story 2 — Disagreeing With Leadership (Backbone)</h2>
+  <p><em>Maps to: Amazon "Have Backbone; Disagree and Commit," Google L5+ behavioral</em></p>
+
+  <div class="star-card">
+    <div class="star-card-header">
+      <div class="star-card-title">"Pushed back on a rushed migration timeline"</div>
+      <span class="star-lp-badge">LP: Backbone</span>
+    </div>
+    <div class="star-blocks">
+      <div class="star-block">
+        <div class="star-letter s-s">S</div>
+        <div class="star-block-label">Situation</div>
+        <div class="star-block-content">
+          My manager wanted to ship the New Architecture migration to 100% of users in [timeframe]. Three of our top-5 revenue-driving native modules were still on the legacy bridge.
+        </div>
+      </div>
+      <div class="star-block">
+        <div class="star-letter s-t">T</div>
+        <div class="star-block-label">Task</div>
+        <div class="star-block-content">
+          I needed to make the case for a phased rollout without being perceived as blocking progress or being overly cautious.
+        </div>
+      </div>
+      <div class="star-block">
+        <div class="star-letter s-a">A</div>
+        <div class="star-block-label">Action</div>
+        <div class="star-block-content">
+          I wrote a 1-page technical risk doc with two options — full rollout vs phased (10% → 50% → 100% with kill-switch) — including estimated crash-rate delta per option based on our Sentry data. I presented in the next team sync, let the data do the arguing.
+        </div>
+      </div>
+      <div class="star-block">
+        <div class="star-letter s-r">R</div>
+        <div class="star-block-label">Result</div>
+        <div class="star-block-content">
+          Manager chose the phased approach. We caught a [specific module] regression at 10% that would have affected ~[N]k users. <strong>Crash-free sessions stayed above 99.7%</strong> throughout. Full rollout completed on time 6 weeks later.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2>Story 3 — Dealing With Ambiguity</h2>
+  <div class="star-card">
+    <div class="star-card-header">
+      <div class="star-card-title">"Drove offline-first feature decision with no clear requirements"</div>
+      <span class="star-lp-badge">LP: Bias for Action</span>
+    </div>
+    <div class="star-blocks">
+      <div class="star-block">
+        <div class="star-letter s-s">S</div>
+        <div class="star-block-label">Situation</div>
+        <div class="star-block-content">
+          PM left the company mid-sprint. The offline sync feature was "approved in principle" with no spec, no API contract, and a 6-week deadline.
+        </div>
+      </div>
+      <div class="star-block">
+        <div class="star-letter s-t">T</div>
+        <div class="star-block-label">Task</div>
+        <div class="star-block-content">
+          I needed to define the scope, unblock 2 junior engineers, and keep delivery on track — all without a PM.
+        </div>
+      </div>
+      <div class="star-block">
+        <div class="star-letter s-a">A</div>
+        <div class="star-block-label">Action</div>
+        <div class="star-block-content">
+          I ran a 90-minute async RFC doc: defined the API contract, local schema, conflict resolution strategy (last-write-wins for non-critical data, user-prompted merge for conflicting edits). Got sign-off from backend lead and design in 48h via async comments. Broke work into 2-day milestones so juniors had clear tasks.
+        </div>
+      </div>
+      <div class="star-block">
+        <div class="star-letter s-r">R</div>
+        <div class="star-block-label">Result</div>
+        <div class="star-block-content">
+          Shipped 1 week early. Zero rework on the API contract. The RFC became the team's template for all subsequent feature specs. New PM onboarded using it as reference.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2>Story 4 — Technical Dive Deep</h2>
+  <div class="star-card">
+    <div class="star-card-header">
+      <div class="star-card-title">"Debugged a race condition that only appeared in production at scale"</div>
+      <span class="star-lp-badge">LP: Dive Deep</span>
+    </div>
+    <div class="star-blocks">
+      <div class="star-block">
+        <div class="star-letter s-s">S</div>
+        <div class="star-block-label">Situation</div>
+        <div class="star-block-content">
+          Sentry was showing a crash in 0.3% of sessions: <code>NullPointerException</code> in a TurboModule on Android. Couldn't reproduce locally. Only appeared on low-RAM devices (&lt;3GB) under background/foreground transitions.
+        </div>
+      </div>
+      <div class="star-block">
+        <div class="star-letter s-t">T</div>
+        <div class="star-block-label">Task</div>
+        <div class="star-block-content">
+          Track down a race condition with no reliable repro path, affecting ~[N]k users per week.
+        </div>
+      </div>
+      <div class="star-block">
+        <div class="star-letter s-a">A</div>
+        <div class="star-block-label">Action</div>
+        <div class="star-block-content">
+          Added verbose logging to the TurboModule's lifecycle methods. Used Android's background app killer simulation in the emulator. Found the module was being destroyed by the system before a pending JS callback resolved — null bridge reference. Fixed with a WeakReference + null check guard and moved the callback to the module's onCatalystInstanceDestroy.
+        </div>
+      </div>
+      <div class="star-block">
+        <div class="star-letter s-r">R</div>
+        <div class="star-block-label">Result</div>
+        <div class="star-block-content">
+          Crash rate on that issue dropped from <strong>0.3% to 0.02%</strong> within one release. Wrote the pattern into our TurboModule boilerplate to prevent recurrence.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2>Story 5 — Mentoring / Making Others Better</h2>
+  <div class="star-card">
+    <div class="star-card-header">
+      <div class="star-card-title">"Brought a mid-level engineer from inconsistent to reliable"</div>
+      <span class="star-lp-badge">LP: Hire & Develop</span>
+    </div>
+    <div class="star-blocks">
+      <div class="star-block">
+        <div class="star-letter s-s">S</div>
+        <div class="star-block-label">Situation</div>
+        <div class="star-block-content">
+          A mid-level engineer on my team was technically capable but shipped features with recurring performance regressions, causing QA bouncebacks 60% of the time.
+        </div>
+      </div>
+      <div class="star-block">
+        <div class="star-letter s-t">T</div>
+        <div class="star-block-label">Task</div>
+        <div class="star-block-content">
+          My manager asked me to help without making them feel managed. I had no formal authority.
+        </div>
+      </div>
+      <div class="star-block">
+        <div class="star-letter s-a">A</div>
+        <div class="star-block-label">Action</div>
+        <div class="star-block-content">
+          I proposed a "performance pairing" ritual: 30 min per PR where we'd profile together using Flipper/React DevTools before submission — framed as learning, not review. I also wrote a pre-PR checklist (render counts, list virtualization, no inline objects in JSX) they could self-check.
+        </div>
+      </div>
+      <div class="star-block">
+        <div class="star-letter s-r">R</div>
+        <div class="star-block-label">Result</div>
+        <div class="star-block-content">
+          QA bounceback rate for their PRs dropped from <strong>60% to under 15%</strong> in 8 weeks. They later led a performance review for another team member independently. The checklist is now part of our team's PR template.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout callout-sage">
+    <div class="callout-icon">📋</div>
+    <div class="callout-body">
+      <div class="callout-title">7 Dimensions You Must Cover</div>
+      Make sure you have at least one story prepared for each: <strong>Conflict/disagreement</strong> · <strong>Failure/what you'd do differently</strong> · <strong>Ownership outside your scope</strong> · <strong>Ambiguity with no clear answer</strong> · <strong>Mentoring/teaching</strong> · <strong>Technical depth/debugging</strong> · <strong>Prioritization under pressure</strong>. Write them all out before interview week. Reading them aloud is mandatory — if you haven't said the words, you'll stumble.
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     SECTION 4 — TECHNICAL Q&A BANK
+══════════════════════════════════════════════ -->
+<section class="section" id="qna">
+  <div class="section-header">
+    <div class="section-num">04</div>
+    <div class="section-title-block">
+      <div class="section-kicker">Missing Area 4 of 6</div>
+      <div class="section-title">Technical <em>Q&A Bank</em></div>
+      <p class="section-desc">Your docs had 7 interview questions total. Here are 40+ depth questions with full model answers across threading, Fabric, Hermes, Reanimated, memory, and architecture — organized by seniority level.</p>
+    </div>
+  </div>
+
+  <h2>Threading & Architecture</h2>
+
+  <div class="qa-item">
+    <div class="qa-question">
+      <div class="qa-q-icon">Q</div>
+      <div class="qa-q-text">Walk me through exactly what happens on the JS thread vs UI thread vs native modules thread in RN 0.76+. What changed with New Architecture?</div>
+    </div>
+    <div class="qa-answer">
+      <p><strong>Old arch (Bridge):</strong> 3 threads — JS thread (JS execution, React reconciliation), UI thread (native view updates), and Shadow Thread (Yoga layout). Communication was async JSON batches over the bridge. You could not call native modules synchronously.</p>
+      <p><strong>New arch:</strong> JS thread still runs Hermes. The Shadow Thread is replaced by C++ Fabric renderer running concurrent layout on a background thread. TurboModules expose JSI HostObjects — native code can now be called <em>synchronously from JS</em> with zero serialization. Reanimated worklets run on a dedicated Worklet thread (a second Hermes runtime), sharing memory with the C++ layer via JSI — that's why animations survive JS thread jank. The UI thread still handles final view mutations, now via atomic Fabric commit.</p>
+      <p><strong>Implication you should raise unprompted:</strong> With New Arch, blocking the JS thread can still cause missed frames because Fabric batches commits to the UI thread — but worklet-based animations are fully immune since they bypass JS. That's why Reanimated 3+ is preferred over <code>Animated</code> for any gesture-coupled animation.</p>
+    </div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-question">
+      <div class="qa-q-icon">Q</div>
+      <div class="qa-q-text">What is a JSI HostObject? Write a minimal C++ implementation.</div>
+    </div>
+    <div class="qa-answer">
+      <p>A HostObject is a C++ class implementing <code>jsi::HostObject</code> that is exposed directly to the Hermes JS runtime. JS can call methods on it synchronously — no serialization, no async bridge, no JSON. MMKV, Reanimated, and react-native-skia are all HostObject-based.</p>
+      <pre><span class="pre-lang">C++</span><code><span class="c-kw">class</span> <span class="c-type">MyStorage</span> : <span class="c-kw">public</span> jsi::<span class="c-type">HostObject</span> {
+<span class="c-kw">public</span>:
+  jsi::<span class="c-type">Value</span> <span class="c-fn">get</span>(jsi::<span class="c-type">Runtime</span>&amp; rt, <span class="c-kw">const</span> jsi::<span class="c-type">PropNameID</span>&amp; name) <span class="c-kw">override</span> {
+    <span class="c-kw">auto</span> propName = name.<span class="c-fn">utf8</span>(rt);
+    <span class="c-kw">if</span> (propName == <span class="c-str">"getString"</span>) {
+      <span class="c-kw">return</span> jsi::<span class="c-type">Function</span>::<span class="c-fn">createFromHostFunction</span>(rt, name, <span class="c-num">1</span>,
+        [<span class="c-kw">this</span>](jsi::<span class="c-type">Runtime</span>&amp; rt, <span class="c-kw">const</span> jsi::<span class="c-type">Value</span>&amp;,
+               <span class="c-kw">const</span> jsi::<span class="c-type">Value</span>* args, size_t) -&gt; jsi::<span class="c-type">Value</span> {
+          <span class="c-kw">auto</span> key = args[<span class="c-num">0</span>].<span class="c-fn">getString</span>(rt).<span class="c-fn">utf8</span>(rt);
+          <span class="c-kw">return</span> jsi::<span class="c-type">String</span>::<span class="c-fn">createFromUtf8</span>(rt, store_[key]);
+        });
+    }
+    <span class="c-kw">return</span> jsi::<span class="c-type">Value</span>::<span class="c-fn">undefined</span>();
+  }
+<span class="c-kw">private</span>:
+  std::<span class="c-type">unordered_map</span>&lt;std::<span class="c-type">string</span>, std::<span class="c-type">string</span>&gt; store_;
+};</code></pre>
+      <p>Install into the runtime: <code>rt.global().setProperty(rt, "MyStorage", jsi::Object::createFromHostObject(rt, std::make_shared&lt;MyStorage&gt;()));</code></p>
+    </div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-question">
+      <div class="qa-q-icon">Q</div>
+      <div class="qa-q-text">Describe the Fabric commit pipeline from setState to pixels on screen.</div>
+    </div>
+    <div class="qa-answer">
+      <p><strong>5-phase pipeline:</strong></p>
+      <ol>
+        <li><strong>Render phase (JS thread):</strong> React reconciler runs, produces updated Fiber tree. Host config calls emit mount instructions.</li>
+        <li><strong>Commit phase (JS thread → C++):</strong> Shadow tree is built/diffed in C++ (react/renderer/core). Yoga layout runs on a shadow tree clone. This can run concurrently with JS — that's Concurrent React in RN.</li>
+        <li><strong>Mount phase (UI thread):</strong> Fabric applies the committed shadow tree diff to native views atomically. View mutations are coalesced — no partial frame renders.</li>
+      </ol>
+      <p><strong>Key difference from Paper:</strong> In Paper, UIManager was JS-driven and views were updated via async bridge calls (could produce partial updates). In Fabric, the UI thread pull-syncs from the C++ tree atomically, eliminating the "tearing" artifact where layout and paint could be out of sync.</p>
+    </div>
+  </div>
+
+  <h2>Memory & GC</h2>
+
+  <div class="qa-item">
+    <div class="qa-question">
+      <div class="qa-q-icon">Q</div>
+      <div class="qa-q-text">How does Hermes Hades GC work and why does it matter for animations?</div>
+    </div>
+    <div class="qa-answer">
+      <p><strong>Hades</strong> is a concurrent mark-sweep collector for the old generation. Unlike the previous stop-the-world GC, Hades runs the mark phase on a <em>background thread</em> concurrently with JS execution. The JS thread only stops briefly for final evacuation (typically &lt;1ms). Old GC could pause the JS thread for 100–200ms — enough to drop multiple frames.</p>
+      <p><strong>Why it matters for animations:</strong> Even with Reanimated worklets bypassing the JS thread, any GC pause on the JS thread affects state updates and re-renders driven from JS. With Hades, UI-coupled JS work (gesture state sync, scroll event handlers written in JS) is far less likely to jank. Hades became the default in Hermes for React Native in 0.74+. Up to 30× shorter pause times in benchmarks.</p>
+      <p><strong>Mention in context:</strong> "If I see jank that doesn't correlate with JS thread work, I look at GC events in Hermes profiler output before assuming it's a rendering issue."</p>
+    </div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-question">
+      <div class="qa-q-icon">Q</div>
+      <div class="qa-q-text">What are SharedValues in Reanimated 3 and how do they cross the JS/worklet boundary without serialization?</div>
+    </div>
+    <div class="qa-answer">
+      <p>A <code>SharedValue</code> (created with <code>useSharedValue()</code>) is a C++ object exposed to <em>both</em> the JS runtime and the Worklet runtime via JSI HostObjects. There is no serialization — both runtimes access the same underlying C++ memory via JSI pointers.</p>
+      <p>When you write <code>sv.value = 1</code> from JS, it's a synchronous C++ write. When a worklet reads <code>sv.value</code>, it reads the same C++ memory synchronously. The Worklet runtime runs on its own thread (Reanimated's dedicated queue), so reads/writes from both sides are guarded by an internal mutex.</p>
+      <p><strong>Implication:</strong> You can animate at 60/120fps driven entirely by native gesture events, with zero round-trips to the JS thread. The JS thread can be fully blocked and animations keep running. This is the fundamental reason Reanimated + RNGH replaces the old <code>Animated.event</code> pattern.</p>
+    </div>
+  </div>
+
+  <h2>Architecture & Production</h2>
+
+  <div class="qa-item">
+    <div class="qa-question">
+      <div class="qa-q-icon">Q</div>
+      <div class="qa-q-text">How would you implement a safe, gradual rollout of a TurboModule migration across 5M users?</div>
+    </div>
+    <div class="qa-answer">
+      <p>Never do a big-bang migration. Strategy:</p>
+      <ol>
+        <li><strong>Parallel registration:</strong> Register both the legacy NativeModule and the TurboModule. Use a feature flag (LaunchDarkly/Statsig) to select which one is instantiated at runtime — <code>TurboModuleRegistry.getEnforcing</code> in the new path, <code>NativeModules.MyModule</code> in the legacy path.</li>
+        <li><strong>Canary (1%):</strong> Enable TurboModule for 1% of users. Watch Sentry for new crashes specifically correlated with that cohort. Monitor for 24–48h on a stable release.</li>
+        <li><strong>Ramp (10% → 50% → 100%):</strong> Each stage requires passing a crash-free session threshold (99.5% minimum). Build a kill-switch: feature flag can be turned off remotely without an OTA.</li>
+        <li><strong>Remove legacy path:</strong> Only after 100% ramp has been stable for 2+ releases.</li>
+      </ol>
+      <p><strong>Common trap:</strong> TurboModules change the threading model. Async callbacks that were "fire and forget" on the bridge now need explicit threading guarantees. Test on the lowest-spec device you support.</p>
+    </div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-question">
+      <div class="qa-q-icon">Q</div>
+      <div class="qa-q-text">What is Codegen and what does it actually generate?</div>
+    </div>
+    <div class="qa-answer">
+      <p>Codegen is a build-time tool that takes your TypeScript spec file (a <code>.ts</code> file exporting <code>TurboModuleRegistry.getEnforcing</code> or <code>codegenNativeComponent</code>) and generates:</p>
+      <ul>
+        <li><strong>Android:</strong> Java/Kotlin abstract classes with type-safe method signatures that your native module extends</li>
+        <li><strong>iOS:</strong> Objective-C protocol header (<code>RCTMyModuleSpec.h</code>) that your Swift/ObjC class conforms to</li>
+        <li><strong>C++:</strong> JSI binding glue that connects the TS spec to the native implementations</li>
+      </ul>
+      <p>The key benefit: type safety enforced at build time rather than runtime. If you change the JS spec without updating native, the build fails. Before Codegen, type mismatches produced silent runtime crashes. <code>npx react-native codegen</code> runs it; in Expo it's run during <code>expo prebuild</code>. The output lives in <code>android/app/build/generated/source/codegen/</code> and <code>ios/build/generated/ios/</code>.</p>
+    </div>
+  </div>
+
+  <div class="qa-item">
+    <div class="qa-question">
+      <div class="qa-q-icon">Q</div>
+      <div class="qa-q-text">Your app has a memory leak that only appears after 20+ minutes of use. Walk me through how you'd diagnose it.</div>
+    </div>
+    <div class="qa-answer">
+      <p><strong>Step 1 — Confirm it's a leak, not expected growth:</strong> Android Studio Memory Profiler / Xcode Instruments Leaks. Take heap snapshots every 5 min. If retained heap grows linearly without GC recovery → leak.</p>
+      <p><strong>Step 2 — Isolate to JS vs native:</strong> Hermes profiler (Chrome DevTools → remote JS debugging) shows JS heap. If JS heap is stable but native heap grows → C++/native module leak. If JS heap grows → JS-side leak.</p>
+      <p><strong>Common JS leaks:</strong> <code>useEffect</code> with missing cleanup (event listeners, subscriptions, timers), closures capturing large objects in module scope, cached data in custom stores never evicted.</p>
+      <p><strong>Common native leaks:</strong> TurboModule holding a strong reference to an Activity/Context (use WeakReference on Android), iOS delegate cycles (use <code>weak self</code> in Obj-C callbacks).</p>
+      <p><strong>Step 3 — React-specific:</strong> Use <code>why-did-you-render</code> + component profiler to find components that never unmount. Common in modal/overlay patterns where unmount is never called due to wrong navigation stack handling.</p>
+    </div>
+  </div>
+
+  <h2>Quick-Fire Q&A Reference</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Question</th><th>Model Answer (2–3 sentences)</th><th>Level</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Why are RAM bundles incompatible with Hermes?</strong></td>
+          <td>RAM bundles lazy-load JS modules on demand by splitting the bundle into indexed sections. Hermes pre-compiles the entire bundle to bytecode at build time — there is no module-level boundary in the bytecode to lazy-load from. Use inline requires (Metro config) for the same effect with Hermes.</td>
+          <td><span class="level-badge level-staff">Staff</span></td>
+        </tr>
+        <tr>
+          <td><strong>What thread does a Reanimated worklet run on?</strong></td>
+          <td>Reanimated's dedicated Worklet thread — a separate Hermes runtime instance. It shares memory with the C++ layer via JSI SharedValues, but has its own call stack. It never touches the JS thread during animation execution.</td>
+          <td><span class="level-badge level-senior">Senior</span></td>
+        </tr>
+        <tr>
+          <td><strong>What's the difference between Fabric's shadow tree and Paper's UIManager?</strong></td>
+          <td>Paper's UIManager was a JS-driven, async queue of view mutations — views could be partially updated mid-frame. Fabric's shadow tree is a C++ immutable tree; diffs are committed to the UI thread atomically in one operation, preventing partial frame renders and tearing.</td>
+          <td><span class="level-badge level-staff">Staff</span></td>
+        </tr>
+        <tr>
+          <td><strong>How does TurboModuleRegistry.getEnforcing differ from NativeModules?</strong></td>
+          <td><code>NativeModules</code> lazily initialized via the bridge at runtime with no type guarantees. <code>TurboModuleRegistry.getEnforcing</code> resolves synchronously via JSI at first access, throws immediately if the module is missing (hence "Enforcing"), and is type-safe via Codegen.</td>
+          <td><span class="level-badge level-senior">Senior</span></td>
+        </tr>
+        <tr>
+          <td><strong>When would you choose CRDT over last-write-wins for conflict resolution?</strong></td>
+          <td>When concurrent edits to the same field must merge without data loss — e.g., collaborative text editing, shared lists, counter increments. Last-write-wins is simpler but silently drops concurrent writes. CRDT (Yjs, Automerge) guarantees convergence. Use last-write-wins when one user owns the data (notes, profile fields).</td>
+          <td><span class="level-badge level-staff">Staff</span></td>
+        </tr>
+        <tr>
+          <td><strong>What is Play Integrity and when do you need it?</strong></td>
+          <td>Google's replacement for SafetyNet — attests that the APK is unmodified, running on a real uncertified Android device, and the app was installed from Play. Required for payment flows, high-value loyalty features, anything that can be gamed by rooted/emulated devices. Check the verdict server-side, never on-device.</td>
+          <td><span class="level-badge level-senior">Senior</span></td>
+        </tr>
+        <tr>
+          <td><strong>Explain Yoga layout and how Fabric uses it.</strong></td>
+          <td>Yoga is a cross-platform C++ layout engine implementing Flexbox. Fabric builds a shadow tree of Yoga nodes from the React element tree, runs layout (calculating positions/sizes) entirely in C++ on a background thread, then commits the final positions to native views on the UI thread. This removes the JS-thread layout bottleneck of Paper.</td>
+          <td><span class="level-badge level-principal">Principal</span></td>
+        </tr>
+        <tr>
+          <td><strong>What's a Baseline Profile on Android and what does it buy you?</strong></td>
+          <td>A static file bundled with the APK listing hot methods for ART's Ahead-of-Time compilation. Without it, ART interprets code until JIT kicks in after first runs. With it, startup-critical paths are AOT-compiled from first launch. Shopify reported ~10% Android cold-start improvement; RN community benchmarks suggest up to 40% in some configurations.</td>
+          <td><span class="level-badge level-staff">Staff</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     SECTION 5 — NEGOTIATION
+══════════════════════════════════════════════ -->
+<section class="section" id="negotiation">
+  <div class="section-header">
+    <div class="section-num">05</div>
+    <div class="section-title-block">
+      <div class="section-kicker">Missing Area 5 of 6</div>
+      <div class="section-title">Salary <em>Negotiation</em></div>
+      <p class="section-desc">Your docs had one paragraph. At Staff level, the comp difference between a strong and weak negotiation can be $80–150k in total comp. Here: the full playbook with exact scripts.</p>
+    </div>
+  </div>
+
+  <div class="callout callout-crimson">
+    <div class="callout-icon">⚠️</div>
+    <div class="callout-body">
+      <div class="callout-title">The Cardinal Rules</div>
+      <strong>Never give a number first.</strong> Whoever names a number first loses anchor advantage. If pressed: "I'd rather understand the full scope of the role first — I'm sure you have a range in mind." &nbsp;·&nbsp; <strong>Never accept on the call.</strong> Always take at least 48 hours. &nbsp;·&nbsp; <strong>Competing offers are your only real leverage</strong> — run parallel processes.
+    </div>
+  </div>
+
+  <h2>The 5-Phase Negotiation Playbook</h2>
+
+  <div class="migration-track">
+    <div class="migration-phase">
+      <div class="phase-label">
+        <div class="phase-tag cat-teal">Phase 1</div>
+        <div class="phase-name">Research</div>
+      </div>
+      <div class="phase-content">
+        <ul>
+          <li>levels.fyi: filter by company + level + location. Look at P25/P50/P75 for <em>total comp</em>, not base alone.</li>
+          <li>Blind / TeamBlind: real-time offer data, especially useful for Series B–D startups not on levels.fyi</li>
+          <li>AngelList / Wellfound: startup equity benchmarks (know the difference between ISO and NSO options)</li>
+          <li>Know your target number before the first call. Know your walk-away number. Keep both private.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="migration-phase">
+      <div class="phase-label">
+        <div class="phase-tag cat-teal">Phase 2</div>
+        <div class="phase-name">Deflect</div>
+      </div>
+      <div class="phase-content">
+        <p>When asked for current salary or expectations:</p>
+        <div class="script-box">
+          <span class="script-label">Script — Deflect salary question</span>
+          "I'd prefer to understand the full scope of the role before discussing numbers — can you share the band for this level? I want to make sure we're both in the right range before investing more time."
+        </div>
+        <div class="script-box">
+          <span class="script-label">Script — If they push harder</span>
+          "My comp is structured in a way that's not directly comparable — there's a mix of base, equity, and bonuses. I'd rather not anchor on a number that doesn't reflect what I'm looking for in this role specifically."
+        </div>
+      </div>
+    </div>
+    <div class="migration-phase">
+      <div class="phase-label">
+        <div class="phase-tag cat-teal">Phase 3</div>
+        <div class="phase-name">First Offer</div>
+      </div>
+      <div class="phase-content">
+        <p>When you receive an offer:</p>
+        <div class="script-box">
+          <span class="script-label">Script — Receive offer gracefully, buy time</span>
+          "Thank you — I'm genuinely excited about the role and the team. I want to give this the consideration it deserves. Can I have until [specific date, ~5 days out] to review everything?"
+        </div>
+        <p>Then: look up the offer on levels.fyi. Calculate total comp (base + target bonus + RSU / 4-year vest). Compare to your research numbers. Almost always counter.</p>
+      </div>
+    </div>
+    <div class="migration-phase">
+      <div class="phase-label">
+        <div class="phase-tag cat-teal">Phase 4</div>
+        <div class="phase-name">Counter</div>
+      </div>
+      <div class="phase-content">
+        <div class="script-box">
+          <span class="script-label">Script — Counter with competing offer</span>
+          "I've been going through the offer carefully and I'm very interested in joining. I do have a competing offer at [Company] for [X total comp] — I prefer [your company] for [specific genuine reason], but I wanted to be transparent. Is there room to move to [target number]?"
+        </div>
+        <div class="script-box">
+          <span class="script-label">Script — Counter without competing offer</span>
+          "I've been doing my research on levels.fyi and the market range for this level and location is [range]. Based on my experience with [specific relevant skill], I'd be hoping to land closer to [number]. Is there flexibility?"
+        </div>
+        <p><strong>Counter by 15–20% above the offer</strong> as your opening. They will rarely rescind. The worst answer is "that's our maximum" — which still tells you their ceiling.</p>
+      </div>
+    </div>
+    <div class="migration-phase">
+      <div class="phase-label">
+        <div class="phase-tag cat-teal">Phase 5</div>
+        <div class="phase-name">Non-Cash Levers</div>
+      </div>
+      <div class="phase-content">
+        <p>If base/RSU are locked, negotiate these — they're often more flexible:</p>
+        <ul>
+          <li><strong>Sign-on bonus</strong> — often budget from a different pool. Ask for $20–50k. Especially useful at Amazon where base is capped at $350k and RSUs are back-loaded (5/15/40/40).</li>
+          <li><strong>RSU cliff reduction</strong> — ask to reduce 1-year cliff to 6-month cliff (reduces golden handcuffs)</li>
+          <li><strong>Accelerated vesting</strong> — for startup equity: ask for double-trigger acceleration on acquisition</li>
+          <li><strong>Remote work / location flexibility</strong> — worth significant comp equivalent</li>
+          <li><strong>Equipment budget, L&D budget</strong> — $5–10k is standard at FAANG; ask if not offered</li>
+          <li><strong>Start date flexibility</strong> — more time for competing offers to come in</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <h2>FAANG-Specific Vesting Notes</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Company</th><th>RSU Vest Schedule</th><th>Negotiation Tip</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Meta</strong></td><td>Even quarterly vest (6.25%/quarter) after 1-year cliff</td><td>Counter on RSU grant size. Refreshers are generous — factor them in.</td></tr>
+        <tr><td><strong>Amazon</strong></td><td>5% yr1 / 15% yr2 / 40% yr3 / 40% yr4 (back-loaded)</td><td>Mitigate with sign-on ($50–100k) to compensate low yr1–2. Counter aggressively on sign-on.</td></tr>
+        <tr><td><strong>Google</strong></td><td>25% yearly (year 1 cliff), with perf multipliers</td><td>Level matters enormously (L5 vs L6 is ~$100k+ delta). Push for L6 evaluation if borderline.</td></tr>
+        <tr><td><strong>Apple</strong></td><td>25% yearly</td><td>Base is often negotiable; RSU range is tighter. Title negotiation matters more here.</td></tr>
+        <tr><td><strong>Startup (Series A–C)</strong></td><td>4yr vest, 1yr cliff; 0.1–0.5% equity typical for Staff</td><td>Ask for preferred-stock price, last-round 409A, total shares outstanding to calculate % ownership. Always model exit scenarios.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout callout-teal">
+    <div class="callout-icon">📖</div>
+    <div class="callout-body">
+      <div class="callout-title">Required Reading</div>
+      Patrick McKenzie's "Salary Negotiation: Make More Money, Be More Valued" (patio11.com) — the most useful single article on the topic. Haseeb Qureshi's negotiation series on haseebq.com covers the full FAANG loop in detail. Both are free.
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     SECTION 6 — QUESTIONS TO ASK
+══════════════════════════════════════════════ -->
+<section class="section" id="questions-to-ask">
+  <div class="section-header">
+    <div class="section-num">06</div>
+    <div class="section-title-block">
+      <div class="section-kicker">Missing Area 6 of 6</div>
+      <div class="section-title">Questions to <em>Ask the Interviewer</em></div>
+      <p class="section-desc">Entirely absent from your existing docs. At Staff level, weak questions signal weak thinking. Strong questions demonstrate scope and show you're evaluating them as much as they're evaluating you.</p>
+    </div>
+  </div>
+
+  <div class="callout callout-gold">
+    <div class="callout-icon">🎯</div>
+    <div class="callout-body">
+      <div class="callout-title">Why This Matters at Staff Level</div>
+      Junior candidates ask "what does the team do." Staff candidates ask questions that reveal they understand engineering org dynamics, technical debt, and what it actually means to be impactful at that scale. Interviewers remember the questions. <strong>Prepare 3–4 per round, expect to use 2.</strong> Never ask about salary, PTO, or benefits in technical rounds.
+    </div>
+  </div>
+
+  <div class="q-ask-grid">
+    <div class="q-ask-card">
+      <div class="q-ask-category cat-gold">🏗 Technical Architecture</div>
+      <ul>
+        <li>What percentage of your native modules are still on the legacy bridge today, and what's blocking the migration?</li>
+        <li>How do you handle breaking changes in your native module layer when you have multiple app teams depending on the same module?</li>
+        <li>What's your current cold start P95 on Android, and what's the biggest remaining lever you haven't pulled yet?</li>
+        <li>Do you have performance budgets enforced in CI? What metric most often triggers a failure?</li>
+        <li>How do you decide between building a native module in Kotlin/Swift vs writing it in C++ for cross-platform reuse?</li>
+      </ul>
+    </div>
+    <div class="q-ask-card">
+      <div class="q-ask-category cat-teal">🔄 Engineering Process</div>
+      <ul>
+        <li>How does a significant architectural change get decided here — is there an RFC process, and what does approval look like?</li>
+        <li>What's the ratio of staff/senior engineers to mid-level, and how does that affect code review and mentoring load?</li>
+        <li>How much time does a Staff engineer here spend in meetings vs hands-on technical work? What does a typical week look like?</li>
+        <li>How do you handle technical debt — do teams have dedicated time for it, or is it always competing with product work?</li>
+      </ul>
+    </div>
+    <div class="q-ask-card">
+      <div class="q-ask-category cat-violet">👥 Team & Culture</div>
+      <ul>
+        <li>What's the biggest disagreement the mobile platform team has had in the last 6 months, and how was it resolved?</li>
+        <li>What do you think the team is genuinely great at, and what are you still working to improve?</li>
+        <li>How are decisions made when there's a disagreement between platform engineering and product teams?</li>
+        <li>What happened to the last person in this role, or what created the opening?</li>
+      </ul>
+    </div>
+    <div class="q-ask-card">
+      <div class="q-ask-category cat-crimson">📈 Impact & Growth</div>
+      <ul>
+        <li>What would make someone in this role extremely successful in their first 6 months vs just ok?</li>
+        <li>Is there an active Staff-to-Principal track here, and what does that progression typically look like?</li>
+        <li>What's the most important technical problem you'd want someone in this role to own in the next year?</li>
+        <li>How does the mobile team's roadmap get influenced by engineers vs being handed down from product?</li>
+      </ul>
+    </div>
+    <div class="q-ask-card">
+      <div class="q-ask-category cat-sage">🌿 For Hiring Managers Only</div>
+      <ul>
+        <li>How do you think about the balance between deep individual contribution and cross-team influence for Staff engineers here?</li>
+        <li>What's your management philosophy around unblocking engineers vs letting them work through hard problems themselves?</li>
+        <li>What's the team's biggest gap right now, and is that gap part of what this role is expected to address?</li>
+        <li>How have you seen engineers grow the fastest under you — what conditions do you try to create?</li>
+      </ul>
+    </div>
+    <div class="q-ask-card">
+      <div class="q-ask-category cat-gold">⚠️ Red Flag Detectors</div>
+      <ul>
+        <li>How often do production incidents require engineers to be on-call outside business hours, and what does the rotation look like?</li>
+        <li>What's the honest state of test coverage on the mobile codebase — E2E, unit, integration?</li>
+        <li>Has there been significant attrition on the mobile team in the last year, and what drove it?</li>
+        <li>How often does the roadmap change mid-quarter, and how much influence does the mobile team have in those decisions?</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout callout-sage">
+    <div class="callout-icon">💬</div>
+    <div class="callout-body">
+      <div class="callout-title">How to End Every Round</div>
+      Reserve 60 seconds at the end to ask: <strong>"Based on what you've heard today, is there anything you're uncertain about regarding my fit for this role?"</strong> — This is the single most powerful closing move. It gives you a real-time chance to address concerns before the debrief. Many interviewers will tell you directly. Even if they don't, asking it signals confidence and self-awareness.
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     SECTION 7 — BROWNFIELD DEPTH
+══════════════════════════════════════════════ -->
+<section class="section" id="brownfield">
+  <div class="section-header">
+    <div class="section-num">07</div>
+    <div class="section-title-block">
+      <div class="section-kicker">Bonus: Thin Coverage in Existing Docs</div>
+      <div class="section-title">Brownfield <em>Migration Depth</em></div>
+      <p class="section-desc">Large companies almost always have brownfield apps. Your docs mentioned section 9 briefly. Here: incremental migration strategies, SDK versioning, feature flag rollout patterns — the actual operational detail interviewers probe at Staff level.</p>
+    </div>
+  </div>
+
+  <h2>The Incremental Brownfield Insertion Pattern</h2>
+  <p>The correct brownfield strategy is <strong>never</strong> to rewrite. You insert RN as a navigation entry point into an existing native app, route screen by screen, and let the native shell remain the host.</p>
+
+  <div class="migration-track">
+    <div class="migration-phase">
+      <div class="phase-label">
+        <div class="phase-tag cat-gold">Phase 1</div>
+        <div class="phase-name">Host Setup</div>
+      </div>
+      <div class="phase-content">
+        <ul>
+          <li>Add <code>react-native</code> as a library dependency (not a standalone app) to the existing Xcode/Gradle project</li>
+          <li>Create a single <code>RCTRootView</code> (iOS) / <code>ReactRootView</code> (Android) host container — a native ViewController/Fragment that boots the RN runtime</li>
+          <li>RN runtime initializes <strong>once</strong> at app start (background thread) and is reused across all RN surfaces — critical for keeping cold start impact low</li>
+          <li>Navigation: native app's router remains the authority. RN screens are pushed as native ViewControllers with RN content inside</li>
+        </ul>
+      </div>
+    </div>
+    <div class="migration-phase">
+      <div class="phase-label">
+        <div class="phase-tag cat-gold">Phase 2</div>
+        <div class="phase-name">First Surface</div>
+      </div>
+      <div class="phase-content">
+        <ul>
+          <li>Pick a <strong>low-risk, high-velocity</strong> screen: settings, onboarding, notifications center — not checkout, not auth</li>
+          <li>Define the native-to-RN interface early: how will native pass params into the RN bundle? (<code>initialProperties</code> on RCTRootView)</li>
+          <li>Define the RN-to-native callback interface: how will RN trigger native navigation events? (TurboModule with <code>navigateToNativeScreen</code> method)</li>
+          <li>Shadow DOM/layout budget: ensure RN screen's Yoga layout matches the native design system's spacing tokens</li>
+        </ul>
+      </div>
+    </div>
+    <div class="migration-phase">
+      <div class="phase-label">
+        <div class="phase-tag cat-gold">Phase 3</div>
+        <div class="phase-name">SDK Versioning</div>
+      </div>
+      <div class="phase-content">
+        <ul>
+          <li><strong>The problem:</strong> as you add RN surfaces, multiple product teams may need different native module APIs. You need a versioning contract.</li>
+          <li>Treat your TurboModules as <strong>internal SDKs</strong>: semantic versioning, changelog, deprecation window (minimum 2 releases)</li>
+          <li>Use a module registry pattern: one <code>PlatformSDK</code> TurboModule that exposes a version string; consumers gate behavior on version</li>
+          <li>Never remove a method from a TurboModule without a 2-release deprecation period — RN OTA updates can run ahead of native releases</li>
+        </ul>
+      </div>
+    </div>
+    <div class="migration-phase">
+      <div class="phase-label">
+        <div class="phase-tag cat-gold">Phase 4</div>
+        <div class="phase-name">Feature Flags</div>
+      </div>
+      <div class="phase-content">
+        <ul>
+          <li>Every RN surface ships behind a feature flag from day one — allows instant kill-switch without OTA or app release</li>
+          <li>Flag is evaluated <em>native-side</em> before the RN surface is even instantiated — eliminates the "blank screen flash" from flag evaluation latency in JS</li>
+          <li>Tiered rollout: internal → 1% → 10% → 50% → 100% with automated crash-rate gates between each tier</li>
+          <li>Post-100% stable (≥2 releases): remove the flag and the native fallback to prevent flag debt</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <h2>Multi-Version RN in a Monorepo</h2>
+  <p>At large orgs, different product teams may be on different RN minor versions. This is a maintenance nightmare but a reality at companies like Microsoft.</p>
+
+  <div class="callout callout-crimson">
+    <div class="callout-icon">🚨</div>
+    <div class="callout-body">
+      <div class="callout-title">Strongly Avoid Multiple RN Versions in One Binary</div>
+      Two RN runtimes in one APK/IPA causes duplicate Hermes instances, doubled cold start overhead, and impossible native module version conflicts. The correct approach is a <strong>single RN version, centrally upgraded on a cadence</strong>. Use a Mobile Platform team to own the upgrade; individual product teams are consumers, not version owners.
+    </div>
+  </div>
+
+  <h3>The "Upgrade Cadence" Pattern (Shopify / Microsoft approach)</h3>
+  <ol>
+    <li><strong>Version lock:</strong> All product teams use the exact same <code>react-native</code> version. It lives in the root <code>package.json</code>, not per-team.</li>
+    <li><strong>Upgrade train:</strong> Mobile Platform team upgrades RN every 1–2 minor versions. They own the compatibility shim layer for any breaking native module changes.</li>
+    <li><strong>Migration window:</strong> 6 weeks for product teams to update any breaking API usages. Breaking changes are announced in an internal RFC with migration guide.</li>
+    <li><strong>Codemods:</strong> Where possible, the Platform team ships automated codemods (jscodeshift) for JS-side breaking changes.</li>
+  </ol>
+
+  <h2>Native Navigation Protocol (for interviewer depth)</h2>
+  <p>One of the most underspecified areas in brownfield RN. When an RN screen needs to navigate to a native screen, you need a clean contract:</p>
+
+  <pre><span class="pre-lang">TypeScript</span><code><span class="c-cm">// TurboModule spec: NativeNavigator.ts</span>
+<span class="c-kw">import type</span> { <span class="c-type">TurboModule</span> } <span class="c-kw">from</span> <span class="c-str">'react-native'</span>;
+<span class="c-kw">import</span> { <span class="c-fn">TurboModuleRegistry</span> } <span class="c-kw">from</span> <span class="c-str">'react-native'</span>;
+
+<span class="c-kw">export interface</span> <span class="c-type">Spec</span> <span class="c-kw">extends</span> <span class="c-type">TurboModule</span> {
+  <span class="c-fn">navigate</span>(screenName: <span class="c-type">string</span>, params: <span class="c-type">Object</span>): <span class="c-type">void</span>;
+  <span class="c-fn">dismissRN</span>(): <span class="c-type">void</span>;       <span class="c-cm">// close RN modal/sheet</span>
+  <span class="c-fn">replaceWithNative</span>(screenName: <span class="c-type">string</span>, params: <span class="c-type">Object</span>): <span class="c-type">void</span>;
+}
+
+<span class="c-kw">export default</span> <span class="c-type">TurboModuleRegistry</span>.<span class="c-fn">getEnforcing</span>&lt;<span class="c-type">Spec</span>&gt;(<span class="c-str">'NativeNavigator'</span>);</code></pre>
+
+  <div class="callout callout-gold">
+    <div class="callout-icon">🏆</div>
+    <div class="callout-body">
+      <div class="callout-title">Staff Interview Differentiator on Brownfield</div>
+      Most candidates describe brownfield as "embedding RN in a native app." Staff candidates describe the <em>operational concerns</em>: SDK versioning contracts, navigation protocol ownership, flag debt management, the single-runtime constraint, and the upgrade cadence governance model. If you can speak to all five, you've demonstrated organizational scope that most senior candidates haven't thought about.
+    </div>
+  </div>
+</section>
+
+
+<footer>
+  <p>React Native Staff/Principal — Interview Supplement · 2026 Edition<br>
+  Companion to: rn_engineering_reference_2025 · rn-staff-manual-2026 · rn_interview_field_manual</p>
+</footer>
+
+<a href="#" class="back-top" title="Back to top">↑</a>
+
+</body>
+</html>
