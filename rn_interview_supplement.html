@@ -1,907 +1,57 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RN Staff Interview — Missing Pieces Supplement</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Epilogue:wght@300;400;500;600;700;800&family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-:root {
-  --bg: #0c0c0e;
-  --bg2: #111116;
-  --bg3: #16161d;
-  --surface: #1c1c26;
-  --surface2: #22222e;
-  --border: #2e2e3e;
-  --border2: #3a3a50;
-  --gold: #d4a843;
-  --gold2: #f0c96a;
-  --gold-pale: rgba(212,168,67,0.08);
-  --crimson: #c43b3b;
-  --crimson-pale: rgba(196,59,59,0.08);
-  --teal: #2ab5a0;
-  --teal-pale: rgba(42,181,160,0.08);
-  --violet: #7c5cbf;
-  --violet-pale: rgba(124,92,191,0.08);
-  --sage: #5a9e6f;
-  --sage-pale: rgba(90,158,111,0.08);
-  --text: #e8e6e0;
-  --text2: #a09d96;
-  --text3: #5a5860;
-  --serif: 'Playfair Display', Georgia, serif;
-  --sans: 'Epilogue', sans-serif;
-  --mono: 'Fira Code', monospace;
-}
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RN Staff Interview — Missing Pieces Supplement</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;650;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ENjdO4Dr2bkBIFxQpeoY9Iu7AMLZc2xno1pB2iZYG3zv2RjO4DQBvYQ7S8ar4k+N" crossorigin="anonymous" />
+    <link rel="stylesheet" href="_theme.css" />
+  </head>
+  <body class="interview-supplement">
+    <div id="reading-progress"></div>
+    <header class="navbar-custom">
+      <div class="navbar-inner">
+        <a class="navbar-brand" href="index.html">
+          <span class="brand-mark">RN</span>
+          <span class="brand-label">Docs</span>
+        </a>
+        <nav class="navbar-links" aria-label="Primary navigation">
+          <a class="navbar-link" href="index.html">Home</a>
+          <a class="navbar-link" href="rn_interview_field_manual.html">Interview</a>
+          <a class="navbar-link active" href="rn_interview_supplement.html">DSA</a>
+          <a class="navbar-link" href="rn-staff-manual-2026.html">Staff Manual</a>
+        </nav>
+        <button id="drawer-toggle" class="navbar-toggler" type="button" aria-label="Open navigation">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="app-shell d-flex align-items-start">
+      <aside class="sidebar" aria-label="Sidebar navigation">
+        <div class="sidebar-section">
+          <label>Sections</label>
+          <a class="sidebar-link" href="#dsa-problem-bank">DSA Problem Bank</a>
+          <a class="sidebar-link" href="#mobile-system-design-worked-examples">Mobile System Design Worked Examples</a>
+          <a class="sidebar-link" href="#behavioral-star-stories">Behavioral STAR Stories</a>
+          <a class="sidebar-link" href="#technical-q-a-bank">Technical Q&amp;A Bank</a>
+          <a class="sidebar-link" href="#salary-negotiation">Salary Negotiation</a>
+          <a class="sidebar-link" href="#questions-to-ask-the-interviewer">Questions to Ask the Interviewer</a>
+          <a class="sidebar-link" href="#brownfield-migration-depth">Brownfield Migration Depth</a>
+        </div>
+      </aside>
+
+      <main class="main" role="main">
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-
-body {
-  font-family: var(--sans);
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.7;
-  font-size: 14px;
-  overflow-x: hidden;
-}
-
-/* ── NOISE TEXTURE ── */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 9999;
-}
-
-/* ── COVER ── */
-.cover {
-  min-height: 100vh;
-  display: grid;
-  grid-template-rows: 1fr auto;
-  background: var(--bg);
-  position: relative;
-  overflow: hidden;
-}
-
-.cover-lines {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(212,168,67,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(212,168,67,0.04) 1px, transparent 1px);
-  background-size: 80px 80px;
-}
-
-.cover-glow {
-  position: absolute;
-  width: 700px; height: 700px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(212,168,67,0.06) 0%, transparent 70%);
-  top: -200px; right: -200px;
-  pointer-events: none;
-}
-
-.cover-glow2 {
-  position: absolute;
-  width: 400px; height: 400px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(124,92,191,0.08) 0%, transparent 70%);
-  bottom: 10%; left: -100px;
-  pointer-events: none;
-}
-
-.cover-inner {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 80px 80px 60px;
-  position: relative;
-  z-index: 1;
-  max-width: 1100px;
-}
-
-.cover-tag {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 32px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.cover-tag::before {
-  content: '';
-  width: 40px; height: 1px;
-  background: var(--gold);
-  opacity: 0.5;
-}
-
-.cover-title {
-  font-family: var(--serif);
-  font-size: clamp(36px, 5vw, 68px);
-  line-height: 1.05;
-  font-weight: 900;
-  color: var(--text);
-  margin-bottom: 8px;
-}
-.cover-title em {
-  font-style: italic;
-  color: var(--gold2);
-}
-
-.cover-sub {
-  font-size: 16px;
-  color: var(--text2);
-  font-weight: 300;
-  margin-top: 20px;
-  max-width: 600px;
-  line-height: 1.6;
-}
-
-.cover-pills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 40px;
-}
-.pill {
-  padding: 6px 16px;
-  border-radius: 100px;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  border: 1px solid;
-}
-.pill-gold { border-color: rgba(212,168,67,0.4); color: var(--gold2); background: var(--gold-pale); }
-.pill-crimson { border-color: rgba(196,59,59,0.4); color: #e07070; background: var(--crimson-pale); }
-.pill-teal { border-color: rgba(42,181,160,0.4); color: var(--teal); background: var(--teal-pale); }
-.pill-violet { border-color: rgba(124,92,191,0.4); color: #a080e0; background: var(--violet-pale); }
-.pill-sage { border-color: rgba(90,158,111,0.4); color: var(--sage); background: var(--sage-pale); }
-
-.cover-footer {
-  padding: 20px 80px;
-  border-top: 1px solid var(--border);
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--text3);
-  letter-spacing: 0.08em;
-  display: flex;
-  gap: 40px;
-  flex-wrap: wrap;
-  position: relative;
-  z-index: 1;
-}
-.cover-footer span { color: var(--text2); }
-
-/* ── NAV ── */
-.nav {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: rgba(12,12,14,0.92);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
-  padding: 0 80px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.nav::-webkit-scrollbar { display: none; }
-
-.nav-item {
-  padding: 14px 16px;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  color: var(--text3);
-  text-decoration: none;
-  white-space: nowrap;
-  border-bottom: 2px solid transparent;
-  transition: all 0.2s;
-}
-.nav-item:hover { color: var(--text); border-bottom-color: var(--gold); }
-
-/* ── SECTION WRAPPER ── */
-.section {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 80px 80px;
-  border-bottom: 1px solid var(--border);
-}
-
-.section-header {
-  display: flex;
-  align-items: flex-start;
-  gap: 32px;
-  margin-bottom: 56px;
-}
-
-.section-num {
-  font-family: var(--serif);
-  font-size: 80px;
-  font-weight: 900;
-  line-height: 1;
-  color: var(--border2);
-  min-width: 60px;
-  font-style: italic;
-}
-
-.section-title-block {}
-
-.section-kicker {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 10px;
-}
-
-.section-title {
-  font-family: var(--serif);
-  font-size: clamp(24px, 3vw, 36px);
-  font-weight: 700;
-  color: var(--text);
-  line-height: 1.2;
-}
-.section-title em {
-  font-style: italic;
-  color: var(--gold2);
-}
-
-.section-desc {
-  color: var(--text2);
-  font-size: 13px;
-  margin-top: 10px;
-  max-width: 640px;
-  line-height: 1.7;
-}
-
-h2 {
-  font-family: var(--serif);
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--text);
-  margin: 48px 0 16px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--border);
-}
-h2:first-of-type { margin-top: 0; }
-
-h3 {
-  font-family: var(--sans);
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--gold2);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin: 28px 0 10px;
-}
-
-p { color: var(--text2); margin-bottom: 12px; font-size: 13.5px; }
-p strong { color: var(--text); font-weight: 600; }
-
-ul, ol { padding-left: 20px; margin-bottom: 14px; }
-li { color: var(--text2); font-size: 13.5px; margin-bottom: 6px; line-height: 1.65; }
-li strong { color: var(--text); }
-ul li::marker { color: var(--gold); }
-ol li::marker { color: var(--gold); font-weight: 700; font-family: var(--mono); font-size: 11px; }
-
-code {
-  font-family: var(--mono);
-  font-size: 12px;
-  background: rgba(212,168,67,0.1);
-  color: var(--gold2);
-  padding: 2px 7px;
-  border-radius: 4px;
-  border: 1px solid rgba(212,168,67,0.2);
-}
-
-pre {
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 20px 24px;
-  overflow-x: auto;
-  margin: 16px 0;
-  position: relative;
-}
-pre code {
-  background: none;
-  border: none;
-  padding: 0;
-  color: #c5c0b5;
-  font-size: 12.5px;
-  line-height: 1.75;
-}
-.pre-lang {
-  position: absolute;
-  top: 10px; right: 14px;
-  font-family: var(--mono);
-  font-size: 9px;
-  color: var(--text3);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-.c-kw { color: #ff7b72; }
-.c-fn { color: #c8a4ff; }
-.c-str { color: #a5d6ff; }
-.c-cm { color: #6a7080; font-style: italic; }
-.c-num { color: #79c0ff; }
-.c-type { color: #ffa657; }
-
-/* ── TABLES ── */
-.table-wrap {
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  overflow: hidden;
-  margin: 20px 0;
-}
-table { width: 100%; border-collapse: collapse; }
-thead th {
-  background: var(--surface);
-  color: var(--text);
-  padding: 12px 16px;
-  text-align: left;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  font-family: var(--mono);
-}
-td {
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--border);
-  color: var(--text2);
-  font-size: 13px;
-  vertical-align: top;
-}
-tr:last-child td { border-bottom: none; }
-tr:nth-child(even) td { background: rgba(255,255,255,0.012); }
-td strong { color: var(--text); }
-
-/* ── CALLOUTS ── */
-.callout {
-  border-radius: 10px;
-  padding: 16px 20px;
-  margin: 20px 0;
-  border-left: 3px solid;
-  display: flex;
-  gap: 14px;
-}
-.callout-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
-.callout-body { font-size: 13px; color: var(--text2); line-height: 1.7; }
-.callout-body strong { color: var(--text); }
-.callout-title { font-weight: 700; color: var(--text); margin-bottom: 4px; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; font-family: var(--mono); }
-
-.callout-gold { background: var(--gold-pale); border-color: var(--gold); }
-.callout-crimson { background: var(--crimson-pale); border-color: var(--crimson); }
-.callout-teal { background: var(--teal-pale); border-color: var(--teal); }
-.callout-violet { background: var(--violet-pale); border-color: var(--violet); }
-.callout-sage { background: var(--sage-pale); border-color: var(--sage); }
-
-/* ── DSA PROBLEM CARDS ── */
-.problem-grid {
-  display: grid;
-  gap: 16px;
-  margin: 20px 0;
-}
-
-.problem-card {
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  overflow: hidden;
-  transition: border-color 0.2s;
-}
-.problem-card:hover { border-color: var(--border2); }
-
-.problem-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 18px;
-  border-bottom: 1px solid var(--border);
-}
-
-.difficulty {
-  font-family: var(--mono);
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  padding: 3px 8px;
-  border-radius: 100px;
-}
-.diff-easy { background: rgba(90,158,111,0.2); color: var(--sage); border: 1px solid rgba(90,158,111,0.3); }
-.diff-medium { background: rgba(212,168,67,0.2); color: var(--gold2); border: 1px solid rgba(212,168,67,0.3); }
-.diff-hard { background: rgba(196,59,59,0.2); color: #e07070; border: 1px solid rgba(196,59,59,0.3); }
-
-.problem-title {
-  font-weight: 700;
-  font-size: 14px;
-  color: var(--text);
-  flex: 1;
-}
-
-.problem-tag {
-  font-family: var(--mono);
-  font-size: 9px;
-  color: var(--text3);
-  letter-spacing: 0.06em;
-}
-
-.problem-body {
-  padding: 16px 18px;
-}
-
-.problem-meta {
-  display: flex;
-  gap: 20px;
-  margin-bottom: 12px;
-  flex-wrap: wrap;
-}
-.meta-item {
-  font-size: 11px;
-  color: var(--text3);
-  font-family: var(--mono);
-}
-.meta-item strong { color: var(--text2); }
-
-/* ── SYSTEM DESIGN ── */
-.sd-framework {
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  overflow: hidden;
-  margin: 20px 0;
-}
-
-.sd-step {
-  display: flex;
-  gap: 0;
-  border-bottom: 1px solid var(--border);
-}
-.sd-step:last-child { border-bottom: none; }
-
-.sd-num {
-  font-family: var(--serif);
-  font-size: 32px;
-  font-weight: 900;
-  font-style: italic;
-  color: var(--border2);
-  padding: 20px 24px;
-  min-width: 70px;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  border-right: 1px solid var(--border);
-  background: var(--bg2);
-}
-
-.sd-content {
-  padding: 20px 24px;
-  flex: 1;
-}
-
-.sd-label {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 6px;
-}
-
-.sd-title {
-  font-weight: 700;
-  font-size: 14px;
-  color: var(--text);
-  margin-bottom: 8px;
-}
-
-.sd-body {
-  font-size: 13px;
-  color: var(--text2);
-  line-height: 1.7;
-}
-
-.sd-timing {
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--crimson);
-  margin-top: 6px;
-  letter-spacing: 0.04em;
-}
-
-/* ── STAR CARDS ── */
-.star-card {
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  margin: 20px 0;
-  overflow: hidden;
-}
-
-.star-card-header {
-  padding: 16px 20px;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.star-card-title {
-  font-family: var(--serif);
-  font-size: 17px;
-  font-weight: 700;
-  color: var(--text);
-}
-
-.star-lp-badge {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 0.1em;
-  padding: 4px 10px;
-  border-radius: 100px;
-  background: var(--violet-pale);
-  border: 1px solid rgba(124,92,191,0.4);
-  color: #a080e0;
-}
-
-.star-blocks {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  border-top: 1px solid var(--border);
-}
-
-.star-block {
-  padding: 18px 20px;
-  border-right: 1px solid var(--border);
-}
-.star-block:last-child { border-right: none; }
-
-.star-letter {
-  font-family: var(--serif);
-  font-size: 28px;
-  font-weight: 900;
-  font-style: italic;
-  line-height: 1;
-  margin-bottom: 8px;
-}
-.s-s { color: var(--gold); }
-.s-t { color: var(--teal); }
-.s-a { color: var(--violet); }
-.s-r { color: var(--sage); }
-
-.star-block-label {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text3);
-  margin-bottom: 8px;
-}
-
-.star-block-content {
-  font-size: 12.5px;
-  color: var(--text2);
-  line-height: 1.65;
-}
-
-.star-block-content strong {
-  color: var(--text);
-  display: block;
-  margin-bottom: 3px;
-}
-
-/* ── Q&A BANK ── */
-.qa-item {
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  margin: 16px 0;
-  overflow: hidden;
-}
-
-.qa-question {
-  padding: 16px 20px;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-}
-
-.qa-q-icon {
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--gold);
-  background: var(--gold-pale);
-  border: 1px solid rgba(212,168,67,0.3);
-  width: 26px; height: 26px;
-  display: flex; align-items: center; justify-content: center;
-  border-radius: 6px;
-  flex-shrink: 0;
-  margin-top: 1px;
-}
-
-.qa-q-text {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text);
-  line-height: 1.5;
-}
-
-.qa-answer {
-  padding: 16px 20px;
-}
-
-.qa-answer p { margin-bottom: 8px; }
-.qa-answer p:last-child { margin-bottom: 0; }
-
-/* ── NEGOTIATION ── */
-.neg-phase {
-  display: flex;
-  gap: 0;
-  margin: 12px 0;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.neg-step-num {
-  background: var(--surface);
-  padding: 16px 20px;
-  font-family: var(--serif);
-  font-size: 24px;
-  font-weight: 900;
-  font-style: italic;
-  color: var(--gold);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 60px;
-  border-right: 1px solid var(--border);
-}
-
-.neg-body {
-  padding: 16px 20px;
-  flex: 1;
-}
-
-.neg-label {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--teal);
-  margin-bottom: 5px;
-}
-
-.neg-title {
-  font-weight: 700;
-  color: var(--text);
-  font-size: 14px;
-  margin-bottom: 6px;
-}
-
-.neg-content { font-size: 13px; color: var(--text2); line-height: 1.65; }
-.neg-content strong { color: var(--text); }
-
-/* ── SCRIPT BOXES ── */
-.script-box {
-  background: var(--bg2);
-  border: 1px solid var(--border2);
-  border-left: 3px solid var(--teal);
-  border-radius: 0 8px 8px 0;
-  padding: 14px 18px;
-  margin: 12px 0;
-  font-size: 13px;
-  color: var(--text);
-  line-height: 1.7;
-  font-style: italic;
-}
-
-.script-label {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--teal);
-  font-style: normal;
-  margin-bottom: 6px;
-  display: block;
-}
-
-/* ── QUESTIONS TO ASK ── */
-.q-ask-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-  margin: 20px 0;
-}
-
-.q-ask-card {
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 18px 20px;
-  transition: border-color 0.2s;
-}
-.q-ask-card:hover { border-color: var(--border2); }
-
-.q-ask-category {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  margin-bottom: 12px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--border);
-}
-
-.cat-gold { color: var(--gold); }
-.cat-teal { color: var(--teal); }
-.cat-violet { color: #a080e0; }
-.cat-crimson { color: #e07070; }
-.cat-sage { color: var(--sage); }
-
-.q-ask-card ul { padding-left: 0; list-style: none; }
-.q-ask-card li {
-  padding: 8px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-  font-size: 13px;
-  color: var(--text2);
-  line-height: 1.6;
-  padding-left: 16px;
-  position: relative;
-}
-.q-ask-card li:last-child { border-bottom: none; }
-.q-ask-card li::before {
-  content: '→';
-  position: absolute;
-  left: 0;
-  color: var(--text3);
-  font-size: 12px;
-}
-
-/* ── TECH Q&A LEVEL BADGES ── */
-.level-badge {
-  font-family: var(--mono);
-  font-size: 8px;
-  letter-spacing: 0.1em;
-  padding: 2px 8px;
-  border-radius: 100px;
-  font-weight: 700;
-}
-.level-senior { background: rgba(42,181,160,0.15); color: var(--teal); border: 1px solid rgba(42,181,160,0.3); }
-.level-staff { background: rgba(212,168,67,0.15); color: var(--gold2); border: 1px solid rgba(212,168,67,0.3); }
-.level-principal { background: rgba(196,59,59,0.15); color: #e07070; border: 1px solid rgba(196,59,59,0.3); }
-
-/* ── BROWNFIELD ── */
-.migration-track {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  overflow: hidden;
-  margin: 20px 0;
-}
-
-.migration-phase {
-  display: flex;
-  gap: 0;
-  border-bottom: 1px solid var(--border);
-}
-.migration-phase:last-child { border-bottom: none; }
-
-.phase-label {
-  background: var(--bg2);
-  padding: 20px;
-  min-width: 130px;
-  border-right: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-}
-
-.phase-tag {
-  font-family: var(--mono);
-  font-size: 8px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  margin-bottom: 4px;
-}
-
-.phase-name {
-  font-weight: 700;
-  font-size: 13px;
-  color: var(--text);
-}
-
-.phase-content {
-  padding: 20px 24px;
-  flex: 1;
-}
-
-.phase-content ul { margin: 0; }
-
-/* ── BACK TO TOP ── */
-.back-top {
-  position: fixed;
-  bottom: 32px; right: 32px;
-  width: 44px; height: 44px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text2);
-  text-decoration: none;
-  font-size: 18px;
-  transition: all 0.2s;
-  z-index: 50;
-}
-.back-top:hover {
-  background: var(--gold-pale);
-  border-color: var(--gold);
-  color: var(--gold);
-}
-
-/* ── DIVIDER ── */
-.divider {
-  border: none;
-  border-top: 1px solid var(--border);
-  margin: 32px 0;
-}
-
-/* ── FOOTER ── */
-footer {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 48px 80px;
-  text-align: center;
-}
-
-footer p {
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--text3);
-  letter-spacing: 0.06em;
-}
-
-@media (max-width: 768px) {
-  .cover-inner, .section, .nav, .cover-footer, footer { padding-left: 24px; padding-right: 24px; }
-  .star-blocks { grid-template-columns: 1fr 1fr; }
-  .q-ask-grid { grid-template-columns: 1fr; }
-  .section-header { flex-direction: column; gap: 12px; }
-  .section-num { font-size: 48px; }
-  .sd-step { flex-direction: column; }
-  .sd-num { min-width: auto; border-right: none; border-bottom: 1px solid var(--border); padding: 12px 20px; font-size: 22px; flex-direction: row; gap: 8px; }
-}
-</style>
-</head>
-<body>
-
-<!-- ══ COVER ══ -->
 <div class="cover">
   <div class="cover-lines"></div>
   <div class="cover-glow"></div>
   <div class="cover-glow2"></div>
   <div class="cover-inner">
-    <div class="cover-tag">React Native Staff/Principal · Interview Supplement · 2026</div>
+    <div class="cover-tag">React Native <span class="badge-level staff">Staff</span>/<span class="badge-level principal">Principal</span> · Interview Supplement · 2026</div>
     <div class="cover-title">The <em>Missing</em><br>Pieces</div>
     <p class="cover-sub">Everything your existing prep documents didn't cover — DSA problem sets, worked system design examples, written STAR stories, 40+ technical Q&A, negotiation scripts, and questions to ask your interviewers.</p>
     <div class="cover-pills">
@@ -921,40 +71,25 @@ footer p {
   </div>
 </div>
 
-<!-- ══ NAV ══ -->
-<nav class="nav">
-  <a href="#dsa" class="nav-item">01 — DSA Problems</a>
-  <a href="#sysdesign" class="nav-item">02 — System Design</a>
-  <a href="#behavioral" class="nav-item">03 — STAR Stories</a>
-  <a href="#qna" class="nav-item">04 — Technical Q&A</a>
-  <a href="#negotiation" class="nav-item">05 — Negotiation</a>
-  <a href="#questions-to-ask" class="nav-item">06 — Questions to Ask</a>
-  <a href="#brownfield" class="nav-item">07 — Brownfield Depth</a>
-</nav>
+<div class="callout callout--note supplement-nav"><span>⚡ <span class="badge-level faang">FAANG</span> Timing Targets</span><div class="callout-body"><a href="#dsa" class="sidebar-link">01 — DSA Problems</a>
+  <a href="#sysdesign" class="sidebar-link">02 — System Design</a>
+  <a href="#behavioral" class="sidebar-link">03 — STAR Stories</a>
+  <a href="#qna" class="sidebar-link">04 — Technical Q&A</a>
+  <a href="#negotiation" class="sidebar-link">05 — Negotiation</a>
+  <a href="#questions-to-ask" class="sidebar-link">06 — Questions to Ask</a>
+  <a href="#brownfield" class="sidebar-link">07 — Brownfield Depth</a>
+</div></div>
 
-
-<!-- ══════════════════════════════════════════════
-     SECTION 1 — DSA
-══════════════════════════════════════════════ -->
 <section class="section" id="dsa">
-  <div class="section-header">
-    <div class="section-num">01</div>
-    <div class="section-title-block">
-      <div class="section-kicker">Missing Area 1 of 6</div>
-      <div class="section-title">DSA <em>Problem Bank</em></div>
-      <p class="section-desc">Curated LeetCode problems with patterns, timing targets, and model approaches — specifically tagged for Meta, Amazon, and Google mobile rounds. Your existing docs listed topics but gave zero actual problems.</p>
-    </div>
+  <div class="section-opener">
+    <div class="opener-tag"><span class="num">01</span> — Missing Area 1 of 6</div>
+    <h2 id="dsa-problem-bank">DSA <em>Problem Bank</em><a aria-label="Permalink" class="anchor-link" href="#dsa-problem-bank">¶</a></h2>
   </div>
+  <p class="section-desc">Curated LeetCode problems with patterns, timing targets, and model approaches — specifically tagged for Meta, Amazon, and Google mobile rounds. Your existing docs listed topics but gave zero actual problems.</p>
 
-  <div class="callout callout-gold">
-    <div class="callout-icon">⚡</div>
-    <div class="callout-body">
-      <div class="callout-title">FAANG Timing Targets</div>
-      Easy: ≤10 min &nbsp;·&nbsp; Medium: ≤25 min cold &nbsp;·&nbsp; Hard: ≤45 min &nbsp;·&nbsp; All in TypeScript. If you can't hit these cold, you're not ready to apply. Mock with a timer on.
-    </div>
-  </div>
+  <div class="callout callout--warning"><span>⚡ FAANG Timing Targets</span><div class="callout-body">Easy: ≤10 min &nbsp;·&nbsp; Medium: ≤25 min cold &nbsp;·&nbsp; Hard: ≤45 min &nbsp;·&nbsp; All in TypeScript. If you can't hit these cold, you're not ready to apply. Mock with a timer on.</div></div>
 
-  <h2>Arrays & Sliding Window</h2>
+  <h3 id="arrays-sliding-window">Arrays & Sliding Window<a aria-label="Permalink" class="anchor-link" href="#arrays-sliding-window">¶</a></h3>
 
   <div class="problem-grid">
     <div class="problem-card">
@@ -970,7 +105,7 @@ footer p {
           <span class="meta-item">Target: <strong>≤15 min</strong></span>
         </div>
         <p><strong>Why it's asked at Meta:</strong> Tests core sliding-window intuition. Appears frequently in Meta phone screens.</p>
-        <pre><span class="pre-lang">TypeScript</span><code><span class="c-kw">function</span> <span class="c-fn">lengthOfLongestSubstring</span>(s: <span class="c-type">string</span>): <span class="c-type">number</span> {
+        <div class="code-block code-block--solution"><div class="code-block__topbar"><span class="code-block__badge">Longest Substring Without Repeating Characters · TypeScript</span><button aria-label="Copy code" class="copy-btn" type="button">&#128203;</button></div><pre><code class=""><span class="c-kw">function</span> <span class="c-fn">lengthOfLongestSubstring</span>(s: <span class="c-type">string</span>): <span class="c-type">number</span> {
   <span class="c-kw">const</span> seen = <span class="c-kw">new</span> <span class="c-fn">Map</span>&lt;<span class="c-type">string</span>, <span class="c-type">number</span>&gt;();
   <span class="c-kw">let</span> left = <span class="c-num">0</span>, max = <span class="c-num">0</span>;
   <span class="c-kw">for</span> (<span class="c-kw">let</span> right = <span class="c-num">0</span>; right &lt; s.length; right++) {
@@ -981,8 +116,8 @@ footer p {
     max = <span class="c-fn">Math.max</span>(max, right - left + <span class="c-num">1</span>);
   }
   <span class="c-kw">return</span> max;
-}</code></pre>
-        <p style="font-size:12px;color:var(--text3);">Key insight: store the <em>index</em> in the map, not just membership — lets you jump left pointer in O(1).</p>
+}</code></pre></div>
+        <p class="solution-note">Key insight: store the <em>index</em> in the map, not just membership — lets you jump left pointer in O(1).</p>
       </div>
     </div>
 
@@ -999,7 +134,7 @@ footer p {
           <span class="meta-item">Target: <strong>≤25 min</strong></span>
         </div>
         <p><strong>Why it's asked at Amazon:</strong> Tests "have/need" counting pattern. Classic Amazon OA problem.</p>
-        <pre><span class="pre-lang">TypeScript</span><code><span class="c-kw">function</span> <span class="c-fn">minWindow</span>(s: <span class="c-type">string</span>, t: <span class="c-type">string</span>): <span class="c-type">string</span> {
+        <div class="code-block code-block--solution"><div class="code-block__topbar"><span class="code-block__badge">Minimum Window Substring · TypeScript</span><button aria-label="Copy code" class="copy-btn" type="button">&#128203;</button></div><pre><code class=""><span class="c-kw">function</span> <span class="c-fn">minWindow</span>(s: <span class="c-type">string</span>, t: <span class="c-type">string</span>): <span class="c-type">string</span> {
   <span class="c-kw">const</span> need = <span class="c-kw">new</span> <span class="c-fn">Map</span>&lt;<span class="c-type">string</span>, <span class="c-type">number</span>&gt;();
   <span class="c-kw">for</span> (<span class="c-kw">const</span> c <span class="c-kw">of</span> t) need.<span class="c-fn">set</span>(c, (need.<span class="c-fn">get</span>(c) ?? <span class="c-num">0</span>) + <span class="c-num">1</span>);
   <span class="c-kw">let</span> have = <span class="c-num">0</span>, total = need.size;
@@ -1016,19 +151,19 @@ footer p {
     }
   }
   <span class="c-kw">return</span> res;
-}</code></pre>
+}</code></pre></div>
       </div>
     </div>
   </div>
 
-  <h2>Trees & Graphs (High Frequency)</h2>
+  <h3 id="trees-graphs-high-frequency">Trees & Graphs (High Frequency)<a aria-label="Permalink" class="anchor-link" href="#trees-graphs-high-frequency">¶</a></h3>
 
   <div class="problem-grid">
     <div class="problem-card">
       <div class="problem-header">
         <span class="difficulty diff-medium">Medium</span>
         <span class="problem-title">Binary Tree Level Order Traversal</span>
-        <span class="problem-tag">All FAANG · LC#102</span>
+        <span class="problem-tag">All <span class="badge-level faang">FAANG</span> · LC#102</span>
       </div>
       <div class="problem-body">
         <div class="problem-meta">
@@ -1037,7 +172,7 @@ footer p {
           <span class="meta-item">Target: <strong>≤12 min</strong></span>
         </div>
         <p>Master template — dozens of variants (zigzag, right side view, max width) all follow this exact queue-drain pattern.</p>
-        <pre><span class="pre-lang">TypeScript</span><code><span class="c-kw">function</span> <span class="c-fn">levelOrder</span>(root: <span class="c-type">TreeNode</span> | <span class="c-kw">null</span>): <span class="c-type">number</span>[][] {
+        <div class="code-block code-block--solution"><div class="code-block__topbar"><span class="code-block__badge">Binary Tree Level Order Traversal · TypeScript</span><button aria-label="Copy code" class="copy-btn" type="button">&#128203;</button></div><pre><code class=""><span class="c-kw">function</span> <span class="c-fn">levelOrder</span>(root: <span class="c-type">TreeNode</span> | <span class="c-kw">null</span>): <span class="c-type">number</span>[][] {
   <span class="c-kw">if</span> (!root) <span class="c-kw">return</span> [];
   <span class="c-kw">const</span> result: <span class="c-type">number</span>[][] = [], queue: <span class="c-type">TreeNode</span>[] = [root];
   <span class="c-kw">while</span> (queue.length) {
@@ -1052,7 +187,7 @@ footer p {
     result.<span class="c-fn">push</span>(level);
   }
   <span class="c-kw">return</span> result;
-}</code></pre>
+}</code></pre></div>
       </div>
     </div>
 
@@ -1060,7 +195,7 @@ footer p {
       <div class="problem-header">
         <span class="difficulty diff-medium">Medium</span>
         <span class="problem-title">Number of Islands</span>
-        <span class="problem-tag">All FAANG · LC#200</span>
+        <span class="problem-tag">All <span class="badge-level faang">FAANG</span> · LC#200</span>
       </div>
       <div class="problem-body">
         <div class="problem-meta">
@@ -1069,7 +204,7 @@ footer p {
           <span class="meta-item">Target: <strong>≤15 min</strong></span>
         </div>
         <p>Master of the flood-fill pattern. Comes up in disguise: count connected components, find largest island, etc.</p>
-        <pre><span class="pre-lang">TypeScript</span><code><span class="c-kw">function</span> <span class="c-fn">numIslands</span>(grid: <span class="c-type">string</span>[][]): <span class="c-type">number</span> {
+        <div class="code-block code-block--solution"><div class="code-block__topbar"><span class="code-block__badge">Number of Islands · TypeScript</span><button aria-label="Copy code" class="copy-btn" type="button">&#128203;</button></div><pre><code class=""><span class="c-kw">function</span> <span class="c-fn">numIslands</span>(grid: <span class="c-type">string</span>[][]): <span class="c-type">number</span> {
   <span class="c-kw">let</span> count = <span class="c-num">0</span>;
   <span class="c-kw">const</span> <span class="c-fn">dfs</span> = (r: <span class="c-type">number</span>, c: <span class="c-type">number</span>) => {
     <span class="c-kw">if</span> (r &lt; <span class="c-num">0</span> || r >= grid.length || c &lt; <span class="c-num">0</span> || c >= grid[<span class="c-num">0</span>].length
@@ -1081,7 +216,7 @@ footer p {
     <span class="c-kw">for</span> (<span class="c-kw">let</span> c = <span class="c-num">0</span>; c &lt; grid[<span class="c-num">0</span>].length; c++)
       <span class="c-kw">if</span> (grid[r][c] === <span class="c-str">'1'</span>) { <span class="c-fn">dfs</span>(r, c); count++; }
   <span class="c-kw">return</span> count;
-}</code></pre>
+}</code></pre></div>
       </div>
     </div>
 
@@ -1098,7 +233,7 @@ footer p {
           <span class="meta-item">Target: <strong>≤35 min</strong></span>
         </div>
         <p><strong>Key insight:</strong> Model each word as a node; edges exist when words differ by one letter. Shortest path = BFS. The trick is generating neighbors via wildcard buckets, not comparing all pairs.</p>
-        <pre><span class="pre-lang">TypeScript</span><code><span class="c-kw">function</span> <span class="c-fn">ladderLength</span>(begin: <span class="c-type">string</span>, end: <span class="c-type">string</span>, wordList: <span class="c-type">string</span>[]): <span class="c-type">number</span> {
+        <div class="code-block code-block--solution"><div class="code-block__topbar"><span class="code-block__badge">Word Ladder · TypeScript</span><button aria-label="Copy code" class="copy-btn" type="button">&#128203;</button></div><pre><code class=""><span class="c-kw">function</span> <span class="c-fn">ladderLength</span>(begin: <span class="c-type">string</span>, end: <span class="c-type">string</span>, wordList: <span class="c-type">string</span>[]): <span class="c-type">number</span> {
   <span class="c-kw">const</span> wordSet = <span class="c-kw">new</span> <span class="c-fn">Set</span>(wordList);
   <span class="c-kw">if</span> (!wordSet.has(end)) <span class="c-kw">return</span> <span class="c-num">0</span>;
   <span class="c-kw">const</span> queue: [<span class="c-type">string</span>, <span class="c-type">number</span>][] = [[begin, <span class="c-num">1</span>]];
@@ -1116,12 +251,12 @@ footer p {
     }
   }
   <span class="c-kw">return</span> <span class="c-num">0</span>;
-}</code></pre>
+}</code></pre></div>
       </div>
     </div>
   </div>
 
-  <h2>Dynamic Programming</h2>
+  <h3 id="dynamic-programming">Dynamic Programming<a aria-label="Permalink" class="anchor-link" href="#dynamic-programming">¶</a></h3>
   <div class="problem-grid">
     <div class="problem-card">
       <div class="problem-header">
@@ -1135,15 +270,15 @@ footer p {
           <span class="meta-item">Time: <strong>O(amount × coins)</strong></span>
           <span class="meta-item">Target: <strong>≤20 min</strong></span>
         </div>
-        <pre><span class="pre-lang">TypeScript</span><code><span class="c-kw">function</span> <span class="c-fn">coinChange</span>(coins: <span class="c-type">number</span>[], amount: <span class="c-type">number</span>): <span class="c-type">number</span> {
+        <div class="code-block code-block--solution"><div class="code-block__topbar"><span class="code-block__badge">Coin Change · TypeScript</span><button aria-label="Copy code" class="copy-btn" type="button">&#128203;</button></div><pre><code class=""><span class="c-kw">function</span> <span class="c-fn">coinChange</span>(coins: <span class="c-type">number</span>[], amount: <span class="c-type">number</span>): <span class="c-type">number</span> {
   <span class="c-kw">const</span> dp = <span class="c-kw">new</span> <span class="c-type">Array</span>(amount + <span class="c-num">1</span>).<span class="c-fn">fill</span>(<span class="c-type">Infinity</span>);
   dp[<span class="c-num">0</span>] = <span class="c-num">0</span>;
   <span class="c-kw">for</span> (<span class="c-kw">const</span> coin <span class="c-kw">of</span> coins)
     <span class="c-kw">for</span> (<span class="c-kw">let</span> a = coin; a &lt;= amount; a++)
       dp[a] = <span class="c-fn">Math.min</span>(dp[a], dp[a - coin] + <span class="c-num">1</span>);
   <span class="c-kw">return</span> dp[amount] === <span class="c-type">Infinity</span> ? -<span class="c-num">1</span> : dp[amount];
-}</code></pre>
-        <p style="font-size:12px;color:var(--text3);">Fill dp[0]=0, everything else Infinity. For each coin, update forward. Classic "fewest coins" pattern.</p>
+}</code></pre></div>
+        <p class="solution-note">Fill dp[0]=0, everything else Infinity. For each coin, update forward. Classic "fewest coins" pattern.</p>
       </div>
     </div>
 
@@ -1159,8 +294,8 @@ footer p {
           <span class="meta-item">Time: <strong>O(n log n)</strong></span>
           <span class="meta-item">Target: <strong>≤35 min</strong></span>
         </div>
-        <p><strong>Interviewer signal:</strong> if you only know O(n²) DP, that's ok for Medium. Knowing the O(n log n) tails approach separates Staff candidates.</p>
-        <pre><span class="pre-lang">TypeScript</span><code><span class="c-kw">function</span> <span class="c-fn">lengthOfLIS</span>(nums: <span class="c-type">number</span>[]): <span class="c-type">number</span> {
+        <p><strong>Interviewer signal:</strong> if you only know O(n²) DP, that's ok for Medium. Knowing the O(n log n) tails approach separates <span class="badge-level staff">Staff</span> candidates.</p>
+        <div class="code-block code-block--solution"><div class="code-block__topbar"><span class="code-block__badge">Longest Increasing Subsequence · TypeScript</span><button aria-label="Copy code" class="copy-btn" type="button">&#128203;</button></div><pre><code class=""><span class="c-kw">function</span> <span class="c-fn">lengthOfLIS</span>(nums: <span class="c-type">number</span>[]): <span class="c-type">number</span> {
   <span class="c-kw">const</span> tails: <span class="c-type">number</span>[] = [];
   <span class="c-kw">for</span> (<span class="c-kw">const</span> n <span class="c-kw">of</span> nums) {
     <span class="c-kw">let</span> lo = <span class="c-num">0</span>, hi = tails.length;
@@ -1171,22 +306,16 @@ footer p {
     tails[lo] = n;
   }
   <span class="c-kw">return</span> tails.length;
-}</code></pre>
+}</code></pre></div>
       </div>
     </div>
   </div>
 
-  <div class="callout callout-crimson">
-    <div class="callout-icon">🎯</div>
-    <div class="callout-body">
-      <div class="callout-title">RN-Specific Coding Context (Meta AI Round, 2025)</div>
-      Meta introduced AI-assisted coding in 2025. You code in their environment with Copilot-style suggestions enabled. <strong>Practice with Cursor or GitHub Copilot under timed conditions.</strong> The evaluator watches whether you verify generated code, catch subtle bugs, and drive the solution — not just accept suggestions. Knowing what the AI is likely to get wrong (off-by-one in binary search, wrong base case in DP) is itself a signal of depth. Google does not permit AI tools — practice both modes.
-    </div>
-  </div>
+  <div class="callout callout--warning"><span>🎯 RN-Specific Coding Context (Meta AI Round, 2025)</span><div class="callout-body">Meta introduced AI-assisted coding in 2025. You code in their environment with Copilot-style suggestions enabled. <strong>Practice with Cursor or GitHub Copilot under timed conditions.</strong> The evaluator watches whether you verify generated code, catch subtle bugs, and drive the solution — not just accept suggestions. Knowing what the AI is likely to get wrong (off-by-one in binary search, wrong base case in DP) is itself a signal of depth. Google does not permit AI tools — practice both modes.</div></div>
 
-  <h2>Quick-Reference: Pattern → Problems</h2>
+  <h3 id="quick-reference-pattern-problems">Quick-Reference: Pattern → Problems<a aria-label="Permalink" class="anchor-link" href="#quick-reference-pattern-problems">¶</a></h3>
   <div class="table-wrap">
-    <table>
+<div class="table-responsive-custom"><table class="table-custom">
       <thead><tr><th>Pattern</th><th>Key LeetCode Problems</th><th>Companies</th></tr></thead>
       <tbody>
         <tr><td><strong>Two Pointer</strong></td><td>15 (3Sum), 11 (Container), 42 (Trapping Rain)</td><td>All</td></tr>
@@ -1198,25 +327,19 @@ footer p {
         <tr><td><strong>DP</strong></td><td>322, 300, 1143 (LCS), 312 (Burst Balloons)</td><td>Amazon, Google</td></tr>
         <tr><td><strong>Trie</strong></td><td>208, 212 (Word Search II), 820</td><td>Google</td></tr>
       </tbody>
-    </table>
-  </div>
+    </table></div>
+</div>
 </section>
 
 
-<!-- ══════════════════════════════════════════════
-     SECTION 2 — SYSTEM DESIGN
-══════════════════════════════════════════════ -->
 <section class="section" id="sysdesign">
-  <div class="section-header">
-    <div class="section-num">02</div>
-    <div class="section-title-block">
-      <div class="section-kicker">Missing Area 2 of 6</div>
-      <div class="section-title">Mobile System Design <em>Worked Examples</em></div>
-      <p class="section-desc">Your docs mentioned system design but gave only one-line prompts. Here: a reusable framework + two fully worked examples (News Feed & Messaging) you can walk through in 45 minutes flat.</p>
-    </div>
+  <div class="section-opener">
+    <div class="opener-tag"><span class="num">02</span> — Missing Area 2 of 6</div>
+    <h2 id="mobile-system-design-worked-examples">Mobile System Design <em>Worked Examples</em><a aria-label="Permalink" class="anchor-link" href="#mobile-system-design-worked-examples">¶</a></h2>
   </div>
+  <p class="section-desc">Your docs mentioned system design but gave only one-line prompts. Here: a reusable framework + two fully worked examples (News Feed & Messaging) you can walk through in 45 minutes flat.</p>
 
-  <h2>The 7-Step Mobile System Design Framework</h2>
+  <h3 id="the-7-step-mobile-system-design-framework">The 7-Step Mobile System Design Framework<a aria-label="Permalink" class="anchor-link" href="#the-7-step-mobile-system-design-framework">¶</a></h3>
   <p>Apply this every time. The interviewer is scoring you on <em>structure</em> as much as technical depth. Announce each step as you begin it.</p>
 
   <div class="sd-framework">
@@ -1285,17 +408,11 @@ footer p {
     </div>
   </div>
 
-  <div class="callout callout-teal">
-    <div class="callout-icon">💡</div>
-    <div class="callout-body">
-      <div class="callout-title">Time Budget</div>
-      Total = 30–32 min of content + ~10 min for interviewer questions. If you're running long, drop step 7 to bullet points. Never sacrifice steps 1–3 — scoping and data model are where interviewers form their opinion.
-    </div>
-  </div>
+  <div class="callout callout--tip"><span>💡 Time Budget</span><div class="callout-body">Total = 30–32 min of content + ~10 min for interviewer questions. If you're running long, drop step 7 to bullet points. Never sacrifice steps 1–3 — scoping and data model are where interviewers form their opinion.</div></div>
 
-  <h2>Worked Example 1: Design a News Feed (Instagram/Twitter)</h2>
+  <h3 id="worked-example-1-design-a-news-feed-instagram-twitter">Worked Example 1: Design a News Feed (Instagram/Twitter)<a aria-label="Permalink" class="anchor-link" href="#worked-example-1-design-a-news-feed-instagram-twitter">¶</a></h3>
 
-  <h3>Scope Assumptions (you negotiate these in the interview)</h3>
+  <h4>Scope Assumptions (you negotiate these in the interview)</h4>
   <ul>
     <li>50M DAU, read-heavy (100:1 read/write ratio), iOS + Android</li>
     <li>Offline: show cached feed for up to 48h. New posts need connectivity.</li>
@@ -1303,8 +420,8 @@ footer p {
     <li>Real-time: new post indicators, not live feed injection</li>
   </ul>
 
-  <h3>API Contract</h3>
-  <pre><code><span class="c-cm">// Feed</span>
+  <h4>API Contract</h4>
+  <div class="code-block"><div class="code-block__topbar"><span class="code-block__badge">Text</span><button aria-label="Copy code" class="copy-btn" type="button">&#128203;</button></div><pre><code class=""><span class="c-cm">// Feed</span>
 GET  /feed?cursor=&lt;opaque_token&gt;&amp;limit=20
      → { items: Post[], nextCursor: string | null, ttl: number }
 
@@ -1314,19 +431,19 @@ POST /posts  { mediaUrls: string[], caption: string }
 
 <span class="c-cm">// Media upload (presigned S3)</span>
 POST /media/presign { mimeType: string }
-     → { uploadUrl: string, cdnUrl: string }</code></pre>
+     → { uploadUrl: string, cdnUrl: string }</code></pre></div>
 
-  <h3>Local Data Model (WatermelonDB)</h3>
-  <pre><code><span class="c-cm">// posts table</span>
+  <h4>Local Data Model (WatermelonDB)</h4>
+  <div class="code-block"><div class="code-block__topbar"><span class="code-block__badge">Text</span><button aria-label="Copy code" class="copy-btn" type="button">&#128203;</button></div><pre><code class=""><span class="c-cm">// posts table</span>
 postId: string (indexed), authorId, createdAt (indexed),
 caption, mediaUrls: JSON, localStatus: 'synced'|'pending'|'failed',
 seenAt: number | null   <span class="c-cm">// for "new posts" badge</span>
 
 <span class="c-cm">// feed_cursor: MMKV</span>
 <span class="c-str">'feed:cursor'</span>   → opaque server cursor string
-<span class="c-str">'feed:lastSync'</span> → epoch ms</code></pre>
+<span class="c-str">'feed:lastSync'</span> → epoch ms</code></pre></div>
 
-  <h3>Image Loading Pipeline</h3>
+  <h4>Image Loading Pipeline</h4>
   <ol>
     <li>Store <code>blurhash</code> string alongside CDN URL in the Post model</li>
     <li>Render <code>&lt;ExpoBlurHash&gt;</code> immediately from local DB — zero network latency</li>
@@ -1335,7 +452,7 @@ seenAt: number | null   <span class="c-cm">// for "new posts" badge</span>
     <li>On low memory (<code>AppState → background</code>): call <code>Image.clearMemoryCache()</code></li>
   </ol>
 
-  <h3>Offline Strategy</h3>
+  <h4>Offline Strategy</h4>
   <ul>
     <li><strong>Read path:</strong> Query WatermelonDB first. If <code>lastSync</code> &lt; 48h, show cached feed with staleness banner.</li>
     <li><strong>Write path:</strong> Write to local DB with <code>localStatus: 'pending'</code>. Optimistically show in feed. Background sync queue retries on connectivity restore (<code>NetInfo.addEventListener</code>).</li>
@@ -1344,18 +461,18 @@ seenAt: number | null   <span class="c-cm">// for "new posts" badge</span>
 
   <hr class="divider">
 
-  <h2>Worked Example 2: Design a Chat / Messaging Feature</h2>
+  <h3 id="worked-example-2-design-a-chat-messaging-feature">Worked Example 2: Design a Chat / Messaging Feature<a aria-label="Permalink" class="anchor-link" href="#worked-example-2-design-a-chat-messaging-feature">¶</a></h3>
 
-  <h3>Scope Assumptions</h3>
+  <h4>Scope Assumptions</h4>
   <ul>
     <li>1:1 and group chat (≤250 members), 10M DAU</li>
     <li>Offline: queue messages, deliver on reconnect. Show sent/delivered/read receipts.</li>
     <li>Real-time: WebSocket for active sessions, push for backgrounded users</li>
   </ul>
 
-  <h3>Message Status State Machine</h3>
+  <h4>Message Status State Machine</h4>
   <div class="table-wrap">
-    <table>
+<div class="table-responsive-custom"><table class="table-custom">
       <thead><tr><th>Status</th><th>Trigger</th><th>UI</th></tr></thead>
       <tbody>
         <tr><td><code>pending</code></td><td>User taps Send (no connectivity)</td><td>⏳ grey clock</td></tr>
@@ -1364,11 +481,11 @@ seenAt: number | null   <span class="c-cm">// for "new posts" badge</span>
         <tr><td><code>read</code></td><td>Recipient opens conversation</td><td>✓✓ double blue tick</td></tr>
         <tr><td><code>failed</code></td><td>3 retries exhausted</td><td>⚠ red retry button</td></tr>
       </tbody>
-    </table>
-  </div>
+    </table></div>
+</div>
 
-  <h3>WebSocket Architecture</h3>
-  <pre><code><span class="c-cm">// Connect on app foreground, disconnect on background after 30s</span>
+  <h4>WebSocket Architecture</h4>
+  <div class="code-block"><div class="code-block__topbar"><span class="code-block__badge">Text</span><button aria-label="Copy code" class="copy-btn" type="button">&#128203;</button></div><pre><code class=""><span class="c-cm">// Connect on app foreground, disconnect on background after 30s</span>
 <span class="c-kw">const</span> ws = <span class="c-kw">new</span> <span class="c-fn">WebSocket</span>(<span class="c-str">`wss://chat.api/ws?token=${jwt}`</span>);
 
 <span class="c-cm">// Message envelope</span>
@@ -1381,10 +498,10 @@ seenAt: number | null   <span class="c-cm">// for "new posts" badge</span>
 }
 
 <span class="c-cm">// Reconnection: exponential backoff 1s→2s→4s→8s cap 30s</span>
-<span class="c-cm">// On reconnect: send lastSeenMessageId per conversation to get missed msgs</span></code></pre>
+<span class="c-cm">// On reconnect: send lastSeenMessageId per conversation to get missed msgs</span></code></pre></div>
 
-  <h3>Push Notification Deep Link Pattern</h3>
-  <pre><code><span class="c-cm">// In notification payload</span>
+  <h4>Push Notification Deep Link Pattern</h4>
+  <div class="code-block"><div class="code-block__topbar"><span class="code-block__badge">Text</span><button aria-label="Copy code" class="copy-btn" type="button">&#128203;</button></div><pre><code class=""><span class="c-cm">// In notification payload</span>
 { deepLink: <span class="c-str">"myapp://chat/conversation/&lt;id&gt;"</span> }
 
 <span class="c-cm">// Expo Router handler (app/_layout.tsx)</span>
@@ -1393,43 +510,25 @@ seenAt: number | null   <span class="c-cm">// for "new posts" badge</span>
   <span class="c-kw">if</span> (lastNotification?.notification.request.content.data.deepLink) {
     router.<span class="c-fn">push</span>(lastNotification.notification.request.content.data.deepLink);
   }
-}, [lastNotification]);</code></pre>
+}, [lastNotification]);</code></pre></div>
 
-  <div class="callout callout-violet">
-    <div class="callout-icon">🧠</div>
-    <div class="callout-body">
-      <div class="callout-title">Staff-Level Differentiator</div>
-      Junior candidates describe what to build. Senior candidates articulate tradeoffs. Staff candidates proactively identify the hardest problems: <strong>"The trickiest part here is reconciling the optimistic local state with server-assigned message IDs — if the WS drops mid-send, you can get duplicate phantom messages. I'd use a clientId as the dedup key and merge on server ACK."</strong> Say something like this unprompted.
-    </div>
-  </div>
+  <div class="callout callout--note"><span>🧠 Staff-Level Differentiator</span><div class="callout-body">Junior candidates describe what to build. <span class="badge-level senior">Senior</span> candidates articulate tradeoffs. <span class="badge-level staff">Staff</span> candidates proactively identify the hardest problems: <strong>"The trickiest part here is reconciling the optimistic local state with server-assigned message IDs — if the WS drops mid-send, you can get duplicate phantom messages. I'd use a clientId as the dedup key and merge on server ACK."</strong> Say something like this unprompted.</div></div>
 </section>
 
 
-<!-- ══════════════════════════════════════════════
-     SECTION 3 — BEHAVIORAL STAR STORIES
-══════════════════════════════════════════════ -->
 <section class="section" id="behavioral">
-  <div class="section-header">
-    <div class="section-num">03</div>
-    <div class="section-title-block">
-      <div class="section-kicker">Missing Area 3 of 6</div>
-      <div class="section-title">Behavioral <em>STAR Stories</em></div>
-      <p class="section-desc">Your docs explained the STAR framework but contained zero written stories. Here are 5 fully structured templates across the 7 dimensions interviewers test. Fill in your specifics where marked in brackets.</p>
-    </div>
+  <div class="section-opener">
+    <div class="opener-tag"><span class="num">03</span> — Missing Area 3 of 6</div>
+    <h2 id="behavioral-star-stories">Behavioral <em>STAR Stories</em><a aria-label="Permalink" class="anchor-link" href="#behavioral-star-stories">¶</a></h2>
   </div>
+  <p class="section-desc">Your docs explained the STAR framework but contained zero written stories. Here are 5 fully structured templates across the 7 dimensions interviewers test. Fill in your specifics where marked in brackets.</p>
 
-  <div class="callout callout-gold">
-    <div class="callout-icon">📌</div>
-    <div class="callout-body">
-      <div class="callout-title">Ground Rules</div>
-      Always say <strong>I</strong>, never <strong>we</strong>. Keep each story to 2 minutes max. <strong>R (Result) must have a number</strong>: crash rate, hours saved, engineers unblocked, revenue impact, release date. If you don't have a number, estimate and say "approximately." Interviewers are lenient with estimates but harsh with vague outcomes.
-    </div>
-  </div>
+  <div class="callout callout--note"><span>📌 Ground Rules</span><div class="callout-body">Always say <strong>I</strong>, never <strong>we</strong>. Keep each story to 2 minutes max. <strong>R (Result) must have a number</strong>: crash rate, hours saved, engineers unblocked, revenue impact, release date. If you don't have a number, estimate and say "approximately." Interviewers are lenient with estimates but harsh with vague outcomes.</div></div>
 
-  <h2>Story 1 — Ownership / Taking Initiative</h2>
+  <h3 id="story-1-ownership-taking-initiative">Story 1 — Ownership / Taking Initiative<a aria-label="Permalink" class="anchor-link" href="#story-1-ownership-taking-initiative">¶</a></h3>
   <p><em>Maps to: Amazon "Ownership" LP, Google "Googleyness," Meta "Impact"</em></p>
 
-  <div class="star-card">
+  <div class="star-card qa-item">
     <div class="star-card-header">
       <div class="star-card-title">"Discovered and fixed a performance regression nobody owned"</div>
       <span class="star-lp-badge">LP: Ownership</span>
@@ -1470,10 +569,10 @@ seenAt: number | null   <span class="c-cm">// for "new posts" badge</span>
     </div>
   </div>
 
-  <h2>Story 2 — Disagreeing With Leadership (Backbone)</h2>
+  <h3 id="story-2-disagreeing-with-leadership-backbone">Story 2 — Disagreeing With Leadership (Backbone)<a aria-label="Permalink" class="anchor-link" href="#story-2-disagreeing-with-leadership-backbone">¶</a></h3>
   <p><em>Maps to: Amazon "Have Backbone; Disagree and Commit," Google L5+ behavioral</em></p>
 
-  <div class="star-card">
+  <div class="star-card qa-item">
     <div class="star-card-header">
       <div class="star-card-title">"Pushed back on a rushed migration timeline"</div>
       <span class="star-lp-badge">LP: Backbone</span>
@@ -1510,8 +609,8 @@ seenAt: number | null   <span class="c-cm">// for "new posts" badge</span>
     </div>
   </div>
 
-  <h2>Story 3 — Dealing With Ambiguity</h2>
-  <div class="star-card">
+  <h3 id="story-3-dealing-with-ambiguity">Story 3 — Dealing With Ambiguity<a aria-label="Permalink" class="anchor-link" href="#story-3-dealing-with-ambiguity">¶</a></h3>
+  <div class="star-card qa-item">
     <div class="star-card-header">
       <div class="star-card-title">"Drove offline-first feature decision with no clear requirements"</div>
       <span class="star-lp-badge">LP: Bias for Action</span>
@@ -1548,8 +647,8 @@ seenAt: number | null   <span class="c-cm">// for "new posts" badge</span>
     </div>
   </div>
 
-  <h2>Story 4 — Technical Dive Deep</h2>
-  <div class="star-card">
+  <h3 id="story-4-technical-dive-deep">Story 4 — Technical Dive Deep<a aria-label="Permalink" class="anchor-link" href="#story-4-technical-dive-deep">¶</a></h3>
+  <div class="star-card qa-item">
     <div class="star-card-header">
       <div class="star-card-title">"Debugged a race condition that only appeared in production at scale"</div>
       <span class="star-lp-badge">LP: Dive Deep</span>
@@ -1586,8 +685,8 @@ seenAt: number | null   <span class="c-cm">// for "new posts" badge</span>
     </div>
   </div>
 
-  <h2>Story 5 — Mentoring / Making Others Better</h2>
-  <div class="star-card">
+  <h3 id="story-5-mentoring-making-others-better">Story 5 — Mentoring / Making Others Better<a aria-label="Permalink" class="anchor-link" href="#story-5-mentoring-making-others-better">¶</a></h3>
+  <div class="star-card qa-item">
     <div class="star-card-header">
       <div class="star-card-title">"Brought a mid-level engineer from inconsistent to reliable"</div>
       <span class="star-lp-badge">LP: Hire & Develop</span>
@@ -1624,30 +723,18 @@ seenAt: number | null   <span class="c-cm">// for "new posts" badge</span>
     </div>
   </div>
 
-  <div class="callout callout-sage">
-    <div class="callout-icon">📋</div>
-    <div class="callout-body">
-      <div class="callout-title">7 Dimensions You Must Cover</div>
-      Make sure you have at least one story prepared for each: <strong>Conflict/disagreement</strong> · <strong>Failure/what you'd do differently</strong> · <strong>Ownership outside your scope</strong> · <strong>Ambiguity with no clear answer</strong> · <strong>Mentoring/teaching</strong> · <strong>Technical depth/debugging</strong> · <strong>Prioritization under pressure</strong>. Write them all out before interview week. Reading them aloud is mandatory — if you haven't said the words, you'll stumble.
-    </div>
-  </div>
+  <div class="callout callout--tip"><span>📋 7 Dimensions You Must Cover</span><div class="callout-body">Make sure you have at least one story prepared for each: <strong>Conflict/disagreement</strong> · <strong>Failure/what you'd do differently</strong> · <strong>Ownership outside your scope</strong> · <strong>Ambiguity with no clear answer</strong> · <strong>Mentoring/teaching</strong> · <strong>Technical depth/debugging</strong> · <strong>Prioritization under pressure</strong>. Write them all out before interview week. Reading them aloud is mandatory — if you haven't said the words, you'll stumble.</div></div>
 </section>
 
 
-<!-- ══════════════════════════════════════════════
-     SECTION 4 — TECHNICAL Q&A BANK
-══════════════════════════════════════════════ -->
 <section class="section" id="qna">
-  <div class="section-header">
-    <div class="section-num">04</div>
-    <div class="section-title-block">
-      <div class="section-kicker">Missing Area 4 of 6</div>
-      <div class="section-title">Technical <em>Q&A Bank</em></div>
-      <p class="section-desc">Your docs had 7 interview questions total. Here are 40+ depth questions with full model answers across threading, Fabric, Hermes, Reanimated, memory, and architecture — organized by seniority level.</p>
-    </div>
+  <div class="section-opener">
+    <div class="opener-tag"><span class="num">04</span> — Missing Area 4 of 6</div>
+    <h2 id="technical-q-a-bank">Technical <em>Q&A Bank</em><a aria-label="Permalink" class="anchor-link" href="#technical-q-a-bank">¶</a></h2>
   </div>
+  <p class="section-desc">Your docs had 7 interview questions total. Here are 40+ depth questions with full model answers across threading, Fabric, Hermes, Reanimated, memory, and architecture — organized by seniority level.</p>
 
-  <h2>Threading & Architecture</h2>
+  <h3 id="threading-architecture">Threading & Architecture<a aria-label="Permalink" class="anchor-link" href="#threading-architecture">¶</a></h3>
 
   <div class="qa-item">
     <div class="qa-question">
@@ -1668,7 +755,7 @@ seenAt: number | null   <span class="c-cm">// for "new posts" badge</span>
     </div>
     <div class="qa-answer">
       <p>A HostObject is a C++ class implementing <code>jsi::HostObject</code> that is exposed directly to the Hermes JS runtime. JS can call methods on it synchronously — no serialization, no async bridge, no JSON. MMKV, Reanimated, and react-native-skia are all HostObject-based.</p>
-      <pre><span class="pre-lang">C++</span><code><span class="c-kw">class</span> <span class="c-type">MyStorage</span> : <span class="c-kw">public</span> jsi::<span class="c-type">HostObject</span> {
+      <div class="code-block"><div class="code-block__topbar"><span class="code-block__badge">C++</span><button aria-label="Copy code" class="copy-btn" type="button">&#128203;</button></div><pre><code class=""><span class="c-kw">class</span> <span class="c-type">MyStorage</span> : <span class="c-kw">public</span> jsi::<span class="c-type">HostObject</span> {
 <span class="c-kw">public</span>:
   jsi::<span class="c-type">Value</span> <span class="c-fn">get</span>(jsi::<span class="c-type">Runtime</span>&amp; rt, <span class="c-kw">const</span> jsi::<span class="c-type">PropNameID</span>&amp; name) <span class="c-kw">override</span> {
     <span class="c-kw">auto</span> propName = name.<span class="c-fn">utf8</span>(rt);
@@ -1684,7 +771,7 @@ seenAt: number | null   <span class="c-cm">// for "new posts" badge</span>
   }
 <span class="c-kw">private</span>:
   std::<span class="c-type">unordered_map</span>&lt;std::<span class="c-type">string</span>, std::<span class="c-type">string</span>&gt; store_;
-};</code></pre>
+};</code></pre></div>
       <p>Install into the runtime: <code>rt.global().setProperty(rt, "MyStorage", jsi::Object::createFromHostObject(rt, std::make_shared&lt;MyStorage&gt;()));</code></p>
     </div>
   </div>
@@ -1705,7 +792,7 @@ seenAt: number | null   <span class="c-cm">// for "new posts" badge</span>
     </div>
   </div>
 
-  <h2>Memory & GC</h2>
+  <h3 id="memory-gc">Memory & GC<a aria-label="Permalink" class="anchor-link" href="#memory-gc">¶</a></h3>
 
   <div class="qa-item">
     <div class="qa-question">
@@ -1731,7 +818,7 @@ seenAt: number | null   <span class="c-cm">// for "new posts" badge</span>
     </div>
   </div>
 
-  <h2>Architecture & Production</h2>
+  <h3 id="architecture-production">Architecture & Production<a aria-label="Permalink" class="anchor-link" href="#architecture-production">¶</a></h3>
 
   <div class="qa-item">
     <div class="qa-question">
@@ -1780,79 +867,67 @@ seenAt: number | null   <span class="c-cm">// for "new posts" badge</span>
     </div>
   </div>
 
-  <h2>Quick-Fire Q&A Reference</h2>
+  <h3 id="quick-fire-q-a-reference">Quick-Fire Q&A Reference<a aria-label="Permalink" class="anchor-link" href="#quick-fire-q-a-reference">¶</a></h3>
   <div class="table-wrap">
-    <table>
+<div class="table-responsive-custom"><table class="table-custom">
       <thead><tr><th>Question</th><th>Model Answer (2–3 sentences)</th><th>Level</th></tr></thead>
       <tbody>
         <tr>
           <td><strong>Why are RAM bundles incompatible with Hermes?</strong></td>
           <td>RAM bundles lazy-load JS modules on demand by splitting the bundle into indexed sections. Hermes pre-compiles the entire bundle to bytecode at build time — there is no module-level boundary in the bytecode to lazy-load from. Use inline requires (Metro config) for the same effect with Hermes.</td>
-          <td><span class="level-badge level-staff">Staff</span></td>
+          <td><span class="badge-level staff">Staff</span></td>
         </tr>
         <tr>
           <td><strong>What thread does a Reanimated worklet run on?</strong></td>
           <td>Reanimated's dedicated Worklet thread — a separate Hermes runtime instance. It shares memory with the C++ layer via JSI SharedValues, but has its own call stack. It never touches the JS thread during animation execution.</td>
-          <td><span class="level-badge level-senior">Senior</span></td>
+          <td><span class="badge-level senior">Senior</span></td>
         </tr>
         <tr>
           <td><strong>What's the difference between Fabric's shadow tree and Paper's UIManager?</strong></td>
           <td>Paper's UIManager was a JS-driven, async queue of view mutations — views could be partially updated mid-frame. Fabric's shadow tree is a C++ immutable tree; diffs are committed to the UI thread atomically in one operation, preventing partial frame renders and tearing.</td>
-          <td><span class="level-badge level-staff">Staff</span></td>
+          <td><span class="badge-level staff">Staff</span></td>
         </tr>
         <tr>
           <td><strong>How does TurboModuleRegistry.getEnforcing differ from NativeModules?</strong></td>
           <td><code>NativeModules</code> lazily initialized via the bridge at runtime with no type guarantees. <code>TurboModuleRegistry.getEnforcing</code> resolves synchronously via JSI at first access, throws immediately if the module is missing (hence "Enforcing"), and is type-safe via Codegen.</td>
-          <td><span class="level-badge level-senior">Senior</span></td>
+          <td><span class="badge-level senior">Senior</span></td>
         </tr>
         <tr>
           <td><strong>When would you choose CRDT over last-write-wins for conflict resolution?</strong></td>
           <td>When concurrent edits to the same field must merge without data loss — e.g., collaborative text editing, shared lists, counter increments. Last-write-wins is simpler but silently drops concurrent writes. CRDT (Yjs, Automerge) guarantees convergence. Use last-write-wins when one user owns the data (notes, profile fields).</td>
-          <td><span class="level-badge level-staff">Staff</span></td>
+          <td><span class="badge-level staff">Staff</span></td>
         </tr>
         <tr>
           <td><strong>What is Play Integrity and when do you need it?</strong></td>
           <td>Google's replacement for SafetyNet — attests that the APK is unmodified, running on a real uncertified Android device, and the app was installed from Play. Required for payment flows, high-value loyalty features, anything that can be gamed by rooted/emulated devices. Check the verdict server-side, never on-device.</td>
-          <td><span class="level-badge level-senior">Senior</span></td>
+          <td><span class="badge-level senior">Senior</span></td>
         </tr>
         <tr>
           <td><strong>Explain Yoga layout and how Fabric uses it.</strong></td>
           <td>Yoga is a cross-platform C++ layout engine implementing Flexbox. Fabric builds a shadow tree of Yoga nodes from the React element tree, runs layout (calculating positions/sizes) entirely in C++ on a background thread, then commits the final positions to native views on the UI thread. This removes the JS-thread layout bottleneck of Paper.</td>
-          <td><span class="level-badge level-principal">Principal</span></td>
+          <td><span class="badge-level principal">Principal</span></td>
         </tr>
         <tr>
           <td><strong>What's a Baseline Profile on Android and what does it buy you?</strong></td>
           <td>A static file bundled with the APK listing hot methods for ART's Ahead-of-Time compilation. Without it, ART interprets code until JIT kicks in after first runs. With it, startup-critical paths are AOT-compiled from first launch. Shopify reported ~10% Android cold-start improvement; RN community benchmarks suggest up to 40% in some configurations.</td>
-          <td><span class="level-badge level-staff">Staff</span></td>
+          <td><span class="badge-level staff">Staff</span></td>
         </tr>
       </tbody>
-    </table>
-  </div>
+    </table></div>
+</div>
 </section>
 
 
-<!-- ══════════════════════════════════════════════
-     SECTION 5 — NEGOTIATION
-══════════════════════════════════════════════ -->
 <section class="section" id="negotiation">
-  <div class="section-header">
-    <div class="section-num">05</div>
-    <div class="section-title-block">
-      <div class="section-kicker">Missing Area 5 of 6</div>
-      <div class="section-title">Salary <em>Negotiation</em></div>
-      <p class="section-desc">Your docs had one paragraph. At Staff level, the comp difference between a strong and weak negotiation can be $80–150k in total comp. Here: the full playbook with exact scripts.</p>
-    </div>
+  <div class="section-opener">
+    <div class="opener-tag"><span class="num">05</span> — Missing Area 5 of 6</div>
+    <h2 id="salary-negotiation">Salary <em>Negotiation</em><a aria-label="Permalink" class="anchor-link" href="#salary-negotiation">¶</a></h2>
   </div>
+  <p class="section-desc">Your docs had one paragraph. At <span class="badge-level staff">Staff</span> level, the comp difference between a strong and weak negotiation can be $80–150k in total comp. Here: the full playbook with exact scripts.</p>
 
-  <div class="callout callout-crimson">
-    <div class="callout-icon">⚠️</div>
-    <div class="callout-body">
-      <div class="callout-title">The Cardinal Rules</div>
-      <strong>Never give a number first.</strong> Whoever names a number first loses anchor advantage. If pressed: "I'd rather understand the full scope of the role first — I'm sure you have a range in mind." &nbsp;·&nbsp; <strong>Never accept on the call.</strong> Always take at least 48 hours. &nbsp;·&nbsp; <strong>Competing offers are your only real leverage</strong> — run parallel processes.
-    </div>
-  </div>
+  <div class="callout callout--warning"><span>⚠️ The Cardinal Rules</span><div class="callout-body"><strong>Never give a number first.</strong> Whoever names a number first loses anchor advantage. If pressed: "I'd rather understand the full scope of the role first — I'm sure you have a range in mind." &nbsp;·&nbsp; <strong>Never accept on the call.</strong> Always take at least 48 hours. &nbsp;·&nbsp; <strong>Competing offers are your only real leverage</strong> — run parallel processes.</div></div>
 
-  <h2>The 5-Phase Negotiation Playbook</h2>
+  <h3 id="the-5-phase-negotiation-playbook">The 5-Phase Negotiation Playbook<a aria-label="Permalink" class="anchor-link" href="#the-5-phase-negotiation-playbook">¶</a></h3>
 
   <div class="migration-track">
     <div class="migration-phase">
@@ -1929,57 +1004,39 @@ seenAt: number | null   <span class="c-cm">// for "new posts" badge</span>
           <li><strong>RSU cliff reduction</strong> — ask to reduce 1-year cliff to 6-month cliff (reduces golden handcuffs)</li>
           <li><strong>Accelerated vesting</strong> — for startup equity: ask for double-trigger acceleration on acquisition</li>
           <li><strong>Remote work / location flexibility</strong> — worth significant comp equivalent</li>
-          <li><strong>Equipment budget, L&D budget</strong> — $5–10k is standard at FAANG; ask if not offered</li>
+          <li><strong>Equipment budget, L&D budget</strong> — $5–10k is standard at <span class="badge-level faang">FAANG</span>; ask if not offered</li>
           <li><strong>Start date flexibility</strong> — more time for competing offers to come in</li>
         </ul>
       </div>
     </div>
   </div>
 
-  <h2>FAANG-Specific Vesting Notes</h2>
+  <h3 id="faang-specific-vesting-notes">FAANG-Specific Vesting Notes<a aria-label="Permalink" class="anchor-link" href="#faang-specific-vesting-notes">¶</a></h3>
   <div class="table-wrap">
-    <table>
+<div class="table-responsive-custom"><table class="table-custom">
       <thead><tr><th>Company</th><th>RSU Vest Schedule</th><th>Negotiation Tip</th></tr></thead>
       <tbody>
         <tr><td><strong>Meta</strong></td><td>Even quarterly vest (6.25%/quarter) after 1-year cliff</td><td>Counter on RSU grant size. Refreshers are generous — factor them in.</td></tr>
         <tr><td><strong>Amazon</strong></td><td>5% yr1 / 15% yr2 / 40% yr3 / 40% yr4 (back-loaded)</td><td>Mitigate with sign-on ($50–100k) to compensate low yr1–2. Counter aggressively on sign-on.</td></tr>
         <tr><td><strong>Google</strong></td><td>25% yearly (year 1 cliff), with perf multipliers</td><td>Level matters enormously (L5 vs L6 is ~$100k+ delta). Push for L6 evaluation if borderline.</td></tr>
         <tr><td><strong>Apple</strong></td><td>25% yearly</td><td>Base is often negotiable; RSU range is tighter. Title negotiation matters more here.</td></tr>
-        <tr><td><strong>Startup (Series A–C)</strong></td><td>4yr vest, 1yr cliff; 0.1–0.5% equity typical for Staff</td><td>Ask for preferred-stock price, last-round 409A, total shares outstanding to calculate % ownership. Always model exit scenarios.</td></tr>
+        <tr><td><strong>Startup (Series A–C)</strong></td><td>4yr vest, 1yr cliff; 0.1–0.5% equity typical for <span class="badge-level staff">Staff</span></td><td>Ask for preferred-stock price, last-round 409A, total shares outstanding to calculate % ownership. Always model exit scenarios.</td></tr>
       </tbody>
-    </table>
-  </div>
+    </table></div>
+</div>
 
-  <div class="callout callout-teal">
-    <div class="callout-icon">📖</div>
-    <div class="callout-body">
-      <div class="callout-title">Required Reading</div>
-      Patrick McKenzie's "Salary Negotiation: Make More Money, Be More Valued" (patio11.com) — the most useful single article on the topic. Haseeb Qureshi's negotiation series on haseebq.com covers the full FAANG loop in detail. Both are free.
-    </div>
-  </div>
+  <div class="callout callout--tip"><span>📖 Required Reading</span><div class="callout-body">Patrick McKenzie's "Salary Negotiation: Make More Money, Be More Valued" (patio11.com) — the most useful single article on the topic. Haseeb Qureshi's negotiation series on haseebq.com covers the full <span class="badge-level faang">FAANG</span> loop in detail. Both are free.</div></div>
 </section>
 
 
-<!-- ══════════════════════════════════════════════
-     SECTION 6 — QUESTIONS TO ASK
-══════════════════════════════════════════════ -->
 <section class="section" id="questions-to-ask">
-  <div class="section-header">
-    <div class="section-num">06</div>
-    <div class="section-title-block">
-      <div class="section-kicker">Missing Area 6 of 6</div>
-      <div class="section-title">Questions to <em>Ask the Interviewer</em></div>
-      <p class="section-desc">Entirely absent from your existing docs. At Staff level, weak questions signal weak thinking. Strong questions demonstrate scope and show you're evaluating them as much as they're evaluating you.</p>
-    </div>
+  <div class="section-opener">
+    <div class="opener-tag"><span class="num">06</span> — Missing Area 6 of 6</div>
+    <h2 id="questions-to-ask-the-interviewer">Questions to <em>Ask the Interviewer</em><a aria-label="Permalink" class="anchor-link" href="#questions-to-ask-the-interviewer">¶</a></h2>
   </div>
+  <p class="section-desc">Entirely absent from your existing docs. At <span class="badge-level staff">Staff</span> level, weak questions signal weak thinking. Strong questions demonstrate scope and show you're evaluating them as much as they're evaluating you.</p>
 
-  <div class="callout callout-gold">
-    <div class="callout-icon">🎯</div>
-    <div class="callout-body">
-      <div class="callout-title">Why This Matters at Staff Level</div>
-      Junior candidates ask "what does the team do." Staff candidates ask questions that reveal they understand engineering org dynamics, technical debt, and what it actually means to be impactful at that scale. Interviewers remember the questions. <strong>Prepare 3–4 per round, expect to use 2.</strong> Never ask about salary, PTO, or benefits in technical rounds.
-    </div>
-  </div>
+  <div class="callout callout--note"><span>🎯 Why This Matters at <span class="badge-level staff">Staff</span> Level</span><div class="callout-body">Junior candidates ask "what does the team do." <span class="badge-level staff">Staff</span> candidates ask questions that reveal they understand engineering org dynamics, technical debt, and what it actually means to be impactful at that scale. Interviewers remember the questions. <strong>Prepare 3–4 per round, expect to use 2.</strong> Never ask about salary, PTO, or benefits in technical rounds.</div></div>
 
   <div class="q-ask-grid">
     <div class="q-ask-card">
@@ -1997,7 +1054,7 @@ seenAt: number | null   <span class="c-cm">// for "new posts" badge</span>
       <ul>
         <li>How does a significant architectural change get decided here — is there an RFC process, and what does approval look like?</li>
         <li>What's the ratio of staff/senior engineers to mid-level, and how does that affect code review and mentoring load?</li>
-        <li>How much time does a Staff engineer here spend in meetings vs hands-on technical work? What does a typical week look like?</li>
+        <li>How much time does a <span class="badge-level staff">Staff</span> engineer here spend in meetings vs hands-on technical work? What does a typical week look like?</li>
         <li>How do you handle technical debt — do teams have dedicated time for it, or is it always competing with product work?</li>
       </ul>
     </div>
@@ -2022,7 +1079,7 @@ seenAt: number | null   <span class="c-cm">// for "new posts" badge</span>
     <div class="q-ask-card">
       <div class="q-ask-category cat-sage">🌿 For Hiring Managers Only</div>
       <ul>
-        <li>How do you think about the balance between deep individual contribution and cross-team influence for Staff engineers here?</li>
+        <li>How do you think about the balance between deep individual contribution and cross-team influence for <span class="badge-level staff">Staff</span> engineers here?</li>
         <li>What's your management philosophy around unblocking engineers vs letting them work through hard problems themselves?</li>
         <li>What's the team's biggest gap right now, and is that gap part of what this role is expected to address?</li>
         <li>How have you seen engineers grow the fastest under you — what conditions do you try to create?</li>
@@ -2039,30 +1096,18 @@ seenAt: number | null   <span class="c-cm">// for "new posts" badge</span>
     </div>
   </div>
 
-  <div class="callout callout-sage">
-    <div class="callout-icon">💬</div>
-    <div class="callout-body">
-      <div class="callout-title">How to End Every Round</div>
-      Reserve 60 seconds at the end to ask: <strong>"Based on what you've heard today, is there anything you're uncertain about regarding my fit for this role?"</strong> — This is the single most powerful closing move. It gives you a real-time chance to address concerns before the debrief. Many interviewers will tell you directly. Even if they don't, asking it signals confidence and self-awareness.
-    </div>
-  </div>
+  <div class="callout callout--tip"><span>💬 How to End Every Round</span><div class="callout-body">Reserve 60 seconds at the end to ask: <strong>"Based on what you've heard today, is there anything you're uncertain about regarding my fit for this role?"</strong> — This is the single most powerful closing move. It gives you a real-time chance to address concerns before the debrief. Many interviewers will tell you directly. Even if they don't, asking it signals confidence and self-awareness.</div></div>
 </section>
 
 
-<!-- ══════════════════════════════════════════════
-     SECTION 7 — BROWNFIELD DEPTH
-══════════════════════════════════════════════ -->
 <section class="section" id="brownfield">
-  <div class="section-header">
-    <div class="section-num">07</div>
-    <div class="section-title-block">
-      <div class="section-kicker">Bonus: Thin Coverage in Existing Docs</div>
-      <div class="section-title">Brownfield <em>Migration Depth</em></div>
-      <p class="section-desc">Large companies almost always have brownfield apps. Your docs mentioned section 9 briefly. Here: incremental migration strategies, SDK versioning, feature flag rollout patterns — the actual operational detail interviewers probe at Staff level.</p>
-    </div>
+  <div class="section-opener">
+    <div class="opener-tag"><span class="num">07</span> — Bonus: Thin Coverage in Existing Docs</div>
+    <h2 id="brownfield-migration-depth">Brownfield <em>Migration Depth</em><a aria-label="Permalink" class="anchor-link" href="#brownfield-migration-depth">¶</a></h2>
   </div>
+  <p class="section-desc">Large companies almost always have brownfield apps. Your docs mentioned section 9 briefly. Here: incremental migration strategies, SDK versioning, feature flag rollout patterns — the actual operational detail interviewers probe at <span class="badge-level staff">Staff</span> level.</p>
 
-  <h2>The Incremental Brownfield Insertion Pattern</h2>
+  <h3 id="the-incremental-brownfield-insertion-pattern">The Incremental Brownfield Insertion Pattern<a aria-label="Permalink" class="anchor-link" href="#the-incremental-brownfield-insertion-pattern">¶</a></h3>
   <p>The correct brownfield strategy is <strong>never</strong> to rewrite. You insert RN as a navigation entry point into an existing native app, route screen by screen, and let the native shell remain the host.</p>
 
   <div class="migration-track">
@@ -2124,18 +1169,12 @@ seenAt: number | null   <span class="c-cm">// for "new posts" badge</span>
     </div>
   </div>
 
-  <h2>Multi-Version RN in a Monorepo</h2>
+  <h3 id="multi-version-rn-in-a-monorepo">Multi-Version RN in a Monorepo<a aria-label="Permalink" class="anchor-link" href="#multi-version-rn-in-a-monorepo">¶</a></h3>
   <p>At large orgs, different product teams may be on different RN minor versions. This is a maintenance nightmare but a reality at companies like Microsoft.</p>
 
-  <div class="callout callout-crimson">
-    <div class="callout-icon">🚨</div>
-    <div class="callout-body">
-      <div class="callout-title">Strongly Avoid Multiple RN Versions in One Binary</div>
-      Two RN runtimes in one APK/IPA causes duplicate Hermes instances, doubled cold start overhead, and impossible native module version conflicts. The correct approach is a <strong>single RN version, centrally upgraded on a cadence</strong>. Use a Mobile Platform team to own the upgrade; individual product teams are consumers, not version owners.
-    </div>
-  </div>
+  <div class="callout callout--critical"><span>🚨 Strongly Avoid Multiple RN Versions in One Binary</span><div class="callout-body">Two RN runtimes in one APK/IPA causes duplicate Hermes instances, doubled cold start overhead, and impossible native module version conflicts. The correct approach is a <strong>single RN version, centrally upgraded on a cadence</strong>. Use a Mobile Platform team to own the upgrade; individual product teams are consumers, not version owners.</div></div>
 
-  <h3>The "Upgrade Cadence" Pattern (Shopify / Microsoft approach)</h3>
+  <h4>The "Upgrade Cadence" Pattern (Shopify / Microsoft approach)</h4>
   <ol>
     <li><strong>Version lock:</strong> All product teams use the exact same <code>react-native</code> version. It lives in the root <code>package.json</code>, not per-team.</li>
     <li><strong>Upgrade train:</strong> Mobile Platform team upgrades RN every 1–2 minor versions. They own the compatibility shim layer for any breaking native module changes.</li>
@@ -2143,10 +1182,10 @@ seenAt: number | null   <span class="c-cm">// for "new posts" badge</span>
     <li><strong>Codemods:</strong> Where possible, the Platform team ships automated codemods (jscodeshift) for JS-side breaking changes.</li>
   </ol>
 
-  <h2>Native Navigation Protocol (for interviewer depth)</h2>
+  <h3 id="native-navigation-protocol-for-interviewer-depth">Native Navigation Protocol (for interviewer depth)<a aria-label="Permalink" class="anchor-link" href="#native-navigation-protocol-for-interviewer-depth">¶</a></h3>
   <p>One of the most underspecified areas in brownfield RN. When an RN screen needs to navigate to a native screen, you need a clean contract:</p>
 
-  <pre><span class="pre-lang">TypeScript</span><code><span class="c-cm">// TurboModule spec: NativeNavigator.ts</span>
+  <div class="code-block"><div class="code-block__topbar"><span class="code-block__badge">TypeScript</span><button aria-label="Copy code" class="copy-btn" type="button">&#128203;</button></div><pre><code class=""><span class="c-cm">// TurboModule spec: NativeNavigator.ts</span>
 <span class="c-kw">import type</span> { <span class="c-type">TurboModule</span> } <span class="c-kw">from</span> <span class="c-str">'react-native'</span>;
 <span class="c-kw">import</span> { <span class="c-fn">TurboModuleRegistry</span> } <span class="c-kw">from</span> <span class="c-str">'react-native'</span>;
 
@@ -2156,24 +1195,132 @@ seenAt: number | null   <span class="c-cm">// for "new posts" badge</span>
   <span class="c-fn">replaceWithNative</span>(screenName: <span class="c-type">string</span>, params: <span class="c-type">Object</span>): <span class="c-type">void</span>;
 }
 
-<span class="c-kw">export default</span> <span class="c-type">TurboModuleRegistry</span>.<span class="c-fn">getEnforcing</span>&lt;<span class="c-type">Spec</span>&gt;(<span class="c-str">'NativeNavigator'</span>);</code></pre>
+<span class="c-kw">export default</span> <span class="c-type">TurboModuleRegistry</span>.<span class="c-fn">getEnforcing</span>&lt;<span class="c-type">Spec</span>&gt;(<span class="c-str">'NativeNavigator'</span>);</code></pre></div>
 
-  <div class="callout callout-gold">
-    <div class="callout-icon">🏆</div>
-    <div class="callout-body">
-      <div class="callout-title">Staff Interview Differentiator on Brownfield</div>
-      Most candidates describe brownfield as "embedding RN in a native app." Staff candidates describe the <em>operational concerns</em>: SDK versioning contracts, navigation protocol ownership, flag debt management, the single-runtime constraint, and the upgrade cadence governance model. If you can speak to all five, you've demonstrated organizational scope that most senior candidates haven't thought about.
-    </div>
-  </div>
+  <div class="callout callout--note"><span>🏆 <span class="badge-level staff">Staff</span> Interview Differentiator on Brownfield</span><div class="callout-body">Most candidates describe brownfield as "embedding RN in a native app." <span class="badge-level staff">Staff</span> candidates describe the <em>operational concerns</em>: SDK versioning contracts, navigation protocol ownership, flag debt management, the single-runtime constraint, and the upgrade cadence governance model. If you can speak to all five, you've demonstrated organizational scope that most senior candidates haven't thought about.</div></div>
 </section>
 
 
 <footer>
-  <p>React Native Staff/Principal — Interview Supplement · 2026 Edition<br>
+  <p>React Native <span class="badge-level staff">Staff</span>/<span class="badge-level principal">Principal</span> — Interview Supplement · 2026 Edition<br>
   Companion to: rn_engineering_reference_2025 · rn-staff-manual-2026 · rn_interview_field_manual</p>
 </footer>
 
 <a href="#" class="back-top" title="Back to top">↑</a>
+      </main>
 
-</body>
+      <aside class="toc" aria-label="Table of contents">
+        <div class="toc-content">
+          <a class="toc-link" href="#dsa-problem-bank">DSA Problem Bank</a>
+          <a class="toc-link toc-sub" href="#arrays-sliding-window">Arrays &amp; Sliding Window</a>
+          <a class="toc-link toc-sub" href="#trees-graphs-high-frequency">Trees &amp; Graphs (High Frequency)</a>
+          <a class="toc-link toc-sub" href="#dynamic-programming">Dynamic Programming</a>
+          <a class="toc-link toc-sub" href="#quick-reference-pattern-problems">Quick-Reference: Pattern → Problems</a>
+          <a class="toc-link" href="#mobile-system-design-worked-examples">Mobile System Design Worked Examples</a>
+          <a class="toc-link toc-sub" href="#the-7-step-mobile-system-design-framework">The 7-Step Mobile System Design Framework</a>
+          <a class="toc-link toc-sub" href="#worked-example-1-design-a-news-feed-instagram-twitter">Worked Example 1: Design a News Feed (Instagram/Twitter)</a>
+          <a class="toc-link toc-sub" href="#worked-example-2-design-a-chat-messaging-feature">Worked Example 2: Design a Chat / Messaging Feature</a>
+          <a class="toc-link" href="#behavioral-star-stories">Behavioral STAR Stories</a>
+          <a class="toc-link toc-sub" href="#story-1-ownership-taking-initiative">Story 1 — Ownership / Taking Initiative</a>
+          <a class="toc-link toc-sub" href="#story-2-disagreeing-with-leadership-backbone">Story 2 — Disagreeing With Leadership (Backbone)</a>
+          <a class="toc-link toc-sub" href="#story-3-dealing-with-ambiguity">Story 3 — Dealing With Ambiguity</a>
+          <a class="toc-link toc-sub" href="#story-4-technical-dive-deep">Story 4 — Technical Dive Deep</a>
+          <a class="toc-link toc-sub" href="#story-5-mentoring-making-others-better">Story 5 — Mentoring / Making Others Better</a>
+          <a class="toc-link" href="#technical-q-a-bank">Technical Q&amp;A Bank</a>
+          <a class="toc-link toc-sub" href="#threading-architecture">Threading &amp; Architecture</a>
+          <a class="toc-link toc-sub" href="#memory-gc">Memory &amp; GC</a>
+          <a class="toc-link toc-sub" href="#architecture-production">Architecture &amp; Production</a>
+          <a class="toc-link toc-sub" href="#quick-fire-q-a-reference">Quick-Fire Q&amp;A Reference</a>
+          <a class="toc-link" href="#salary-negotiation">Salary Negotiation</a>
+          <a class="toc-link toc-sub" href="#the-5-phase-negotiation-playbook">The 5-Phase Negotiation Playbook</a>
+          <a class="toc-link toc-sub" href="#faang-specific-vesting-notes">FAANG-Specific Vesting Notes</a>
+          <a class="toc-link" href="#questions-to-ask-the-interviewer">Questions to Ask the Interviewer</a>
+          <a class="toc-link" href="#brownfield-migration-depth">Brownfield Migration Depth</a>
+          <a class="toc-link toc-sub" href="#the-incremental-brownfield-insertion-pattern">The Incremental Brownfield Insertion Pattern</a>
+          <a class="toc-link toc-sub" href="#multi-version-rn-in-a-monorepo">Multi-Version RN in a Monorepo</a>
+          <a class="toc-link toc-sub" href="#native-navigation-protocol-for-interviewer-depth">Native Navigation Protocol (for interviewer depth)</a>
+        </div>
+      </aside>
+    </div>
+
+    <button id="contents-btn" type="button" aria-label="Open contents">
+      Contents
+    </button>
+
+    <div id="mobile-drawer" class="mobile-drawer" aria-hidden="true">
+      <div class="drawer-header">
+        <strong>Navigation</strong>
+        <button id="drawer-close" class="drawer-close" type="button" aria-label="Close navigation">✕</button>
+      </div>
+      <div class="p-3">
+        <div class="sidebar-section">
+          <label>Sections</label>
+          <a class="sidebar-link" href="#dsa-problem-bank">DSA Problem Bank</a>
+          <a class="sidebar-link" href="#mobile-system-design-worked-examples">Mobile System Design Worked Examples</a>
+          <a class="sidebar-link" href="#behavioral-star-stories">Behavioral STAR Stories</a>
+          <a class="sidebar-link" href="#technical-q-a-bank">Technical Q&amp;A Bank</a>
+          <a class="sidebar-link" href="#salary-negotiation">Salary Negotiation</a>
+          <a class="sidebar-link" href="#questions-to-ask-the-interviewer">Questions to Ask the Interviewer</a>
+          <a class="sidebar-link" href="#brownfield-migration-depth">Brownfield Migration Depth</a>
+        </div>
+      </div>
+    </div>
+    <div id="drawer-overlay" class="overlay" aria-hidden="true"></div>
+
+    <div id="mobile-toc-drawer" class="mobile-toc-drawer" aria-hidden="true">
+      <div class="drawer-header">
+        <strong>Contents</strong>
+        <button class="drawer-close" type="button" aria-label="Close contents">✕</button>
+      </div>
+      <div class="p-3">
+<div class="toc-content">
+      <a class="toc-link" href="#dsa-problem-bank">DSA Problem Bank</a>
+      <a class="toc-link" href="#arrays-sliding-window">Arrays &amp; Sliding Window</a>
+      <a class="toc-link" href="#trees-graphs-high-frequency">Trees &amp; Graphs (High Frequency)</a>
+      <a class="toc-link" href="#dynamic-programming">Dynamic Programming</a>
+      <a class="toc-link" href="#quick-reference-pattern-problems">Quick-Reference: Pattern → Problems</a>
+      <a class="toc-link" href="#mobile-system-design-worked-examples">Mobile System Design Worked Examples</a>
+      <a class="toc-link" href="#the-7-step-mobile-system-design-framework">The 7-Step Mobile System Design Framework</a>
+      <a class="toc-link toc-sub" href="#worked-example-1-design-a-news-feed-instagram-twitter">Worked Example 1: Design a News Feed (Instagram/Twitter)</a>
+      <a class="toc-link toc-sub" href="#worked-example-2-design-a-chat-messaging-feature">Worked Example 2: Design a Chat / Messaging Feature</a>
+      <a class="toc-link toc-sub" href="#behavioral-star-stories">Behavioral STAR Stories</a>
+      <a class="toc-link toc-sub" href="#story-1-ownership-taking-initiative">Story 1 — Ownership / Taking Initiative</a>
+      <a class="toc-link toc-sub" href="#story-2-disagreeing-with-leadership-backbone">Story 2 — Disagreeing With Leadership (Backbone)</a>
+      <a class="toc-link toc-sub" href="#story-3-dealing-with-ambiguity">Story 3 — Dealing With Ambiguity</a>
+      <a class="toc-link toc-sub" href="#story-4-technical-dive-deep">Story 4 — Technical Dive Deep</a>
+      <a class="toc-link toc-sub" href="#story-5-mentoring-making-others-better">Story 5 — Mentoring / Making Others Better</a>
+      <a class="toc-link toc-sub" href="#technical-q-a-bank">Technical Q&amp;A Bank</a>
+      <a class="toc-link toc-sub" href="#threading-architecture">Threading &amp; Architecture</a>
+      <a class="toc-link toc-sub" href="#memory-gc">Memory &amp; GC</a>
+      <a class="toc-link toc-sub" href="#architecture-production">Architecture &amp; Production</a>
+      <a class="toc-link toc-sub" href="#quick-fire-q-a-reference">Quick-Fire Q&amp;A Reference</a>
+      <a class="toc-link toc-sub" href="#salary-negotiation">Salary Negotiation</a>
+      <a class="toc-link toc-sub" href="#the-5-phase-negotiation-playbook">The 5-Phase Negotiation Playbook</a>
+      <a class="toc-link toc-sub" href="#faang-specific-vesting-notes">FAANG-Specific Vesting Notes</a>
+      <a class="toc-link toc-sub" href="#questions-to-ask-the-interviewer">Questions to Ask the Interviewer</a>
+      <a class="toc-link toc-sub" href="#brownfield-migration-depth">Brownfield Migration Depth</a>
+      <a class="toc-link toc-sub" href="#the-incremental-brownfield-insertion-pattern">The Incremental Brownfield Insertion Pattern</a>
+      <a class="toc-link toc-sub" href="#multi-version-rn-in-a-monorepo">Multi-Version RN in a Monorepo</a>
+      <a class="toc-link toc-sub" href="#native-navigation-protocol-for-interviewer-depth">Native Navigation Protocol (for interviewer depth)</a>
+    </div>
+      </div>
+    </div>
+    <div id="toc-overlay" class="overlay" aria-hidden="true"></div>
+
+    <button id="back-to-top" type="button" aria-label="Back to top">
+      ↑
+    </button>
+
+    <footer class="container-fluid">
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="rn_engineering_reference_2025.html">Engineering Reference</a>
+        <a href="rn_interview_field_manual.html">Interview Field Manual</a>
+        <a href="rn_interview_supplement.html">Interview Supplement</a>
+        <a href="rn-staff-manual-2026.html">Staff Manual</a>
+      </div>
+    </footer>
+
+    <script src="_scripts.js"></script>
+  </body>
 </html>
