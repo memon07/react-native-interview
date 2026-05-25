@@ -44,7 +44,7 @@ body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle at top, rgba(68, 147, 248, 0.08), transparent 26%), radial-gradient(circle at 80% 10%, rgba(188, 140, 255, 0.08), transparent 22%);
+  background: radial-gradient(ellipse 60% 40% at 20% 0%, rgba(68, 147, 248, 0.045), transparent), radial-gradient(ellipse 40% 30% at 85% 8%, rgba(188, 140, 255, 0.035), transparent);
   pointer-events: none;
   z-index: -1;
 }
@@ -88,9 +88,7 @@ h2 {
   font-weight: 600;
   letter-spacing: -0.02em;
   margin-top: 48px;
-  padding-left: 12px;
-  padding-bottom: 8px;
-  border-left: 3px solid var(--accent-blue);
+  padding-bottom: 10px;
   border-bottom: 1px solid var(--border-subtle);
 }
 
@@ -158,7 +156,9 @@ pre {
   z-index: 50;
   height: 52px;
   padding: 0 24px;
-  background: var(--bg-base);
+  background: rgba(9, 12, 16, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-subtle);
 }
 
@@ -181,11 +181,14 @@ pre {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 12px;
-  background: var(--accent-blue);
-  color: white;
+  border-radius: 8px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  color: var(--accent-blue);
   font-weight: 700;
-  font-size: 20px;
+  font-size: 14px;
+  letter-spacing: -0.02em;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
 }
 
 .brand-label {
@@ -382,9 +385,7 @@ pre {
   letter-spacing: -0.035em;
   max-width: 860px;
   margin-bottom: 18px;
-  background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
-  -webkit-background-clip: text;
-  color: transparent;
+  color: var(--text-primary);
 }
 
 .hero-subtitle {
@@ -1327,14 +1328,8 @@ footer {
 .hero-grid {
   position: absolute;
   inset: 0;
-  background-image: linear-gradient(rgba(0,212,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,212,255,0.04) 1px, transparent 1px);
+  background-image: linear-gradient(rgba(0,212,255,0.018) 1px, transparent 1px), linear-gradient(90deg, rgba(0,212,255,0.018) 1px, transparent 1px);
   background-size: 60px 60px;
-  animation: gridDrift 20s linear infinite;
-}
-
-@keyframes gridDrift {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(60px); }
 }
 
 .hero-glow {
@@ -1342,16 +1337,10 @@ footer {
   width: 600px;
   height: 600px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(124,58,237,0.15) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(124,58,237,0.08) 0%, transparent 70%);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  animation: pulse 4s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
-  50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
 }
 
 .hero-badge {
@@ -1373,16 +1362,11 @@ footer {
 
 .hero-badge::before {
   content: '';
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
   background: var(--accent-blue);
   border-radius: 50%;
-  animation: blink 1.5s ease-in-out infinite;
-}
-
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.2; }
+  opacity: 0.8;
 }
 
 .hero h1 {
@@ -1397,10 +1381,7 @@ footer {
 
 .hero h1 .line1 { color: var(--text-primary); display: block; }
 .hero h1 .line2 {
-  background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 50%, var(--accent-amber) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--accent-blue);
   display: block;
 }
 
