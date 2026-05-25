@@ -10,57 +10,48 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ENjdO4Dr2bkBIFxQpeoY9Iu7AMLZc2xno1pB2iZYG3zv2RjO4DQBvYQ7S8ar4k+N" crossorigin="anonymous" />
     <link rel="stylesheet" href="_theme.css" />
     <style>
-      .main .toc {
-        background: var(--bg2);
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        padding: 2rem;
-        margin: 3rem auto;
-        max-width: 1200px;
-        position: relative;
-      }
+      /* Cover block */
+      .sm-cover { padding: 40px 0 32px; border-bottom: 1px solid var(--border-subtle); margin-bottom: 40px; }
+      .sm-toc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 6px; margin-top: 8px; }
+      .sm-toc-item { display: flex; align-items: center; gap: 10px; padding: 8px 12px; color: var(--text-body); text-decoration: none; border-radius: 6px; font-size: 12px; border: 1px solid var(--border-subtle); transition: all 0.18s; }
+      .sm-toc-item:hover { color: var(--accent-blue); background: var(--accent-blue-subtle); border-color: var(--accent-blue); }
+      .sm-toc-num { font-size: 10px; color: var(--text-muted); font-weight: 700; min-width: 20px; font-family: "JetBrains Mono", monospace; }
 
-      .main .toc::before {
-        content: 'TABLE OF CONTENTS';
-        display: block;
-        font-size: 10px;
-        letter-spacing: 0.2em;
-        color: var(--accent);
-        margin-bottom: 1.5rem;
-        font-weight: 700;
-      }
+      /* Section openers */
+      section { padding-top: 40px; margin-bottom: 0; }
+      .sm-section-title { font-size: 1.75rem; font-weight: 700; color: var(--text-primary); margin: 8px 0 12px; letter-spacing: -0.02em; }
+      .sm-section-desc { color: var(--text-muted); font-size: 14px; margin-bottom: 28px; line-height: 1.6; }
 
-      .main .toc-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 0.5rem;
-      }
+      /* Card grid */
+      .sm-card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; margin: 1.25rem 0 1.75rem; }
+      .sm-card { background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.25rem; }
+      .sm-card-icon { font-size: 1.5rem; margin-bottom: 8px; }
+      .sm-card-title { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
+      .sm-card-body { font-size: 12.5px; color: var(--text-muted); line-height: 1.55; }
 
-      .main .toc a {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        padding: 8px 12px;
-        color: var(--text2);
-        text-decoration: none;
-        border-radius: 6px;
-        font-size: 12px;
-        transition: all 0.2s;
-        border: 1px solid transparent;
-      }
+      /* Timeline / roadmap items */
+      .timeline { display: grid; gap: 1rem; margin: 1rem 0 2rem; }
+      .tl-item { display: grid; grid-template-columns: 44px 1fr; gap: 14px; }
+      .tl-dot { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 999px; background: var(--accent-blue); color: #fff; font-size: 11px; font-weight: 700; flex-shrink: 0; }
+      .tl-title { font-weight: 600; color: var(--text-primary); margin-bottom: 4px; font-size: 14px; }
+      .tl-body { color: var(--text-body); font-size: 13px; }
 
-      .main .toc a:hover {
-        color: var(--accent);
-        background: rgba(0,212,255,0.05);
-        border-color: rgba(0,212,255,0.2);
-      }
+      /* Diff grid (good/bad) */
+      .diff-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.25rem 0; }
+      .diff-good { background: var(--accent-green-subtle); border: 1px solid var(--accent-green); border-radius: 8px; padding: 1rem 1.25rem; }
+      .diff-bad { background: var(--accent-red-subtle); border: 1px solid var(--accent-red); border-radius: 8px; padding: 1rem 1.25rem; }
+      .diff-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; margin-bottom: 8px; }
+      .diff-good .diff-label { color: var(--accent-green); }
+      .diff-bad .diff-label { color: var(--accent-red); }
 
-      .main .toc a .toc-num {
-        font-size: 10px;
-        color: var(--accent2);
-        font-weight: 700;
-        min-width: 24px;
-        font-family: var(--font-head);
+      /* h4 within sections */
+      .staff-manual main h4 { font-size: 13.5px; font-weight: 600; color: var(--text-primary); margin-top: 22px; margin-bottom: 6px; }
+
+      /* Section divider */
+      section + section { border-top: 1px solid var(--border-subtle); }
+
+      @media (max-width: 640px) {
+        .sm-toc-grid, .diff-grid { grid-template-columns: 1fr; }
       }
     </style>
   </head>
@@ -160,83 +151,37 @@
       </aside>
       <main class="main" role="main">
 
- NAV 
-<nav class="nav">
-<div class="nav-logo">RN <span>STAFF</span> MANUAL</div>
-<div class="nav-links">
-<a href="#android">Android</a>
-<a href="#ios">iOS</a>
-<a href="#react">React</a>
-<a href="#js-engine">JS Engine</a>
-<a href="#distributed">Distributed</a>
-<a href="#testing">Testing</a>
-<a href="#architecture">Architecture</a>
-<a href="#incidents">Incidents</a>
-<a href="#ai">AI</a>
-<a href="#leadership">Leadership</a>
-<a href="#system-design">Sys Design</a>
-<a href="#performance">Performance</a>
-<a href="#interview">Interview</a>
-<a href="#roadmap">Roadmap</a>
+<div class="sm-cover">
+  <div class="opener-tag"><span class="num">2026 Edition</span> Staff Engineer Prep</div>
+  <h1 style="font-size:2.2rem;font-weight:700;color:var(--text-primary);margin:16px 0 12px;">React Native Staff Engineer Manual</h1>
+  <p style="color:var(--text-body);font-size:15px;max-width:680px;margin-bottom:24px;">The definitive Senior → Staff → Tech Lead field manual. Production-grade internals, FAANG-level architecture, native engineering depth, and interview mastery for 2026.</p>
+  <div style="display:flex;gap:24px;flex-wrap:wrap;margin-bottom:32px;">
+    <div style="text-align:center;"><div style="font-size:2rem;font-weight:700;color:var(--accent-blue);">14</div><div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);">Deep Sections</div></div>
+    <div style="text-align:center;"><div style="font-size:2rem;font-weight:700;color:var(--accent-blue);">200+</div><div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);">Interview Q&amp;A</div></div>
+    <div style="text-align:center;"><div style="font-size:2rem;font-weight:700;color:var(--accent-blue);">80+</div><div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);">Code Examples</div></div>
+    <div style="text-align:center;"><div style="font-size:2rem;font-weight:700;color:var(--accent-blue);">2026</div><div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);">Modern Stack</div></div>
+  </div>
+  <div class="sm-toc-grid">
+    <a class="sm-toc-item" href="#android"><span class="sm-toc-num">01</span> Android Native Engineering</a>
+    <a class="sm-toc-item" href="#ios"><span class="sm-toc-num">02</span> iOS Native Engineering</a>
+    <a class="sm-toc-item" href="#react"><span class="sm-toc-num">03</span> React Internals (Fiber, Concurrent)</a>
+    <a class="sm-toc-item" href="#js-engine"><span class="sm-toc-num">04</span> JavaScript Engine Internals</a>
+    <a class="sm-toc-item" href="#distributed"><span class="sm-toc-num">05</span> Distributed Systems for Mobile</a>
+    <a class="sm-toc-item" href="#testing"><span class="sm-toc-num">06</span> Full Testing Strategy</a>
+    <a class="sm-toc-item" href="#architecture"><span class="sm-toc-num">07</span> Software Architecture Patterns</a>
+    <a class="sm-toc-item" href="#incidents"><span class="sm-toc-num">08</span> Production Incidents &amp; Debugging</a>
+    <a class="sm-toc-item" href="#ai"><span class="sm-toc-num">09</span> AI-Assisted Engineering</a>
+    <a class="sm-toc-item" href="#leadership"><span class="sm-toc-num">10</span> Tech Lead / Staff Leadership</a>
+    <a class="sm-toc-item" href="#system-design"><span class="sm-toc-num">11</span> Advanced Mobile System Design</a>
+    <a class="sm-toc-item" href="#performance"><span class="sm-toc-num">12</span> Advanced Performance Engineering</a>
+    <a class="sm-toc-item" href="#interview"><span class="sm-toc-num">13</span> Complete Interview Question Bank</a>
+    <a class="sm-toc-item" href="#roadmap"><span class="sm-toc-num">14</span> Staff-Level Roadmap (6/12 months)</a>
+  </div>
 </div>
-</nav>
- HERO 
-<section class="hero" style="margin-top:52px">
-<div class="hero-grid"></div>
-<div class="hero-glow"></div>
-<div class="hero-badge">2026 Edition · Staff Engineer Prep</div>
-<h1>
-<span class="line1">React Native</span>
-<span class="line2">Staff Engineer Manual</span>
-</h1>
-<p class="hero-sub">The definitive Senior → Staff → Tech Lead field manual. Production-grade internals, FAANG-level architecture, native engineering depth, and interview mastery for 2026.</p>
-<div class="hero-meta">
-<div class="hero-stat"><span class="num">14</span><span class="label">Deep Sections</span></div>
-<div class="hero-stat"><span class="num">200+</span><span class="label">Interview Q&amp;A</span></div>
-<div class="hero-stat"><span class="num">80+</span><span class="label">Code Examples</span></div>
-<div class="hero-stat"><span class="num">2026</span><span class="label">Modern Stack</span></div>
-</div>
-</section>
- TOC 
-<div class="container">
-<div class="toc">
-<div class="toc-grid">
-<a href="#android"><span class="toc-num">01</span> Android Native Engineering</a>
-<a href="#ios"><span class="toc-num">02</span> iOS Native Engineering</a>
-<a href="#react"><span class="toc-num">03</span> React Internals (Fiber, Concurrent)</a>
-<a href="#js-engine"><span class="toc-num">04</span> JavaScript Engine Internals</a>
-<a href="#distributed"><span class="toc-num">05</span> Distributed Systems for Mobile</a>
-<a href="#testing"><span class="toc-num">06</span> Full Testing Strategy</a>
-<a href="#architecture"><span class="toc-num">07</span> Software Architecture Patterns</a>
-<a href="#incidents"><span class="toc-num">08</span> Production Incidents &amp; Debugging</a>
-<a href="#ai"><span class="toc-num">09</span> AI-Assisted Engineering</a>
-<a href="#leadership"><span class="toc-num">10</span> Tech Lead / Staff Leadership</a>
-<a href="#system-design"><span class="toc-num">11</span> Advanced Mobile System Design</a>
-<a href="#performance"><span class="toc-num">12</span> Advanced Performance Engineering</a>
-<a href="#interview"><span class="toc-num">13</span> Complete Interview Question Bank</a>
-<a href="#roadmap"><span class="toc-num">14</span> Staff-Level Roadmap (6/12 months)</a>
-</div>
-</div>
-</div>
- ===== SECTION 1: ANDROID ===== 
-<section class="section" id="android">
-<div class="section-header">
-<div class="section-num">01</div>
-<div class="section-title-wrap">
-<div class="section-tag">Native Platform Deep Dive</div>
-<h1 class="section-title">Android Native Engineering</h1>
-<p class="section-desc">Complete Android internals for React Native engineers moving to Senior/Lead/Staff. From Activity lifecycle to JNI, Gradle, Kotlin coroutines, and production debugging.</p>
-</div>
-</div>
-<div class="tags">
-<span class="badge badge-android">Android</span>
-<span class="tag">Activity Lifecycle</span>
-<span class="tag">Gradle</span>
-<span class="tag">Kotlin</span>
-<span class="tag">JNI</span>
-<span class="tag">ART</span>
-<span class="tag">Binder IPC</span>
-</div>
+<section id="android">
+<div class="opener-tag"><span class="num">01</span> Native Platform Deep Dive</div>
+<div class="sm-section-title">Android Native Engineering</div>
+<p class="sm-section-desc">Complete Android internals for React Native engineers moving to Senior/Lead/Staff. From Activity lifecycle to JNI, Gradle, Kotlin coroutines, and production debugging.</p>
 <h2 id="android-architecture-fundamentals">Android Architecture Fundamentals<a aria-label="Permalink" class="anchor-link" href="#android-architecture-fundamentals">¶</a></h2>
 <h3 id="activity-lifecycle-the-complete-picture">Activity Lifecycle — The Complete Picture<a aria-label="Permalink" class="anchor-link" href="#activity-lifecycle-the-complete-picture">¶</a></h3>
 <p>Most engineers know onCreate/onResume. Staff engineers know <em>why</em> they exist and how process death, configuration changes, and back-stack interact.</p>
@@ -276,12 +221,10 @@ ACTIVITY LIFECYCLE (Full State Machine)
   ViewModel survives config change ✓
 </pre></div>
 </div>
-<div class="callout callout-danger">
-<span class="callout-icon">⚠️</span>
-<div class="callout-content">
-<div class="callout-title">Process Death — The Silent Killer</div>
-      Android can kill your process while it's in the background. When the user returns, the OS recreates the Activity from savedInstanceState. Any in-memory state (ViewModel data, global singletons) is gone. React Native apps frequently crash on restoration because JS state isn't persisted. Staff engineers ensure persistence through SharedPreferences, Room, or MMKV + proper ViewModel + SavedStateHandle.
-    </div>
+<div class="callout callout--critical">
+  <span>Critical</span>
+  <div><strong>Process Death — The Silent Killer</strong><br/>
+      Android can kill your process while it's in the background. When the user returns, the OS recreates the Activity from savedInstanceState. Any in-memory state (ViewModel data, global singletons) is gone. React Native apps frequently crash on restoration because JS state isn't persisted. Staff engineers ensure persistence through SharedPreferences, Room, or MMKV + proper ViewModel + SavedStateHandle.</div>
 </div>
 <h3 id="key-lifecycle-callbacks-for-rn-engineers">Key Lifecycle Callbacks for RN Engineers<a aria-label="Permalink" class="anchor-link" href="#key-lifecycle-callbacks-for-rn-engineers">¶</a></h3>
 <div class="code-block"><div class="code-block__topbar"><span class="code-block__badge">Text</span><button aria-label="Copy code" class="copy-btn" type="button">📋</button></div><pre data-lang="Kotlin"><code><span class="kw">class</span> <span class="type">MainActivity</span> : <span class="type">ReactActivity</span>() {
@@ -337,18 +280,18 @@ FRAGMENT LIFECYCLE
 </pre></div>
 </div>
 <h3 id="android-services">Android Services<a aria-label="Permalink" class="anchor-link" href="#android-services">¶</a></h3>
-<div class="card-grid">
-<div class="card">
-<div class="card-title">Foreground Service</div>
-<div class="card-body">Runs with persistent notification. Required for audio playback, location tracking, file downloads. RN: react-native-track-player uses this. Android 14+ requires declaring foreground service type in manifest.</div>
+<div class="sm-card-grid">
+<div class="sm-card">
+<div class="sm-card-title">Foreground Service</div>
+<div class="sm-card-body">Runs with persistent notification. Required for audio playback, location tracking, file downloads. RN: react-native-track-player uses this. Android 14+ requires declaring foreground service type in manifest.</div>
 </div>
-<div class="card">
-<div class="card-title">Background Service</div>
-<div class="card-body">Deprecated for long work. Use WorkManager instead. Background services are killed aggressively on API 26+. Common mistake: using old IntentService for background sync in RN apps.</div>
+<div class="sm-card">
+<div class="sm-card-title">Background Service</div>
+<div class="sm-card-body">Deprecated for long work. Use WorkManager instead. Background services are killed aggressively on API 26+. Common mistake: using old IntentService for background sync in RN apps.</div>
 </div>
-<div class="card">
-<div class="card-title">Bound Service</div>
-<div class="card-body">Allows IPC via AIDL or Messenger. Used for in-app billing, DRM, Bluetooth. RN TurboModules don't use this—they use JSI. Staff engineers understand AIDL for complex native integrations.</div>
+<div class="sm-card">
+<div class="sm-card-title">Bound Service</div>
+<div class="sm-card-body">Allows IPC via AIDL or Messenger. Used for in-app billing, DRM, Bluetooth. RN TurboModules don't use this—they use JSI. Staff engineers understand AIDL for complex native integrations.</div>
 </div>
 </div>
 <h3 id="android-threading-model">Android Threading Model<a aria-label="Permalink" class="anchor-link" href="#android-threading-model">¶</a></h3>
@@ -421,15 +364,14 @@ WHY THIS MATTERS FOR ANR:
 </pre></div>
 </div>
 <h3 id="anr-internals-debugging">ANR Internals &amp; Debugging<a aria-label="Permalink" class="anchor-link" href="#anr-internals-debugging">¶</a></h3>
-<div class="incident">
-<div class="incident-header">
-<span class="incident-badge">Production Incident</span>
-<span class="incident-title">ANR Spike: 2% of users on cold start</span>
-</div>
-<p><strong>Symptom:</strong> ANR in startup. <code>/data/anr/traces.txt</code> showed main thread blocked in <code>SharedPreferences.getAll()</code>.</p>
-<p><strong>Root cause:</strong> RN app loaded large MMKV/SharedPreferences synchronously during <code>ReactNativeHost.getPackages()</code> initialization, which runs on the main thread.</p>
-<p><strong>Fix:</strong> Deferred initialization using <code>lazy</code> + moved to WorkManager pre-fetch. Used <code>DataStore</code> (async) instead of SharedPreferences for large data.</p>
-<p><strong>Tools used:</strong> Android Vitals, Perfetto, <code>adb bugreport</code>, <code>simpleperf</code></p>
+<div class="case-study">
+  <div class="cs-header"><span>Production Incident</span><span>ANR Spike: 2% of users on cold start</span></div>
+  <div class="cs-body">
+    <p><strong>Symptom:</strong> ANR in startup. <code>/data/anr/traces.txt</code> showed main thread blocked in <code>SharedPreferences.getAll()</code>.</p>
+    <p><strong>Root cause:</strong> RN app loaded large MMKV/SharedPreferences synchronously during <code>ReactNativeHost.getPackages()</code> initialization, which runs on the main thread.</p>
+    <p><strong>Fix:</strong> Deferred initialization using <code>lazy</code> + moved to WorkManager pre-fetch. Used <code>DataStore</code> (async) instead of SharedPreferences for large data.</p>
+    <p><strong>Tools used:</strong> Android Vitals, Perfetto, <code>adb bugreport</code>, <code>simpleperf</code></p>
+  </div>
 </div>
 <h2 id="gradle-deep-dive">Gradle Deep Dive<a aria-label="Permalink" class="anchor-link" href="#gradle-deep-dive">¶</a></h2>
 <h3 id="build-file-anatomy">Build File Anatomy<a aria-label="Permalink" class="anchor-link" href="#build-file-anatomy">¶</a></h3>
@@ -539,12 +481,10 @@ android {
 <span class="cm"># Prevent stripping Kotlin metadata</span>
 -keep <span class="kw">class</span> kotlin.Metadata { *; }
 -keepattributes RuntimeVisibleAnnotations</code></pre></div>
-<div class="callout callout-warn">
-<span class="callout-icon">⚡</span>
-<div class="callout-content">
-<div class="callout-title">R8 Gotcha in Production</div>
-      R8 with full mode aggressively removes classes it thinks are unused. In RN, TurboModule codegen classes and JSI C++ native code are loaded via reflection/JNI — R8 doesn't see these references. Always verify your keep rules with <code>./gradlew :app:generateReleaseR8Usage</code> and test release builds on real devices before shipping.
-    </div>
+<div class="callout callout--warning">
+  <span>Warning</span>
+  <div><strong>R8 Gotcha in Production</strong><br/>
+      R8 with full mode aggressively removes classes it thinks are unused. In RN, TurboModule codegen classes and JSI C++ native code are loaded via reflection/JNI — R8 doesn't see these references. Always verify your keep rules with <code>./gradlew :app:generateReleaseR8Usage</code> and test release builds on real devices before shipping.</div>
 </div>
 <h3 id="multidex-dexing">Multidex &amp; Dexing<a aria-label="Permalink" class="anchor-link" href="#multidex-dexing">¶</a></h3>
 <p>Android's Dalvik/ART limits a single DEX file to 65,536 method references (the "64K limit"). Large RN apps with many node_modules routinely exceed this. <code>multiDexEnabled = true</code> splits into multiple DEX files. On API 21+ this is handled natively. Below API 21 requires the multidex support library.</p>
@@ -606,7 +546,6 @@ hermesEnabled=true</code></pre></div>
     .conflate()   <span class="cm">// drop old values if JS can't keep up</span>
     .shareIn(scope, <span class="type">SharingStarted</span>.WhileSubscribed(<span class="num">5000</span>), replay = <span class="num">1</span>)</code></pre></div>
 <h3 id="dispatchers-explained">Dispatchers Explained<a aria-label="Permalink" class="anchor-link" href="#dispatchers-explained">¶</a></h3>
-<div class="table-wrap">
 <div class="table-responsive-custom"><table>
 <thead><tr><th>Dispatcher</th><th>Thread Pool</th><th>Use Case</th><th>RN Use</th></tr></thead>
 <tbody>
@@ -616,7 +555,6 @@ hermesEnabled=true</code></pre></div>
 <tr><td>Dispatchers.Unconfined</td><td>Caller thread</td><td>Testing, special cases</td><td>Unit test mocking</td></tr>
 </tbody>
 </table></div>
-</div>
 <h2 id="jni-c-for-rn-engineers">JNI &amp; C++ for RN Engineers<a aria-label="Permalink" class="anchor-link" href="#jni-c-for-rn-engineers">¶</a></h2>
 <p>React Native's JSI uses C++ and JNI extensively. Understanding this unlocks the ability to build performant TurboModules and debug native crashes.</p>
 <div class="code-block"><div class="code-block__topbar"><span class="code-block__badge">Text</span><button aria-label="Copy code" class="copy-btn" type="button">📋</button></div><pre data-lang="C++"><code><span class="cm">// JSI Host Object: exposes C++ object directly to JavaScript</span>
@@ -648,12 +586,10 @@ hermesEnabled=true</code></pre></div>
   rt.global().setProperty(rt, <span class="str">"NativeCrypto"</span>,
     jsi::<span class="type">Object</span>::createFromHostObject(rt, module));
 }</code></pre></div>
-<div class="callout callout-info">
-<span class="callout-icon">🔍</span>
-<div class="callout-content">
-<div class="callout-title">Debugging Native Crashes (tombstones)</div>
-      When C++/JNI code crashes, Android generates a tombstone in <code>/data/tombstones/</code>. Use <code>ndk-stack</code> to symbolicate: <code>adb logcat | ndk-stack -sym ./app/build/intermediates/cmake/debug/obj/arm64-v8a</code>. For Hermes crashes, use the <code>.map</code> file from your Hermes build to map bytecode offsets.
-    </div>
+<div class="callout callout--note">
+  <span>Note</span>
+  <div><strong>Debugging Native Crashes (tombstones)</strong><br/>
+      When C++/JNI code crashes, Android generates a tombstone in <code>/data/tombstones/</code>. Use <code>ndk-stack</code> to symbolicate: <code>adb logcat | ndk-stack -sym ./app/build/intermediates/cmake/debug/obj/arm64-v8a</code>. For Hermes crashes, use the <code>.map</code> file from your Hermes build to map bytecode offsets.</div>
 </div>
 <h2 id="android-performance-profiling">Android Performance Profiling<a aria-label="Permalink" class="anchor-link" href="#android-performance-profiling">¶</a></h2>
 <h3 id="perfetto-the-modern-profiler">Perfetto — The Modern Profiler<a aria-label="Permalink" class="anchor-link" href="#perfetto-the-modern-profiler">¶</a></h3>
@@ -700,7 +636,7 @@ RenderThread (hardware acceleration)
         Display Buffer Swap → Screen
 </pre></div>
 </div>
-<div class="qa-block"><div class="qa-meta"><span class="qa-label">Interview Question</span><span class="badge-level staff">Staff Level</span></div><div class="qa-question">Explain how a React Native touch event on Android travels from the screen to a JS event handler. What can go wrong at each stage?</div><div class="qa-answer">
+<div class="qa-question" style="display:flex;flex-direction:column;gap:8px;"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;"><span class="badge-level staff">Staff Level</span><span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);">Interview Q</span></div>Explain how a React Native touch event on Android travels from the screen to a JS event handler. What can go wrong at each stage?</div><div class="qa-answer">
 <strong>Answer:</strong> The touch pipeline:
       <ol>
 <li><strong>Hardware → InputReader (kernel)</strong>: Raw touch coords arrive from touchscreen driver via <code>/dev/input</code></li>
@@ -711,8 +647,8 @@ RenderThread (hardware acceleration)
 <li><strong>JS</strong>: React synthetic event system, bubbling, handler execution.</li>
 </ol>
 <strong>What goes wrong:</strong> Main thread jank blocks input. Long JS frame delays touch response. Fabric fixes this with synchronous event dispatch.
-    </div></div>
-<div class="qa-block"><div class="qa-meta"><span class="qa-label">Interview Question</span><span class="badge-level faang">FAANG Level</span></div><div class="qa-question">Your Android app has a 3% crash-free session rate regression after a Gradle upgrade. Walk through your investigation.</div><div class="qa-answer">
+    </div>
+<div class="qa-question" style="display:flex;flex-direction:column;gap:8px;"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;"><span class="badge-level faang">FAANG Level</span><span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);">Interview Q</span></div>Your Android app has a 3% crash-free session rate regression after a Gradle upgrade. Walk through your investigation.</div><div class="qa-answer">
 <strong>Answer:</strong>
 <ol>
 <li>Check Firebase Crashlytics: group crashes by type. Is it a native crash (signal 11) or Java exception?</li>
@@ -723,27 +659,12 @@ RenderThread (hardware acceleration)
 <li>Bisect: revert Gradle version, confirm regression disappears, then add back incrementally.</li>
 <li>Write regression test: CI step that verifies crash-free rate on Firebase Test Lab before merge.</li>
 </ol>
-</div></div>
+</div>
 </section>
- ===== SECTION 2: iOS ===== 
-<section class="section" id="ios">
-<div class="section-header">
-<div class="section-num">02</div>
-<div class="section-title-wrap">
-<div class="section-tag">Native Platform Deep Dive</div>
-<h1 class="section-title">iOS Native Engineering</h1>
-<p class="section-desc">UIKit internals, Swift concurrency, ARC memory model, how Fabric integrates into UIKit, and production iOS debugging workflows.</p>
-</div>
-</div>
-<div class="tags">
-<span class="badge badge-ios">iOS</span>
-<span class="tag">Swift</span>
-<span class="tag">ARC</span>
-<span class="tag">RunLoop</span>
-<span class="tag">GCD</span>
-<span class="tag">Instruments</span>
-<span class="tag">Fabric</span>
-</div>
+<section id="ios">
+<div class="opener-tag"><span class="num">02</span> Native Platform Deep Dive</div>
+<div class="sm-section-title">iOS Native Engineering</div>
+<p class="sm-section-desc">UIKit internals, Swift concurrency, ARC memory model, how Fabric integrates into UIKit, and production iOS debugging workflows.</p>
 <h2 id="uiapplication-app-delegate-lifecycle">UIApplication &amp; App Delegate Lifecycle<a aria-label="Permalink" class="anchor-link" href="#uiapplication-app-delegate-lifecycle">¶</a></h2>
 <div class="diagram">
 <div class="code-block"><div class="code-block__topbar"><span class="code-block__badge">Text</span><button aria-label="Copy code" class="copy-btn" type="button">📋</button></div><pre>
@@ -981,26 +902,26 @@ KEY IMPROVEMENT over Old Bridge:
 </pre></div>
 </div>
 <h2 id="provisioning-signing-certificates">Provisioning, Signing &amp; Certificates<a aria-label="Permalink" class="anchor-link" href="#provisioning-signing-certificates">¶</a></h2>
-<div class="card-grid">
-<div class="card">
-<div class="card-icon">🔑</div>
-<div class="card-title">Distribution Certificate</div>
-<div class="card-body">Private key (.p12) on your Mac. Signs the code. Team can only have 3. If you lose the private key, revoke and create a new one — this invalidates existing builds. Store in CI as base64 secret.</div>
+<div class="sm-card-grid">
+<div class="sm-card">
+<div class="sm-card-icon">🔑</div>
+<div class="sm-card-title">Distribution Certificate</div>
+<div class="sm-card-body">Private key (.p12) on your Mac. Signs the code. Team can only have 3. If you lose the private key, revoke and create a new one — this invalidates existing builds. Store in CI as base64 secret.</div>
 </div>
-<div class="card">
-<div class="card-icon">📄</div>
-<div class="card-title">Provisioning Profile</div>
-<div class="card-body">Links: App ID + Certificate + Devices. App Store profiles don't list devices. Ad Hoc lists specific UDIDs. Development profiles needed for on-device debugging. Match (Fastlane) automates this entire mess.</div>
+<div class="sm-card">
+<div class="sm-card-icon">📄</div>
+<div class="sm-card-title">Provisioning Profile</div>
+<div class="sm-card-body">Links: App ID + Certificate + Devices. App Store profiles don't list devices. Ad Hoc lists specific UDIDs. Development profiles needed for on-device debugging. Match (Fastlane) automates this entire mess.</div>
 </div>
-<div class="card">
-<div class="card-icon">🆔</div>
-<div class="card-title">App ID / Bundle ID</div>
-<div class="card-body">com.company.app format. Wildcards (com.company.*) for testing. Explicit App IDs required for push notifications, In-App Purchase, App Clips. Each capability (push, wallet, etc.) must be enabled in App ID and provisioning profile.</div>
+<div class="sm-card">
+<div class="sm-card-icon">🆔</div>
+<div class="sm-card-title">App ID / Bundle ID</div>
+<div class="sm-card-body">com.company.app format. Wildcards (com.company.*) for testing. Explicit App IDs required for push notifications, In-App Purchase, App Clips. Each capability (push, wallet, etc.) must be enabled in App ID and provisioning profile.</div>
 </div>
-<div class="card">
-<div class="card-icon">⚡</div>
-<div class="card-title">Fastlane Match — The Solution</div>
-<div class="card-body">Stores encrypted certs in Git or S3. Team members run <code>fastlane match appstore</code> to sync. CI uses readonly mode. Eliminates cert rotation hell. Strongly recommended for any team &gt;2 iOS devs.</div>
+<div class="sm-card">
+<div class="sm-card-icon">⚡</div>
+<div class="sm-card-title">Fastlane Match — The Solution</div>
+<div class="sm-card-body">Stores encrypted certs in Git or S3. Team members run <code>fastlane match appstore</code> to sync. CI uses readonly mode. Eliminates cert rotation hell. Strongly recommended for any team &gt;2 iOS devs.</div>
 </div>
 </div>
 <h2 id="apns-push-notifications-internals">APNs — Push Notifications Internals<a aria-label="Permalink" class="anchor-link" href="#apns-push-notifications-internals">¶</a></h2>
@@ -1033,7 +954,6 @@ TOKENS:
 </div>
 <h2 id="ios-performance-instruments">iOS Performance &amp; Instruments<a aria-label="Permalink" class="anchor-link" href="#ios-performance-instruments">¶</a></h2>
 <h3 id="instruments-workflows-for-rn-engineers">Instruments Workflows for RN Engineers<a aria-label="Permalink" class="anchor-link" href="#instruments-workflows-for-rn-engineers">¶</a></h3>
-<div class="table-wrap">
 <div class="table-responsive-custom"><table>
 <thead><tr><th>Instrument</th><th>What It Finds</th><th>RN Use Case</th></tr></thead>
 <tbody>
@@ -1045,33 +965,18 @@ TOKENS:
 <tr><td>Energy Log</td><td>CPU/GPU/Radio/Location usage</td><td>Battery drain from background location</td></tr>
 </tbody>
 </table></div>
-</div>
-<div class="qa-block"><div class="qa-meta"><span class="qa-label">Interview Question</span><span class="badge-level staff">Staff Level</span></div><div class="qa-question">How does React Native integrate with the iOS RunLoop, and how does this affect timer accuracy in Reanimated?</div><div class="qa-answer">
+<div class="qa-question" style="display:flex;flex-direction:column;gap:8px;"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;"><span class="badge-level staff">Staff Level</span><span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);">Interview Q</span></div>How does React Native integrate with the iOS RunLoop, and how does this affect timer accuracy in Reanimated?</div><div class="qa-answer">
 <strong>Answer:</strong> React Native creates a dedicated JS thread with its own <code>CFRunLoop</code>. The <code>RCTJSThread</code> is started during bridge initialization. JavaScript timers (<code>setTimeout</code>) are implemented as <code>NSTimer</code> callbacks on this RunLoop.
       <br/><br/>
       Reanimated v3+ bypasses this entirely: it uses <code>CADisplayLink</code> on the main thread (or a dedicated animation thread) synchronized to the display's vsync signal (60/120Hz). This gives frame-accurate animation timing vs the ±16ms jitter of RunLoop-based timers. The worklets run in a separate JS runtime context with its own RunLoop, isolated from the main JS bundle.
       <br/><br/>
 <strong>Implication:</strong> Don't use <code>setInterval</code> for animations. Always use Reanimated or Animated (which internally also uses the display sync path on iOS).
-    </div></div>
+    </div>
 </section>
- ===== SECTION 3: REACT INTERNALS ===== 
-<section class="section" id="react">
-<div class="section-header">
-<div class="section-num">03</div>
-<div class="section-title-wrap">
-<div class="section-tag">Framework Internals</div>
-<h1 class="section-title">React Internals</h1>
-<p class="section-desc">Fiber architecture, reconciliation, concurrent rendering, React 19, Suspense, and how React Native uses Fiber internally.</p>
-</div>
-</div>
-<div class="tags">
-<span class="badge badge-rn">React</span>
-<span class="tag">Fiber</span>
-<span class="tag">Concurrent Mode</span>
-<span class="tag">Suspense</span>
-<span class="tag">React 19</span>
-<span class="tag">Scheduler</span>
-</div>
+<section id="react">
+<div class="opener-tag"><span class="num">03</span> Framework Internals</div>
+<div class="sm-section-title">React Internals</div>
+<p class="sm-section-desc">Fiber architecture, reconciliation, concurrent rendering, React 19, Suspense, and how React Native uses Fiber internally.</p>
 <h2 id="fiber-architecture-first-principles">Fiber Architecture — First Principles<a aria-label="Permalink" class="anchor-link" href="#fiber-architecture-first-principles">¶</a></h2>
 <p>Before Fiber (React 15 and earlier), reconciliation was synchronous and recursive. Once React started processing an update, it couldn't stop until the entire tree was processed. On complex trees, this caused dropped frames.</p>
 <p>Fiber (React 16+) rewrites reconciliation as an <em>interruptible, incremental</em> work loop. Each component becomes a "fiber" — a unit of work that can be paused, resumed, prioritized, or discarded.</p>
@@ -1207,22 +1112,22 @@ CONCURRENT MODE BENEFIT:
 </pre></div>
 </div>
 <h3 id="react-19-key-changes">React 19 Key Changes<a aria-label="Permalink" class="anchor-link" href="#react-19-key-changes">¶</a></h3>
-<div class="card-grid">
-<div class="card">
-<div class="card-title">use() Hook</div>
-<div class="card-body">Reads values from Promises and Context synchronously. Works inside conditions and loops. Replaces useContext + data fetching boilerplate. Integrates with Suspense automatically.</div>
+<div class="sm-card-grid">
+<div class="sm-card">
+<div class="sm-card-title">use() Hook</div>
+<div class="sm-card-body">Reads values from Promises and Context synchronously. Works inside conditions and loops. Replaces useContext + data fetching boilerplate. Integrates with Suspense automatically.</div>
 </div>
-<div class="card">
-<div class="card-title">Server Actions</div>
-<div class="card-body">Mark async functions with "use server" to run on server. RN relevance: React Native Server Components (Expo RSC) use this pattern for data loading. Reduces bundle size by keeping logic off-device.</div>
+<div class="sm-card">
+<div class="sm-card-title">Server Actions</div>
+<div class="sm-card-body">Mark async functions with "use server" to run on server. RN relevance: React Native Server Components (Expo RSC) use this pattern for data loading. Reduces bundle size by keeping logic off-device.</div>
 </div>
-<div class="card">
-<div class="card-title">React Compiler</div>
-<div class="card-body">Automatically memoizes components and hooks — no manual useMemo/useCallback. Analyzes code statically, inserts optimal memoization. Significant performance improvement for RN without code changes.</div>
+<div class="sm-card">
+<div class="sm-card-title">React Compiler</div>
+<div class="sm-card-body">Automatically memoizes components and hooks — no manual useMemo/useCallback. Analyzes code statically, inserts optimal memoization. Significant performance improvement for RN without code changes.</div>
 </div>
-<div class="card">
-<div class="card-title">ref as Prop</div>
-<div class="card-body">No more forwardRef boilerplate. Refs passed as regular props. Simplifies native component wrappers in RN. Combined with useImperativeHandle for custom handle APIs.</div>
+<div class="sm-card">
+<div class="sm-card-title">ref as Prop</div>
+<div class="sm-card-body">No more forwardRef boilerplate. Refs passed as regular props. Simplifies native component wrappers in RN. Combined with useImperativeHandle for custom handle APIs.</div>
 </div>
 </div>
 <h3 id="useeffect-vs-uselayouteffect-when-they-fire">useEffect vs useLayoutEffect — When They Fire<a aria-label="Permalink" class="anchor-link" href="#useeffect-vs-uselayouteffect-when-they-fire">¶</a></h3>
@@ -1276,35 +1181,19 @@ setCount(prev =&gt; prev + <span class="num">1</span>); <span class="cm">// prev
 <span class="kw">const</span> countRef = useRef(count);
 countRef.current = count; <span class="cm">// update ref every render</span>
 <span class="cm">// use countRef.current in callbacks</span></code></pre></div>
-<div class="qa-block"><div class="qa-meta"><span class="qa-label">Interview Question</span><span class="badge-level faang">FAANG Level</span></div><div class="qa-question">Explain tearing in React concurrent mode. How does React 18 prevent it?</div><div class="qa-answer">
+<div class="qa-question" style="display:flex;flex-direction:column;gap:8px;"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;"><span class="badge-level faang">FAANG Level</span><span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);">Interview Q</span></div>Explain tearing in React concurrent mode. How does React 18 prevent it?</div><div class="qa-answer">
 <strong>Tearing</strong> occurs when multiple components read the same external store, but React renders them at different times during a concurrent render. Component A reads value=1, React pauses, the store updates to 2, Component B reads value=2 — UI is inconsistent (torn).
       <br/><br/>
 <strong>React 18 solution:</strong> <code>useSyncExternalStore</code>. It subscribes to external stores with a snapshot mechanism. React detects if the snapshot changed mid-render and re-renders synchronously. Redux, Zustand, and Jotai all updated to use this in their React 18 adapters.
       <br/><br/>
 <strong>RN implication:</strong> If you're reading from native module state directly (vs through the React reconciler), you can get tearing. Always gate external state reads through <code>useSyncExternalStore</code> or use a proper state management library.
-    </div></div>
+    </div>
 </section>
- ===== SECTION 4: JS ENGINE ===== 
-<section class="section" id="js-engine">
-<div class="section-header">
-<div class="section-num">04</div>
-<div class="section-title-wrap">
-<div class="section-tag">Runtime Internals</div>
-<h1 class="section-title">JavaScript Engine Internals</h1>
-<p class="section-desc">V8, Hermes, JSC internals. Event loop, GC, hidden classes, JIT, and how these directly impact RN performance.</p>
-</div>
-</div>
-<div class="tags">
-<span class="badge badge-js">JavaScript</span>
-<span class="tag">Hermes</span>
-<span class="tag">V8</span>
-<span class="tag">JSC</span>
-<span class="tag">Event Loop</span>
-<span class="tag">GC</span>
-<span class="tag">JIT</span>
-</div>
+<section id="js-engine">
+<div class="opener-tag"><span class="num">04</span> Runtime Internals</div>
+<div class="sm-section-title">JavaScript Engine Internals</div>
+<p class="sm-section-desc">V8, Hermes, JSC internals. Event loop, GC, hidden classes, JIT, and how these directly impact RN performance.</p>
 <h2 id="v8-vs-hermes-vs-javascriptcore">V8 vs Hermes vs JavaScriptCore<a aria-label="Permalink" class="anchor-link" href="#v8-vs-hermes-vs-javascriptcore">¶</a></h2>
-<div class="table-wrap">
 <div class="table-responsive-custom"><table>
 <thead><tr><th>Engine</th><th>Platform</th><th>JIT</th><th>Startup</th><th>Peak Perf</th><th>GC Strategy</th></tr></thead>
 <tbody>
@@ -1313,7 +1202,6 @@ countRef.current = count; <span class="cm">// update ref every render</span>
 <tr><td>JSC</td><td>iOS Safari, old RN</td><td>DFG + FTL</td><td>Medium</td><td>High</td><td>Mark-and-sweep</td></tr>
 </tbody>
 </table></div>
-</div>
 <h3 id="hermes-why-it-wins-for-mobile">Hermes — Why It Wins for Mobile<a aria-label="Permalink" class="anchor-link" href="#hermes-why-it-wins-for-mobile">¶</a></h3>
 <p>Hermes compiles JavaScript to bytecode <em>at build time</em> (not at runtime). When the app starts, it reads the pre-compiled bytecode directly — no parsing, no JIT warmup. This is the single biggest TTI improvement for RN apps.</p>
 <div class="diagram">
@@ -1465,7 +1353,7 @@ useEffect(() =&gt; {
     <span class="cm">// Even when you discard this object, closure keeps data alive</span>
   };
 }</code></pre></div>
-<div class="qa-block"><div class="qa-meta"><span class="qa-label">Interview Question</span><span class="badge-level senior">Senior Level</span></div><div class="qa-question">What is the difference between microtasks and macrotasks, and how does async/await relate to them?</div><div class="qa-answer">
+<div class="qa-question" style="display:flex;flex-direction:column;gap:8px;"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;"><span class="badge-level senior">Senior Level</span><span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);">Interview Q</span></div>What is the difference between microtasks and macrotasks, and how does async/await relate to them?</div><div class="qa-answer">
 <strong>Microtasks</strong> run immediately after the current task completes, before the event loop picks up the next macrotask. Every Promise resolution enqueues a microtask. The microtask queue is fully drained between macrotasks.
       <br/><br/>
 <strong>async/await is syntactic sugar over Promises</strong>. Every <code>await</code> suspends the async function and schedules its continuation as a microtask when the awaited value resolves. So:
@@ -1477,18 +1365,12 @@ useEffect(() =&gt; {
 foo(); console.log('C');
 // Output: A, C, B</code></pre></div>
 <strong>In React Native:</strong> Heavy async chains (100s of awaits) can starve the render loop. Use <code>InteractionManager</code> or chunk work into macrotasks for UI-critical paths.
-    </div></div>
+    </div>
 </section>
- ===== SECTION 5: DISTRIBUTED SYSTEMS ===== 
-<section class="section" id="distributed">
-<div class="section-header">
-<div class="section-num">05</div>
-<div class="section-title-wrap">
-<div class="section-tag">Backend Architecture for Mobile</div>
-<h1 class="section-title">Distributed Systems for Mobile Engineers</h1>
-<p class="section-desc">What every mobile Staff engineer must understand about the systems their app talks to — from CDN to Kafka to CAP theorem.</p>
-</div>
-</div>
+<section id="distributed">
+<div class="opener-tag"><span class="num">05</span> Backend Architecture for Mobile</div>
+<div class="sm-section-title">Distributed Systems for Mobile Engineers</div>
+<p class="sm-section-desc">What every mobile Staff engineer must understand about the systems their app talks to — from CDN to Kafka to CAP theorem.</p>
 <h2 id="the-mobile-backend-contract">The Mobile ↔ Backend Contract<a aria-label="Permalink" class="anchor-link" href="#the-mobile-backend-contract">¶</a></h2>
 <div class="diagram">
 <div class="code-block"><div class="code-block__topbar"><span class="code-block__badge">Text</span><button aria-label="Copy code" class="copy-btn" type="button">📋</button></div><pre>
@@ -1524,12 +1406,10 @@ TYPICAL PRODUCTION MOBILE ARCHITECTURE
 </div>
 <h2 id="cdn-how-mobile-apps-use-it">CDN — How Mobile Apps Use It<a aria-label="Permalink" class="anchor-link" href="#cdn-how-mobile-apps-use-it">¶</a></h2>
 <p>A CDN (Content Delivery Network) caches static assets at edge nodes geographically close to users. For mobile apps: images, fonts, JS bundles (OTA updates), and video segments all go through CDN.</p>
-<div class="callout callout-info">
-<span class="callout-icon">💡</span>
-<div class="callout-content">
-<div class="callout-title">Mobile-Specific CDN Considerations</div>
-      Cache-Control headers determine how long the mobile HTTP cache (NSURLCache on iOS, OkHttp cache on Android) stores responses. <code>max-age=31536000, immutable</code> on versioned assets (hashed filenames) prevents unnecessary redownloads. OTA bundle URLs should be immutable with version in the URL path.
-    </div>
+<div class="callout callout--note">
+  <span>Note</span>
+  <div><strong>Mobile-Specific CDN Considerations</strong><br/>
+      Cache-Control headers determine how long the mobile HTTP cache (NSURLCache on iOS, OkHttp cache on Android) stores responses. <code>max-age=31536000, immutable</code> on versioned assets (hashed filenames) prevents unnecessary redownloads. OTA bundle URLs should be immutable with version in the URL path.</div>
 </div>
 <h2 id="authentication-flows">Authentication Flows<a aria-label="Permalink" class="anchor-link" href="#authentication-flows">¶</a></h2>
 <div class="diagram">
@@ -1600,18 +1480,18 @@ SECURITY IN RN:
   }
 }</code></pre></div>
 <h2 id="cap-theorem-for-mobile">CAP Theorem for Mobile<a aria-label="Permalink" class="anchor-link" href="#cap-theorem-for-mobile">¶</a></h2>
-<div class="card-grid">
-<div class="card">
-<div class="card-title">C — Consistency</div>
-<div class="card-body">Every read receives the most recent write. Mobile impact: offline writes might be stale when the user goes online. Healthcare apps require strong consistency (patient records).</div>
+<div class="sm-card-grid">
+<div class="sm-card">
+<div class="sm-card-title">C — Consistency</div>
+<div class="sm-card-body">Every read receives the most recent write. Mobile impact: offline writes might be stale when the user goes online. Healthcare apps require strong consistency (patient records).</div>
 </div>
-<div class="card">
-<div class="card-title">A — Availability</div>
-<div class="card-body">Every request receives a response (might be stale). Mobile impact: optimistic updates show cached data while real data syncs. Social feeds prefer availability over consistency.</div>
+<div class="sm-card">
+<div class="sm-card-title">A — Availability</div>
+<div class="sm-card-body">Every request receives a response (might be stale). Mobile impact: optimistic updates show cached data while real data syncs. Social feeds prefer availability over consistency.</div>
 </div>
-<div class="card">
-<div class="card-title">P — Partition Tolerance</div>
-<div class="card-body">System works despite network partitions. Always required for mobile (users lose connectivity). You choose: CP (banking) or AP (social, e-commerce) for mobile scenarios.</div>
+<div class="sm-card">
+<div class="sm-card-title">P — Partition Tolerance</div>
+<div class="sm-card-body">System works despite network partitions. Always required for mobile (users lose connectivity). You choose: CP (banking) or AP (social, e-commerce) for mobile scenarios.</div>
 </div>
 </div>
 <h2 id="graphql-for-mobile-tradeoffs">GraphQL for Mobile — Tradeoffs<a aria-label="Permalink" class="anchor-link" href="#graphql-for-mobile-tradeoffs">¶</a></h2>
@@ -1670,7 +1550,7 @@ SECURITY IN RN:
     transaction.finish();
   }
 }</code></pre></div>
-<div class="qa-block"><div class="qa-meta"><span class="qa-label">Interview Question</span><span class="badge-level staff">Staff Level</span></div><div class="qa-question">Your mobile app has a chat feature. The backend team asks whether to use REST polling, WebSocket, or Server-Sent Events. What do you recommend and why?</div><div class="qa-answer">
+<div class="qa-question" style="display:flex;flex-direction:column;gap:8px;"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;"><span class="badge-level staff">Staff Level</span><span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);">Interview Q</span></div>Your mobile app has a chat feature. The backend team asks whether to use REST polling, WebSocket, or Server-Sent Events. What do you recommend and why?</div><div class="qa-answer">
 <strong>Recommendation: WebSocket with SSE fallback.</strong>
 <br/><br/>
 <strong>REST polling:</strong> Inefficient — constant requests even when no messages. Battery drain. Works as last resort.
@@ -1680,18 +1560,12 @@ SECURITY IN RN:
 <strong>WebSocket:</strong> Full-duplex. Perfect for chat. Challenges: NAT timeouts (heartbeat every 25s), reconnection (exponential backoff), scaling (sticky sessions or pub/sub layer like Redis Pub/Sub). Use socket.io for automatic fallback and reconnection.
       <br/><br/>
 <strong>Mobile-specific concerns:</strong> Background mode — both platforms limit background socket connections. iOS: background task + push to wake. Android: FCM for wakeup, foreground service for active chat. I'd use a dedicated WebSocket connection with offline queue (SQLite) + push notifications for when app is backgrounded.
-    </div></div>
+    </div>
 </section>
- ===== SECTION 6: TESTING ===== 
-<section class="section" id="testing">
-<div class="section-header">
-<div class="section-num">06</div>
-<div class="section-title-wrap">
-<div class="section-tag">Quality Engineering</div>
-<h1 class="section-title">Full Testing Strategy</h1>
-<p class="section-desc">Jest, RNTL, Detox, Maestro — complete production testing pipeline, CI integration, flaky test debugging, and release confidence.</p>
-</div>
-</div>
+<section id="testing">
+<div class="opener-tag"><span class="num">06</span> Quality Engineering</div>
+<div class="sm-section-title">Full Testing Strategy</div>
+<p class="sm-section-desc">Jest, RNTL, Detox, Maestro — complete production testing pipeline, CI integration, flaky test debugging, and release confidence.</p>
 <h2 id="the-testing-pyramid-for-react-native">The Testing Pyramid for React Native<a aria-label="Permalink" class="anchor-link" href="#the-testing-pyramid-for-react-native">¶</a></h2>
 <div class="diagram">
 <div class="code-block"><div class="code-block__topbar"><span class="code-block__badge">Text</span><button aria-label="Copy code" class="copy-btn" type="button">📋</button></div><pre>
@@ -1885,12 +1759,10 @@ appId: com.myapp
 - assertVisible: "Welcome"
 # Run: maestro test flows/login.yaml
 # CI: maestro cloud --apiKey $MAESTRO_KEY flows/</code></pre></div>
-<div class="callout callout-warn">
-<span class="callout-icon">⚡</span>
-<div class="callout-content">
-<div class="callout-title">Flaky E2E Test Debugging Strategy</div>
-<strong>1. Identify:</strong> Track flake rate per test in CI (re-run failed tests 3x, flag any that pass on retry). <strong>2. Categorize:</strong> Animation timing (add waitFor + timeout), async data (mock APIs in E2E or use seedable test data), device resource (memory pressure kills app mid-test → use simulator with 4GB+). <strong>3. Fix:</strong> Replace hardcoded sleeps with waitFor. Use test IDs not text (text changes with i18n). Isolate tests (clearState: true). Add retry strategy in CI only for known infrastructure flakes.
-    </div>
+<div class="callout callout--warning">
+  <span>Warning</span>
+  <div><strong>Flaky E2E Test Debugging Strategy</strong><br/>
+<strong>1. Identify:</strong> Track flake rate per test in CI (re-run failed tests 3x, flag any that pass on retry). <strong>2. Categorize:</strong> Animation timing (add waitFor + timeout), async data (mock APIs in E2E or use seedable test data), device resource (memory pressure kills app mid-test → use simulator with 4GB+). <strong>3. Fix:</strong> Replace hardcoded sleeps with waitFor. Use test IDs not text (text changes with i18n). Isolate tests (clearState: true). Add retry strategy in CI only for known infrastructure flakes.</div>
 </div>
 <h2 id="ci-testing-pipeline">CI Testing Pipeline<a aria-label="Permalink" class="anchor-link" href="#ci-testing-pipeline">¶</a></h2>
 <div class="diagram">
@@ -1920,7 +1792,7 @@ PR Opened
         └─ Notify QA channel
 </pre></div>
 </div>
-<div class="qa-block"><div class="qa-meta"><span class="qa-label">Interview Question</span><span class="badge-level staff">Staff Level</span></div><div class="qa-question">How do you test a TurboModule that does BLE scanning? What's your strategy at each layer?</div><div class="qa-answer">
+<div class="qa-question" style="display:flex;flex-direction:column;gap:8px;"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;"><span class="badge-level staff">Staff Level</span><span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);">Interview Q</span></div>How do you test a TurboModule that does BLE scanning? What's your strategy at each layer?</div><div class="qa-answer">
 <strong>Unit (Jest):</strong> Mock the TurboModule entirely — <code>jest.mock('../native/NativeBLE', () =&gt; ({ startScan: jest.fn() }))</code>. Test the JS-layer logic (event handling, state transitions) in isolation.
       <br/><br/>
 <strong>Integration (RNTL):</strong> Mock the BLE module, emit fake device events via <code>DeviceEventEmitter.emit('BLEDevice', { id: 'XX:XX', rssi: -45 })</code>. Test that the screen renders device list correctly.
@@ -1928,18 +1800,12 @@ PR Opened
 <strong>Native unit (Android/iOS):</strong> JUnit/XCTest on the TurboModule itself, mocking the platform BLE API. Verify the correct JS events are emitted.
       <br/><br/>
 <strong>E2E:</strong> Only on real physical devices with BLE hardware. Use a known test BLE peripheral (or a second device running BLE advertiser). Maestro or Detox with a custom helper that controls the peripheral. This runs in nightly CI only, not on every PR — too slow and hardware-dependent.
-    </div></div>
+    </div>
 </section>
- ===== SECTION 7: ARCHITECTURE ===== 
-<section class="section" id="architecture">
-<div class="section-header">
-<div class="section-num">07</div>
-<div class="section-title-wrap">
-<div class="section-tag">Software Design</div>
-<h1 class="section-title">Software Architecture Patterns</h1>
-<p class="section-desc">Clean Architecture, MVVM, MVI, feature-based monorepo design, DI, SOLID, and real-world scalable RN folder structures.</p>
-</div>
-</div>
+<section id="architecture">
+<div class="opener-tag"><span class="num">07</span> Software Design</div>
+<div class="sm-section-title">Software Architecture Patterns</div>
+<p class="sm-section-desc">Clean Architecture, MVVM, MVI, feature-based monorepo design, DI, SOLID, and real-world scalable RN folder structures.</p>
 <h2 id="clean-architecture-for-react-native">Clean Architecture for React Native<a aria-label="Permalink" class="anchor-link" href="#clean-architecture-for-react-native">¶</a></h2>
 <div class="diagram">
 <div class="code-block"><div class="code-block__topbar"><span class="code-block__badge">Text</span><button aria-label="Copy code" class="copy-btn" type="button">📋</button></div><pre>
@@ -2137,7 +2003,7 @@ turbo.json:
 }
 </pre></div>
 </div>
-<div class="qa-block"><div class="qa-meta"><span class="qa-label">Interview Question</span><span class="badge-level staff">Staff Level</span></div><div class="qa-question">You're building a white-label app platform for 10 enterprise clients, each with custom branding, features, and API endpoints. How do you architect this?</div><div class="qa-answer">
+<div class="qa-question" style="display:flex;flex-direction:column;gap:8px;"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;"><span class="badge-level staff">Staff Level</span><span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);">Interview Q</span></div>You're building a white-label app platform for 10 enterprise clients, each with custom branding, features, and API endpoints. How do you architect this?</div><div class="qa-answer">
 <strong>Three layers of customization:</strong>
 <br/><br/>
 <strong>1. Build-time (Flavors/Schemes):</strong> Android product flavors + iOS schemes per client. Each has its own <code>google-services.json</code>, bundle ID, signing cert, app icon, splash. Environment config injected via build config fields. CI builds all flavors in parallel.
@@ -2147,18 +2013,12 @@ turbo.json:
 <strong>3. Feature flags (per-tenant):</strong> A feature flag service (LaunchDarkly / custom) gates entire feature modules per client. Dynamic navigation config — screens are registered only if the feature is enabled for that tenant. This avoids dead code in the bundle (use dynamic imports + React.lazy).
       <br/><br/>
 <strong>Code structure:</strong> Core features in <code>packages/core</code>. Client-specific overrides in <code>apps/client-name</code>. Theming via design tokens JSON per client. Automated: adding a new client = new config JSON + new build flavor + CI lane. No code fork.
-    </div></div>
+    </div>
 </section>
- ===== SECTION 8: INCIDENTS ===== 
-<section class="section" id="incidents">
-<div class="section-header">
-<div class="section-num">08</div>
-<div class="section-title-wrap">
-<div class="section-tag">Production Engineering</div>
-<h1 class="section-title">Production Incidents &amp; Debugging</h1>
-<p class="section-desc">Real crash debugging, memory leak hunts, ANR analysis, OTA rollbacks, and how Staff engineers lead incident response.</p>
-</div>
-</div>
+<section id="incidents">
+<div class="opener-tag"><span class="num">08</span> Production Engineering</div>
+<div class="sm-section-title">Production Incidents &amp; Debugging</div>
+<p class="sm-section-desc">Real crash debugging, memory leak hunts, ANR analysis, OTA rollbacks, and how Staff engineers lead incident response.</p>
 <h2 id="incident-response-framework">Incident Response Framework<a aria-label="Permalink" class="anchor-link" href="#incident-response-framework">¶</a></h2>
 <div class="diagram">
 <div class="code-block"><div class="code-block__topbar"><span class="code-block__badge">Text</span><button aria-label="Copy code" class="copy-btn" type="button">📋</button></div><pre>
@@ -2196,31 +2056,29 @@ POSTMORTEM (24-48h):
 </pre></div>
 </div>
 <h2 id="crash-debugging-walkthroughs">Crash Debugging Walkthroughs<a aria-label="Permalink" class="anchor-link" href="#crash-debugging-walkthroughs">¶</a></h2>
-<div class="incident">
-<div class="incident-header">
-<span class="incident-badge">P0 Incident</span>
-<span class="incident-title">Native crash on Android 14 — 4% crash rate on launch</span>
-</div>
-<p><strong>Signal:</strong> Firebase Crashlytics showed <code>SIGSEGV</code> in <code>libhermes.so</code> at <code>0x3f2a</code>. Only Android 14 (API 34), arm64.</p>
-<p><strong>Step 1:</strong> Get symbolicated stack. Download <code>libhermes.so</code> with debug symbols from Hermes GitHub release matching your exact version. Run:</p>
-<div class="code-block"><div class="code-block__topbar"><span class="code-block__badge">Text</span><button aria-label="Copy code" class="copy-btn" type="button">📋</button></div><pre data-lang="bash"><code>llvm-symbolizer --obj=libhermes.so 0x3f2a
+<div class="case-study">
+  <div class="cs-header"><span>P0 Incident</span><span>Native crash on Android 14 — 4% crash rate on launch</span></div>
+  <div class="cs-body">
+    <p><strong>Signal:</strong> Firebase Crashlytics showed <code>SIGSEGV</code> in <code>libhermes.so</code> at <code>0x3f2a</code>. Only Android 14 (API 34), arm64.</p>
+    <p><strong>Step 1:</strong> Get symbolicated stack. Download <code>libhermes.so</code> with debug symbols from Hermes GitHub release matching your exact version. Run:</p>
+    <div class="code-block"><div class="code-block__topbar"><span class="code-block__badge">bash</span><button aria-label="Copy code" class="copy-btn" type="button">📋</button></div><pre data-lang="bash"><code>llvm-symbolizer --obj=libhermes.so 0x3f2a
 # Output: hermes::vm::JSObject::getNamedSlotValue(...) at Object.cpp:245</code></pre></div>
-<p><strong>Step 2:</strong> Narrow to JS code. Enable Hermes source maps: in Metro config, set <code>hermesFlagsRelease: ['-O', '-output-source-map']</code>. Upload source map to Sentry/Firebase.</p>
-<p><strong>Step 3:</strong> Found — a native module was calling into JSI after the React host was destroyed (app backgrounded → system killed activity → JSI runtime torn down). Module had no nil-check on runtime pointer.</p>
-<p><strong>Fix:</strong> Added <code>if (!runtime_) return;</code> guard in C++ module. Added JSI invalidation listener. Added CI step that runs address sanitizer on debug builds.</p>
+    <p><strong>Step 2:</strong> Narrow to JS code. Enable Hermes source maps: in Metro config, set <code>hermesFlagsRelease: ['-O', '-output-source-map']</code>. Upload source map to Sentry/Firebase.</p>
+    <p><strong>Step 3:</strong> Found — a native module was calling into JSI after the React host was destroyed (app backgrounded → system killed activity → JSI runtime torn down). Module had no nil-check on runtime pointer.</p>
+    <p><strong>Fix:</strong> Added <code>if (!runtime_) return;</code> guard in C++ module. Added JSI invalidation listener. Added CI step that runs address sanitizer on debug builds.</p>
+  </div>
 </div>
-<div class="incident">
-<div class="incident-header">
-<span class="incident-badge">Memory Leak</span>
-<span class="incident-title">iOS app memory growing 50MB/hr during normal use</span>
-</div>
-<p><strong>Detection:</strong> Instruments → Allocations → Memory growth 50MB over 30min session in production. User reports: app killed after ~2 hours.</p>
-<p><strong>Investigation:</strong></p>
-<div class="code-block"><div class="code-block__topbar"><span class="code-block__badge">Text</span><button aria-label="Copy code" class="copy-btn" type="button">📋</button></div><pre data-lang="bash"><code># Instruments Leaks template → found: RCTImageView not released
+<div class="case-study">
+  <div class="cs-header"><span>Memory Leak</span><span>iOS app memory growing 50MB/hr during normal use</span></div>
+  <div class="cs-body">
+    <p><strong>Detection:</strong> Instruments → Allocations → Memory growth 50MB over 30min session in production. User reports: app killed after ~2 hours.</p>
+    <p><strong>Investigation:</strong></p>
+    <div class="code-block"><div class="code-block__topbar"><span class="code-block__badge">bash</span><button aria-label="Copy code" class="copy-btn" type="button">📋</button></div><pre data-lang="bash"><code># Instruments Leaks template → found: RCTImageView not released
 # Mark generation: interact with app, mark heap, interact more, compare
 # Found: 2,000 RCTImageView instances alive, expected ~20</code></pre></div>
-<p><strong>Root cause:</strong> <code>FastImage</code> cache wasn't being cleared. Each navigation push created new images, old ones weren't released because a global cache (a plain JS object) held strong references to image URIs mapped to <code>NativeImage</code> objects.</p>
-<p><strong>Fix:</strong> Implemented LRU cache with max size 200. Added <code>FastImage.clearMemoryCache()</code> on app background. Switched to <code>Image.getSizeWithHeaders</code> for prefetching instead of loading invisible <code>Image</code> components.</p>
+    <p><strong>Root cause:</strong> <code>FastImage</code> cache wasn't being cleared. Each navigation push created new images, old ones weren't released because a global cache (a plain JS object) held strong references to image URIs mapped to <code>NativeImage</code> objects.</p>
+    <p><strong>Fix:</strong> Implemented LRU cache with max size 200. Added <code>FastImage.clearMemoryCache()</code> on app background. Switched to <code>Image.getSizeWithHeaders</code> for prefetching instead of loading invisible <code>Image</code> components.</p>
+  </div>
 </div>
 <h2 id="ota-rollback-strategy">OTA Rollback Strategy<a aria-label="Permalink" class="anchor-link" href="#ota-rollback-strategy">¶</a></h2>
 <div class="code-block"><div class="code-block__topbar"><span class="code-block__badge">Text</span><button aria-label="Copy code" class="copy-btn" type="button">📋</button></div><pre data-lang="TypeScript"><code>// EAS Update rollback workflow
@@ -2310,7 +2168,7 @@ const ttfb = transaction.startChild({ op: 'bundle_load' });
 ttfb.finish();
 // ... first screen rendered
 transaction.finish();</code></pre></div>
-<div class="qa-block"><div class="qa-meta"><span class="qa-label">Interview Question</span><span class="badge-level faang">FAANG Level</span></div><div class="qa-question">Your app just crashed for 8% of users on Android immediately after a release. Walk me through your exact incident response as a Staff Engineer.</div><div class="qa-answer">
+<div class="qa-question" style="display:flex;flex-direction:column;gap:8px;"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;"><span class="badge-level faang">FAANG Level</span><span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);">Interview Q</span></div>Your app just crashed for 8% of users on Android immediately after a release. Walk me through your exact incident response as a Staff Engineer.</div><div class="qa-answer">
 <strong>T+0: Detection.</strong> PagerDuty fires — Crashlytics crash-free rate dropped from 99.5% to 91.5%. I'm the on-call. First action: join incident Slack channel, post "I'm investigating."
       <br/><br/>
 <strong>T+2min: Scope.</strong> Check Crashlytics: crash is 100% on the new release (1.2.3), 0% on previous (1.2.2). Android only. All API levels. One crash type: <code>NullPointerException in PaymentModule.java:142</code>.
@@ -2322,39 +2180,33 @@ transaction.finish();</code></pre></div>
 <strong>T+15min: Root cause.</strong> Look at 1.2.3 diff for PaymentModule.java. Found: new R8 minification rule stripped a method used by the payment SDK. Rule missing from proguard-rules.pro.
       <br/><br/>
 <strong>T+45min: Fix + Post-incident.</strong> Add keep rule. Build verified on physical Android device. Write RCA doc. Action items: add automated test that verifies payment module initializes successfully in release build (Firebase Test Lab).
-    </div></div>
+    </div>
 </section>
- ===== SECTION 9: AI ===== 
-<section class="section" id="ai">
-<div class="section-header">
-<div class="section-num">09</div>
-<div class="section-title-wrap">
-<div class="section-tag">Modern Engineering</div>
-<h1 class="section-title">AI-Assisted Engineering</h1>
-<p class="section-desc">Cursor, Claude Code, Copilot, MCPs — responsible use of AI tools in production engineering, agentic workflows, and prompt engineering for engineers.</p>
-</div>
-</div>
+<section id="ai">
+<div class="opener-tag"><span class="num">09</span> Modern Engineering</div>
+<div class="sm-section-title">AI-Assisted Engineering</div>
+<p class="sm-section-desc">Cursor, Claude Code, Copilot, MCPs — responsible use of AI tools in production engineering, agentic workflows, and prompt engineering for engineers.</p>
 <h2 id="senior-engineers-ai-toolkit-2026">Senior Engineer's AI Toolkit (2026)<a aria-label="Permalink" class="anchor-link" href="#senior-engineers-ai-toolkit-2026">¶</a></h2>
-<div class="card-grid">
-<div class="card">
-<div class="card-icon">⚡</div>
-<div class="card-title">Claude Code</div>
-<div class="card-body">Agentic coding: runs terminal commands, edits multiple files, executes tests in a loop. Best for: refactoring across a codebase, writing complete feature implementations, debugging by running code and reading output. Uses extended context — feed it entire feature modules.</div>
+<div class="sm-card-grid">
+<div class="sm-card">
+<div class="sm-card-icon">⚡</div>
+<div class="sm-card-title">Claude Code</div>
+<div class="sm-card-body">Agentic coding: runs terminal commands, edits multiple files, executes tests in a loop. Best for: refactoring across a codebase, writing complete feature implementations, debugging by running code and reading output. Uses extended context — feed it entire feature modules.</div>
 </div>
-<div class="card">
-<div class="card-icon">🖱️</div>
-<div class="card-title">Cursor</div>
-<div class="card-body">Editor-integrated AI with codebase indexing. Ctrl+K for inline edits, Ctrl+L for chat with file context. Composer for multi-file edits. Best for: day-to-day coding, refactoring with context, writing tests for existing code. Rules (system prompt per repo) set coding standards.</div>
+<div class="sm-card">
+<div class="sm-card-icon">🖱️</div>
+<div class="sm-card-title">Cursor</div>
+<div class="sm-card-body">Editor-integrated AI with codebase indexing. Ctrl+K for inline edits, Ctrl+L for chat with file context. Composer for multi-file edits. Best for: day-to-day coding, refactoring with context, writing tests for existing code. Rules (system prompt per repo) set coding standards.</div>
 </div>
-<div class="card">
-<div class="card-icon">🔗</div>
-<div class="card-title">MCPs (Model Context Protocol)</div>
-<div class="card-body">Standardized tool plugins for AI models. Connect Claude/Cursor to: GitHub (PR reviews), Sentry (read errors), Figma (design tokens), your DB (schema queries), internal docs. Staff engineers build custom MCPs for company-specific workflows.</div>
+<div class="sm-card">
+<div class="sm-card-icon">🔗</div>
+<div class="sm-card-title">MCPs (Model Context Protocol)</div>
+<div class="sm-card-body">Standardized tool plugins for AI models. Connect Claude/Cursor to: GitHub (PR reviews), Sentry (read errors), Figma (design tokens), your DB (schema queries), internal docs. Staff engineers build custom MCPs for company-specific workflows.</div>
 </div>
-<div class="card">
-<div class="card-icon">🤖</div>
-<div class="card-title">Agentic Workflows</div>
-<div class="card-body">AI that plans + executes multi-step tasks autonomously. Examples: "Find all usages of deprecated API X and migrate to Y across the repo." "Write tests for this module, run them, fix failures, repeat." Requires: clear scope, rollback plan, human review gate.</div>
+<div class="sm-card">
+<div class="sm-card-icon">🤖</div>
+<div class="sm-card-title">Agentic Workflows</div>
+<div class="sm-card-body">AI that plans + executes multi-step tasks autonomously. Examples: "Find all usages of deprecated API X and migrate to Y across the repo." "Write tests for this module, run them, fix failures, repeat." Requires: clear scope, rollback plan, human review gate.</div>
 </div>
 </div>
 <h2 id="effective-prompt-engineering-for-engineers">Effective Prompt Engineering for Engineers<a aria-label="Permalink" class="anchor-link" href="#effective-prompt-engineering-for-engineers">¶</a></h2>
@@ -2405,16 +2257,14 @@ Flag with severity: [CRITICAL], [MAJOR], [MINOR], [SUGGESTION]
     and security concerns. Be specific about file + line numbers.
     diff: $(cat diff.txt)" &gt;&gt; $GITHUB_STEP_SUMMARY</code></pre></div>
 <h2 id="risks-of-ai-generated-code">Risks of AI-Generated Code<a aria-label="Permalink" class="anchor-link" href="#risks-of-ai-generated-code">¶</a></h2>
-<div class="callout callout-danger">
-<span class="callout-icon">🚨</span>
-<div class="callout-content">
-<div class="callout-title">AI Hallucination Patterns in Mobile Code</div>
+<div class="callout callout--critical">
+  <span>Critical</span>
+  <div><strong>AI Hallucination Patterns in Mobile Code</strong><br/>
 <strong>1. Invented APIs:</strong> AI generates <code>NativeModules.Camera.captureWithOptions()</code> — this API doesn't exist. Always verify against actual docs.
       <br/><strong>2. Version drift:</strong> AI trained on older library versions. React Navigation v5 API vs v7, Reanimated v1 vs v3 patterns are completely different.
       <br/><strong>3. Platform inconsistencies:</strong> AI may generate iOS-only code without Android equivalents, or use deprecated Android APIs.
       <br/><strong>4. Security omissions:</strong> AI-generated auth code often omits PKCE, token rotation, certificate pinning.
-      <br/><strong>5. Test false confidence:</strong> AI-generated tests that always pass — mocks so aggressive they test nothing.
-    </div>
+      <br/><strong>5. Test false confidence:</strong> AI-generated tests that always pass — mocks so aggressive they test nothing.</div>
 </div>
 <h2 id="responsible-ai-use-staff-engineer-standards">Responsible AI Use — Staff Engineer Standards<a aria-label="Permalink" class="anchor-link" href="#responsible-ai-use-staff-engineer-standards">¶</a></h2>
 <ul>
@@ -2425,18 +2275,11 @@ Flag with severity: [CRITICAL], [MAJOR], [MINOR], [SUGGESTION]
 <li><strong>Build internal MCPs:</strong> Connect AI to your internal systems (Jira, design system docs, API specs) for context-aware assistance specific to your codebase.</li>
 </ul>
 </section>
- ===== SECTION 10: LEADERSHIP ===== 
-<section class="section" id="leadership">
-<div class="section-header">
-<div class="section-num">10</div>
-<div class="section-title-wrap">
-<div class="section-tag">Staff Engineering</div>
-<h1 class="section-title">Tech Lead / Staff Engineer Leadership</h1>
-<p class="section-desc">From code review philosophy to RFC writing, technical roadmaps, cross-team influence, and what separates Senior from Staff from Principal.</p>
-</div>
-</div>
+<section id="leadership">
+<div class="opener-tag"><span class="num">10</span> Staff Engineering</div>
+<div class="sm-section-title">Tech Lead / Staff Engineer Leadership</div>
+<p class="sm-section-desc">From code review philosophy to RFC writing, technical roadmaps, cross-team influence, and what separates Senior from Staff from Principal.</p>
 <h2 id="the-levels-senior-lead-staff-principal">The Levels: Senior → Lead → Staff → Principal<a aria-label="Permalink" class="anchor-link" href="#the-levels-senior-lead-staff-principal">¶</a></h2>
-<div class="table-wrap">
 <div class="table-responsive-custom"><table>
 <thead><tr><th>Dimension</th><th>Senior Engineer</th><th>Tech Lead</th><th>Staff Engineer</th><th>Principal</th></tr></thead>
 <tbody>
@@ -2448,7 +2291,6 @@ Flag with severity: [CRITICAL], [MAJOR], [MINOR], [SUGGESTION]
 <tr><td>Decisions</td><td>Owns implementation</td><td>Owns team tech decisions</td><td>Org-wide arch decisions</td><td>Company bets</td></tr>
 </tbody>
 </table></div>
-</div>
 <h2 id="writing-an-rfc-request-for-comments">Writing an RFC (Request for Comments)<a aria-label="Permalink" class="anchor-link" href="#writing-an-rfc-request-for-comments">¶</a></h2>
 <div class="code-block"><div class="code-block__topbar"><span class="code-block__badge">Text</span><button aria-label="Copy code" class="copy-btn" type="button">📋</button></div><pre data-lang="Markdown"><code># RFC-042: Migrate React Native Bridge to New Architecture
 
@@ -2555,7 +2397,7 @@ EXAMPLES:
 - Respond to all comments (even if "acknowledged" or "won't fix: [reason]")
 </code></pre></div>
 <h2 id="difficult-leadership-scenarios">Difficult Leadership Scenarios<a aria-label="Permalink" class="anchor-link" href="#difficult-leadership-scenarios">¶</a></h2>
-<div class="qa-block"><div class="qa-meta"><span class="qa-label">Leadership Interview</span><span class="badge-level staff">Staff Level</span></div><div class="qa-question">Tell me about a time you had to push back on a product decision that you believed was technically unsound.</div><div class="qa-answer">
+<div class="qa-question" style="display:flex;flex-direction:column;gap:8px;"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;"><span class="badge-level staff">Staff Level</span><span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);">Interview Q</span></div>Tell me about a time you had to push back on a product decision that you believed was technically unsound.</div><div class="qa-answer">
 <strong>Structure (STAR with technical depth):</strong>
 <br/><br/>
       "Product wanted to launch a real-time collaboration feature in 2 weeks using our existing REST API. I'd analyzed the architecture and knew this would create unacceptable data inconsistency in a multi-user editing scenario — we'd see data loss.
@@ -2565,8 +2407,8 @@ EXAMPLES:
       I presented this in the product planning meeting with both options. Product chose the 2-week LWW model — they accepted the tradeoff because we'd surface conflicts to users rather than silently losing data.
       <br/><br/>
 <strong>Key:</strong> I didn't just block — I came with options. The pushback was grounded in user impact, not personal preference."
-    </div></div>
-<div class="qa-block"><div class="qa-meta"><span class="qa-label">Leadership Interview</span><span class="badge-level staff">Staff Level</span></div><div class="qa-question">How do you handle a strong senior engineer who consistently writes good code but resists team processes (code review, documentation, testing)?</div><div class="qa-answer">
+    </div>
+<div class="qa-question" style="display:flex;flex-direction:column;gap:8px;"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;"><span class="badge-level staff">Staff Level</span><span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);">Interview Q</span></div>How do you handle a strong senior engineer who consistently writes good code but resists team processes (code review, documentation, testing)?</div><div class="qa-answer">
 <strong>Approach: curiosity before judgment.</strong>
 <br/><br/>
       "First, I have a private 1:1 — not to confront but to understand. 'I've noticed X, help me understand your perspective.' Often there's a legitimate reason: the process is genuinely too slow, tests are testing the wrong things, documentation is never read. I take that seriously.
@@ -2576,18 +2418,12 @@ EXAMPLES:
       If after addressing concerns, the behavior continues: make the expectation explicit with clear language — 'This is a team requirement, not optional.' Connect it to team health, not rules: 'When PRs go unreviewed, junior engineers can't grow. That costs the team.'
       <br/><br/>
       If it still continues, escalate to management with specifics and context — not to punish, but because at this point it's a management conversation about role expectations. I never let one person's resistance excuse others from the process or normalize the exception."
-    </div></div>
+    </div>
 </section>
- ===== SECTION 11: SYSTEM DESIGN ===== 
-<section class="section" id="system-design">
-<div class="section-header">
-<div class="section-num">11</div>
-<div class="section-title-wrap">
-<div class="section-tag">Architecture at Scale</div>
-<h1 class="section-title">Advanced Mobile System Design</h1>
-<p class="section-desc">Offline sync, CRDTs, real-time chat, healthcare SaaS, multi-tenant architecture, and complete whiteboard interview walkthroughs.</p>
-</div>
-</div>
+<section id="system-design">
+<div class="opener-tag"><span class="num">11</span> Architecture at Scale</div>
+<div class="sm-section-title">Advanced Mobile System Design</div>
+<p class="sm-section-desc">Offline sync, CRDTs, real-time chat, healthcare SaaS, multi-tenant architecture, and complete whiteboard interview walkthroughs.</p>
 <h2 id="system-design-build-a-chat-app-like-whatsapp">System Design: Build a Chat App Like WhatsApp<a aria-label="Permalink" class="anchor-link" href="#system-design-build-a-chat-app-like-whatsapp">¶</a></h2>
 <div class="diagram">
 <div class="code-block"><div class="code-block__topbar"><span class="code-block__badge">Text</span><button aria-label="Copy code" class="copy-btn" type="button">📋</button></div><pre>
@@ -2777,7 +2613,7 @@ Performance:
   - P50 stall rate: &lt; 0.5% per 60s
 </pre></div>
 </div>
-<div class="qa-block"><div class="qa-meta"><span class="qa-label">System Design Interview</span><span class="badge-level faang">FAANG Level</span></div><div class="qa-question">Design a ride-sharing app's driver location tracking system. 5 million active drivers, 1 billion location updates/hour.</div><div class="qa-answer">
+<div class="qa-question" style="display:flex;flex-direction:column;gap:8px;"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;"><span class="badge-level faang">FAANG Level</span><span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);">Interview Q</span></div>Design a ride-sharing app's driver location tracking system. 5 million active drivers, 1 billion location updates/hour.</div><div class="qa-answer">
 <strong>Mobile client:</strong> Driver app sends location every 4s on active ride, 15s when waiting. Uses fused location (best accuracy/battery balance). Batches updates: 3 locations per HTTP POST → 3x fewer connections. Uses WebSocket only for incoming ride requests (server→client), not location upload.
       <br/><br/>
 <strong>Ingestion:</strong> Location updates → API Gateway → Kafka (topic: location.updates, partitioned by driver_id). 1B/hr = 277k/s. Kafka handles this with 20 brokers, replication factor 3.
@@ -2789,18 +2625,12 @@ Performance:
 <strong>Rider app receives:</strong> Websocket push when driver moves. Only sends delta if driver moved &gt;50m → reduces update frequency 80%.
       <br/><br/>
 <strong>Map rendering:</strong> Drivers are Animated markers on Mapbox. Interpolate between updates (smooth movement). Only re-render changed drivers (memo keyed by driverId).
-    </div></div>
+    </div>
 </section>
- ===== SECTION 12: PERFORMANCE ===== 
-<section class="section" id="performance">
-<div class="section-header">
-<div class="section-num">12</div>
-<div class="section-title-wrap">
-<div class="section-tag">Performance Engineering</div>
-<h1 class="section-title">Advanced Performance Engineering</h1>
-<p class="section-desc">React render optimization, Fabric internals, bundle splitting, startup optimization, FlashList, Reanimated, Skia, and production profiling workflows.</p>
-</div>
-</div>
+<section id="performance">
+<div class="opener-tag"><span class="num">12</span> Performance Engineering</div>
+<div class="sm-section-title">Advanced Performance Engineering</div>
+<p class="sm-section-desc">React render optimization, Fabric internals, bundle splitting, startup optimization, FlashList, Reanimated, Skia, and production profiling workflows.</p>
 <h2 id="react-render-optimization-complete-guide">React Render Optimization — Complete Guide<a aria-label="Permalink" class="anchor-link" href="#react-render-optimization-complete-guide">¶</a></h2>
 <div class="code-block"><div class="code-block__topbar"><span class="code-block__badge">Text</span><button aria-label="Copy code" class="copy-btn" type="button">📋</button></div><pre data-lang="TypeScript"><code>// The render optimization checklist
 
@@ -3033,7 +2863,6 @@ const rootView = RCTFabricSurfaceHostingProxyRootView(
   initialProperties: ["preloadedUser": configFromSplash]
 );</code"></pre></div>
 <h2 id="performance-budgets-monitoring">Performance Budgets &amp; Monitoring<a aria-label="Permalink" class="anchor-link" href="#performance-budgets-monitoring">¶</a></h2>
-<div class="table-wrap">
 <div class="table-responsive-custom"><table>
 <thead><tr><th>Metric</th><th>Target</th><th>Alert Threshold</th><th>Tool</th></tr></thead>
 <tbody>
@@ -3047,20 +2876,13 @@ const rootView = RCTFabricSurfaceHostingProxyRootView(
 <tr><td>API P50 latency</td><td>&lt; 200ms</td><td>&gt; 400ms</td><td>Sentry Tracing</td></tr>
 </tbody>
 </table></div>
-</div>
 </section>
- ===== SECTION 13: INTERVIEW BANK ===== 
-<section class="section" id="interview">
-<div class="section-header">
-<div class="section-num">13</div>
-<div class="section-title-wrap">
-<div class="section-tag">Interview Preparation</div>
-<h1 class="section-title">Complete Interview Question Bank</h1>
-<p class="section-desc">200+ questions with answers across all domains — Senior, Staff, and FAANG levels. Red flags, follow-ups, and what interviewers actually evaluate.</p>
-</div>
-</div>
+<section id="interview">
+<div class="opener-tag"><span class="num">13</span> Interview Preparation</div>
+<div class="sm-section-title">Complete Interview Question Bank</div>
+<p class="sm-section-desc">200+ questions with answers across all domains — Senior, Staff, and FAANG levels. Red flags, follow-ups, and what interviewers actually evaluate.</p>
 <h2 id="react-native-core">React Native Core<a aria-label="Permalink" class="anchor-link" href="#react-native-core">¶</a></h2>
-<div class="qa-block"><div class="qa-meta"><span class="qa-label">RN Core</span><span class="badge-level senior">Senior</span></div><div class="qa-question">What is the difference between the Old Architecture and New Architecture in React Native?</div><div class="qa-answer">
+<div class="qa-question" style="display:flex;flex-direction:column;gap:8px;"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;"><span class="badge-level senior">Senior</span><span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);">Interview Q</span></div>What is the difference between the Old Architecture and New Architecture in React Native?</div><div class="qa-answer">
 <strong>Old Architecture:</strong> JS ↔ Native communication via async JSON bridge. Layout in JS (YogaJS). Two trees: JS shadow tree + native view tree synchronized asynchronously. Native modules loaded eagerly. All data serialized/deserialized.
       <br/><br/>
 <strong>New Architecture (JSI + Fabric + TurboModules):</strong>
@@ -3071,15 +2893,15 @@ const rootView = RCTFabricSurfaceHostingProxyRootView(
 <li><strong>Codegen:</strong> TypeScript → C++ bindings automatically, type-safe at compile time</li>
 </ul>
 <strong>Impact:</strong> 40-60% startup improvement, sub-5ms native call latency, React 18 Concurrent Mode works correctly.
-    </div></div>
-<div class="qa-block"><div class="qa-meta"><span class="qa-label">RN Core</span><span class="badge-level senior">Senior</span></div><div class="qa-question">How does Metro bundler work? What is its role in the development vs production build?</div><div class="qa-answer">
+    </div>
+<div class="qa-question" style="display:flex;flex-direction:column;gap:8px;"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;"><span class="badge-level senior">Senior</span><span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);">Interview Q</span></div>How does Metro bundler work? What is its role in the development vs production build?</div><div class="qa-answer">
       Metro is RN's JavaScript bundler. It: (1) resolves module imports using its resolver (supports platform-specific files: <code>.ios.js</code>, <code>.android.js</code>), (2) transforms files via Babel (TS→JS, JSX→React.createElement), (3) bundles into a single JS bundle with module map, (4) serves via dev server with HMR in development.
       <br/><br/>
 <strong>Dev:</strong> Serves bundle from Metro dev server. Fast refresh via WebSocket connection. Source maps inline.
       <br/><br/>
 <strong>Production:</strong> Generates <code>index.android.bundle</code> / <code>main.jsbundle</code>. Runs Hermes compiler on the bundle → <code>.hbc</code> bytecode. Source maps generated separately for crash symbolication. Bundle split into RAM bundle format for lazy loading (optional).
-    </div></div>
-<div class="qa-block"><div class="qa-meta"><span class="qa-label">RN Architecture</span><span class="badge-level staff">Staff</span></div><div class="qa-question">How would you design a TurboModule for high-frequency sensor data (1000 readings/second from an accelerometer)?</div><div class="qa-answer">
+    </div>
+<div class="qa-question" style="display:flex;flex-direction:column;gap:8px;"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;"><span class="badge-level staff">Staff</span><span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);">Interview Q</span></div>How would you design a TurboModule for high-frequency sensor data (1000 readings/second from an accelerometer)?</div><div class="qa-answer">
 <strong>Key challenge:</strong> 1000 events/sec via JSI events would flood the JS thread.
       <br/><br/>
 <strong>Design:</strong>
@@ -3090,8 +2912,8 @@ const rootView = RCTFabricSurfaceHostingProxyRootView(
 <li><strong>Worklet offloading:</strong> If processing is numeric (FFT, peak detection), run in a Reanimated worklet on the UI thread, bypassing JS entirely.</li>
 <li><strong>API design:</strong> <code>startStream(intervalMs, onData, onError)</code> returns a subscription handle. <code>stopStream(handle)</code> cancels the native source.</li>
 </ol>
-</div></div>
-<div class="qa-block"><div class="qa-meta"><span class="qa-label">Performance</span><span class="badge-level senior">Senior</span></div><div class="qa-question">A FlatList with 500 items is janky on mid-range Android. Walk through your optimization process.</div><div class="qa-answer">
+</div>
+<div class="qa-question" style="display:flex;flex-direction:column;gap:8px;"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;"><span class="badge-level senior">Senior</span><span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);">Interview Q</span></div>A FlatList with 500 items is janky on mid-range Android. Walk through your optimization process.</div><div class="qa-answer">
 <strong>Step 1: Profile first.</strong> Flipper → Performance → enable "JS FPS" and "UI FPS". Identify: is it the JS thread or UI thread that's dropping frames?
       <br/><br/>
 <strong>JS thread drops:</strong>
@@ -3114,9 +2936,9 @@ const rootView = RCTFabricSurfaceHostingProxyRootView(
 <li>Reduce <code>maxToRenderPerBatch</code> to 5, increase <code>windowSize</code> to 5</li>
 <li>Move images to <code>Image</code> with explicit width/height (no layout recalculation)</li>
 </ul>
-</div></div>
+</div>
 <h2 id="android-ios-deep-dive-questions">Android &amp; iOS Deep Dive Questions<a aria-label="Permalink" class="anchor-link" href="#android-ios-deep-dive-questions">¶</a></h2>
-<div class="qa-block"><div class="qa-meta"><span class="qa-label">Android</span><span class="badge-level senior">Senior</span></div><div class="qa-question">What is the difference between compileSdkVersion, targetSdkVersion, and minSdkVersion in Android?</div><div class="qa-answer">
+<div class="qa-question" style="display:flex;flex-direction:column;gap:8px;"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;"><span class="badge-level senior">Senior</span><span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);">Interview Q</span></div>What is the difference between compileSdkVersion, targetSdkVersion, and minSdkVersion in Android?</div><div class="qa-answer">
 <strong>minSdkVersion:</strong> Minimum Android version your app supports. Devices below this won't install the app. Set to 24 (Android 7.0) for modern RN apps.
       <br/><br/>
 <strong>compileSdkVersion:</strong> SDK version used to compile your code. Use the latest (34). Gives access to latest APIs and compiler checks. Doesn't affect runtime.
@@ -3124,8 +2946,8 @@ const rootView = RCTFabricSurfaceHostingProxyRootView(
 <strong>targetSdkVersion:</strong> The version your app is optimized for. Android changes behavior based on this: if target=33+, you must request BLUETOOTH_SCAN permission (not just BLUETOOTH). If target=34+, foreground service must declare type. Raising targetSdk can break your app — requires testing all behavior changes.
       <br/><br/>
 <strong>Google Play requirement:</strong> New apps must target API 34+ (2024). Updates must target within 1 year of latest release.
-    </div></div>
-<div class="qa-block"><div class="qa-meta"><span class="qa-label">iOS</span><span class="badge-level staff">Staff</span></div><div class="qa-question">Explain how to implement background location tracking on iOS in a React Native app without getting your app rejected by Apple.</div><div class="qa-answer">
+    </div>
+<div class="qa-question" style="display:flex;flex-direction:column;gap:8px;"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;"><span class="badge-level staff">Staff</span><span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);">Interview Q</span></div>Explain how to implement background location tracking on iOS in a React Native app without getting your app rejected by Apple.</div><div class="qa-answer">
 <strong>Entitlements required:</strong> <code>location-always-and-when-in-use</code> background mode in Info.plist. Add <code>UIBackgroundModes: [location]</code>.
       <br/><br/>
 <strong>Permission flow:</strong> Request "When In Use" first → if granted, then request "Always" with explanation dialog. Never request "Always" first (App Store rejection).
@@ -3135,9 +2957,9 @@ const rootView = RCTFabricSurfaceHostingProxyRootView(
 <strong>Apple's rules:</strong> Location must be core to your app's functionality. Your App Store description must explain why. If you request "Always" for analytics or ads → rejection. Write a compelling NSLocationAlwaysAndWhenInUseUsageDescription.
       <br/><br/>
 <strong>Battery:</strong> Use <code>distanceFilter = 50</code> (meters), <code>desiredAccuracy = kCLLocationAccuracyHundredMeters</code>. Only use high accuracy when actively navigating.
-    </div></div>
+    </div>
 <h2 id="behavioral-leadership-questions">Behavioral &amp; Leadership Questions<a aria-label="Permalink" class="anchor-link" href="#behavioral-leadership-questions">¶</a></h2>
-<div class="qa-block"><div class="qa-meta"><span class="qa-label">Leadership</span><span class="badge-level staff">Staff</span></div><div class="qa-question">Tell me about a technical migration you led. What was your approach and what would you do differently?</div><div class="qa-answer">
+<div class="qa-question" style="display:flex;flex-direction:column;gap:8px;"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;"><span class="badge-level staff">Staff</span><span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);">Interview Q</span></div>Tell me about a technical migration you led. What was your approach and what would you do differently?</div><div class="qa-answer">
 <strong>Structure: Context → Approach → Results → Retrospective</strong>
 <br/><br/>
 <strong>Strong answer template:</strong> "We had a 3-year-old React Native app on the Old Architecture. Startup time was 4.5s on P50 Android — a top-5 user complaint. I proposed migrating to New Architecture.
@@ -3147,7 +2969,7 @@ const rootView = RCTFabricSurfaceHostingProxyRootView(
       Results: TTI improved from 4.5s to 2.1s on P50. Zero regression in crash rate during rollout. Unlocked React 18 concurrent features.
       <br/><br/>
       What I'd do differently: I underestimated the library compatibility work by 2x. Next time I'd do a full library audit and build a compatibility matrix before committing to the timeline."
-    </div></div>
+    </div>
 <h2 id="coding-round-common-patterns">Coding Round — Common Patterns<a aria-label="Permalink" class="anchor-link" href="#coding-round-common-patterns">¶</a></h2>
 <div class="code-block"><div class="code-block__topbar"><span class="code-block__badge">Text</span><button aria-label="Copy code" class="copy-btn" type="button">📋</button></div><pre data-lang="TypeScript"><code>// Classic FAANG RN coding question: Debounced search with cancellation
 
@@ -3231,16 +3053,10 @@ function LivePrice({ symbol }: { symbol: string }) {
   );
 }</code"></pre></div>
 </section>
- ===== SECTION 14: ROADMAP ===== 
-<section class="section" id="roadmap">
-<div class="section-header">
-<div class="section-num">14</div>
-<div class="section-title-wrap">
-<div class="section-tag">Career Development</div>
-<h1 class="section-title">Staff-Level Roadmap</h1>
-<p class="section-desc">6-month and 12-month plans with weekly milestones, mock interview cadence, GitHub projects, and FAANG-specific preparation tracks.</p>
-</div>
-</div>
+<section id="roadmap">
+<div class="opener-tag"><span class="num">14</span> Career Development</div>
+<div class="sm-section-title">Staff-Level Roadmap</div>
+<p class="sm-section-desc">6-month and 12-month plans with weekly milestones, mock interview cadence, GitHub projects, and FAANG-specific preparation tracks.</p>
 <h2 id="6-month-roadmap-to-staff-engineer">6-Month Roadmap to Staff Engineer<a aria-label="Permalink" class="anchor-link" href="#6-month-roadmap-to-staff-engineer">¶</a></h2>
 <div class="timeline">
 <div class="tl-item">
@@ -3336,7 +3152,6 @@ function LivePrice({ symbol }: { symbol: string }) {
 </div>
 </div>
 <h2 id="weekly-study-plan-template">Weekly Study Plan Template<a aria-label="Permalink" class="anchor-link" href="#weekly-study-plan-template">¶</a></h2>
-<div class="table-wrap">
 <div class="table-responsive-custom"><table>
 <thead><tr><th>Day</th><th>Focus</th><th>Activity</th><th>Time</th></tr></thead>
 <tbody>
@@ -3349,31 +3164,29 @@ function LivePrice({ symbol }: { symbol: string }) {
 <tr><td>Sunday</td><td>Review</td><td>Review week's notes, update knowledge gaps list</td><td>1h</td></tr>
 </tbody>
 </table></div>
-</div>
 <h2 id="github-project-ideas-for-portfolio">GitHub Project Ideas for Portfolio<a aria-label="Permalink" class="anchor-link" href="#github-project-ideas-for-portfolio">¶</a></h2>
-<div class="card-grid">
-<div class="card">
-<div class="card-title">🔧 Production TurboModule Starter</div>
-<div class="card-body">Complete TurboModule with: Android (Kotlin + JNI), iOS (Swift + ObjC++), TypeScript spec, codegen, Jest mocks, unit tests, CI. 500+ GitHub stars is realistic for quality work.</div>
+<div class="sm-card-grid">
+<div class="sm-card">
+<div class="sm-card-title">🔧 Production TurboModule Starter</div>
+<div class="sm-card-body">Complete TurboModule with: Android (Kotlin + JNI), iOS (Swift + ObjC++), TypeScript spec, codegen, Jest mocks, unit tests, CI. 500+ GitHub stars is realistic for quality work.</div>
 </div>
-<div class="card">
-<div class="card-title">📊 RN Performance Dashboard</div>
-<div class="card-body">App that benchmarks itself: startup time, render count, memory, FPS — all displayed live. Shows before/after of optimization techniques. Educational + demonstrates expertise.</div>
+<div class="sm-card">
+<div class="sm-card-title">📊 RN Performance Dashboard</div>
+<div class="sm-card-body">App that benchmarks itself: startup time, render count, memory, FPS — all displayed live. Shows before/after of optimization techniques. Educational + demonstrates expertise.</div>
 </div>
-<div class="card">
-<div class="card-title">🔄 Offline-First Todo + Sync</div>
-<div class="card-body">Full CRDT-based collaborative todo app. Yjs + SQLite + WebSocket sync. Conflict visualization. Clear demo of offline → online reconciliation. Deploy backend to Fly.io.</div>
+<div class="sm-card">
+<div class="sm-card-title">🔄 Offline-First Todo + Sync</div>
+<div class="sm-card-body">Full CRDT-based collaborative todo app. Yjs + SQLite + WebSocket sync. Conflict visualization. Clear demo of offline → online reconciliation. Deploy backend to Fly.io.</div>
 </div>
-<div class="card">
-<div class="card-title">🎨 Reanimated UI Library</div>
-<div class="card-body">5–10 complex gesture-driven animations: bottom sheet, swipeable rows, drag-to-reorder, pinch-to-zoom map. Benchmarked at 60fps on mid-range Android. Full documentation.</div>
+<div class="sm-card">
+<div class="sm-card-title">🎨 Reanimated UI Library</div>
+<div class="sm-card-body">5–10 complex gesture-driven animations: bottom sheet, swipeable rows, drag-to-reorder, pinch-to-zoom map. Benchmarked at 60fps on mid-range Android. Full documentation.</div>
 </div>
 </div>
 <h2 id="the-staff-engineer-mindset">The Staff Engineer Mindset<a aria-label="Permalink" class="anchor-link" href="#the-staff-engineer-mindset">¶</a></h2>
-<div class="callout callout-success">
-<span class="callout-icon">🎯</span>
-<div class="callout-content">
-<div class="callout-title">What Separates Good from Great at the Staff Level</div>
+<div class="callout callout--tip">
+  <span>Tip</span>
+  <div><strong>What Separates Good from Great at the Staff Level</strong><br/>
 <strong>Technical Excellence is table stakes.</strong> Every Staff candidate can code. What interviewers at FAANG evaluate beyond coding:
       <br/><br/>
 <strong>1. Judgment under ambiguity.</strong> Given incomplete information, can you drive to a decision? Propose options, state tradeoffs, recommend one.
@@ -3384,8 +3197,7 @@ function LivePrice({ symbol }: { symbol: string }) {
       <br/><br/>
 <strong>4. Constructive tension.</strong> Push back on bad ideas from anyone — PM, engineering manager, senior leadership — with data, not ego. Then execute the final decision fully, even if it's not yours.
       <br/><br/>
-<strong>5. Make others better.</strong> Code review, mentoring, architecture guidance. Your impact is multiplied through the people around you.
-    </div>
+<strong>5. Make others better.</strong> Code review, mentoring, architecture guidance. Your impact is multiplied through the people around you.</div>
 </div>
 </section>
  FOOTER 
