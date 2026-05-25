@@ -9,20 +9,23 @@ const tocToggle = document.getElementById('toc-toggle');
 const tocDrawer = document.getElementById('mobile-toc-drawer');
 const tocOverlay = document.getElementById('toc-overlay');
 
-const toggleDrawer = (drawer, overlay, open) => {
+const toggleDrawer = (drawer, overlay, open, trigger = null) => {
   if (!drawer || !overlay) return;
   drawer.classList.toggle('open', open);
+  drawer.setAttribute('aria-hidden', open ? 'false' : 'true');
   overlay.style.display = open ? 'block' : 'none';
   document.body.style.overflow = open ? 'hidden' : '';
+  if (trigger) trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
 };
 
 const closeAllDrawers = () => {
-  toggleDrawer(mobileDrawer, drawerOverlay, false);
-  toggleDrawer(tocDrawer, tocOverlay, false);
+  toggleDrawer(mobileDrawer, drawerOverlay, false, drawerToggle);
+  toggleDrawer(tocDrawer, tocOverlay, false, contentsButton);
 };
 
 if (drawerToggle && mobileDrawer && drawerOverlay) {
-  drawerToggle.addEventListener('click', () => toggleDrawer(mobileDrawer, drawerOverlay, true));
+  drawerToggle.setAttribute('aria-expanded', 'false');
+  drawerToggle.addEventListener('click', () => toggleDrawer(mobileDrawer, drawerOverlay, true, drawerToggle));
   drawerOverlay.addEventListener('click', closeAllDrawers);
 }
 
@@ -37,7 +40,8 @@ if (tocToggle && tocDrawer && tocOverlay) {
 }
 
 if (contentsButton && tocDrawer && tocOverlay) {
-  contentsButton.addEventListener('click', () => toggleDrawer(tocDrawer, tocOverlay, true));
+  contentsButton.setAttribute('aria-expanded', 'false');
+  contentsButton.addEventListener('click', () => toggleDrawer(tocDrawer, tocOverlay, true, contentsButton));
 }
 
 const codeBlocks = document.querySelectorAll('.code-block');

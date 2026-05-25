@@ -4,6 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Staff React Native Field Manual 2026</title>
+    <meta name="description" content="Comprehensive staff-engineer playbook for 2026 — Android native engineering, Gradle deep dives, iOS internals, and operational know-how for staff-level roles." />
+    <meta property="og:title" content="React Native Staff Engineer Manual 2026" />
+    <meta property="og:description" content="Comprehensive staff-engineer playbook for 2026 — Android native engineering, Gradle deep dives, iOS internals, and operational know-how for staff-level roles." />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230A84FF'/%3E%3Ctext x='50%25' y='57%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='15' font-weight='700' fill='white'%3ERN%3C/text%3E%3C/svg%3E" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;650;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -11,6 +16,7 @@
     <link rel="stylesheet" href="_theme.css" />
     <style>
       /* Cover block */
+      .sm-cover-title { font-size: 2.2rem; font-weight: 700; color: var(--text-primary); margin: 16px 0 12px; letter-spacing: -0.02em; }
       .sm-cover { padding: 40px 0 32px; border-bottom: 1px solid var(--border-subtle); margin-bottom: 40px; }
       .sm-toc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 6px; margin-top: 8px; }
       .sm-toc-item { display: flex; align-items: center; gap: 10px; padding: 8px 12px; color: var(--text-body); text-decoration: none; border-radius: 6px; font-size: 12px; border: 1px solid var(--border-subtle); transition: all 0.18s; }
@@ -56,6 +62,8 @@
     </style>
   </head>
   <body class="staff-manual">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
     <div id="reading-progress"></div>
     <header class="navbar-custom">
       <div class="navbar-inner">
@@ -65,9 +73,10 @@
         </a>
         <nav class="navbar-links" aria-label="Primary navigation">
           <a class="navbar-link" href="index.html">Home</a>
+          <a class="navbar-link" href="rn_engineering_reference_2025.html">Reference</a>
           <a class="navbar-link" href="rn_interview_field_manual.html">Interview</a>
           <a class="navbar-link" href="rn_interview_supplement.html">DSA</a>
-          <a class="navbar-link" href="rn-staff-manual-2026.html">Staff Manual</a>
+          <a class="navbar-link active" href="rn-staff-manual-2026.html">Staff Manual</a>
         </nav>
         <button id="drawer-toggle" class="navbar-toggler" type="button" aria-label="Open navigation">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
@@ -77,7 +86,7 @@
     <div class="app-shell d-flex align-items-start">
       <aside class="sidebar" aria-label="Sidebar navigation">
         <div class="sidebar-section">
-          <label>Sections</label>
+          <span class="sidebar-label">Sections</span>
           <a class="sidebar-link" href="#android-architecture-fundamentals">Android Architecture Fundamentals</a>
           <a class="sidebar-link" href="#gradle-deep-dive">Gradle Deep Dive</a>
           <a class="sidebar-link" href="#kotlin-for-rn-engineers">Kotlin for RN Engineers</a>
@@ -149,11 +158,11 @@
           <a class="sidebar-link" href="#the-staff-engineer-mindset">The Staff Engineer Mindset</a>
         </div>
       </aside>
-      <main class="main" role="main">
+      <main id="main-content" class="main" role="main">
 
 <div class="sm-cover">
   <div class="opener-tag"><span class="num">2026 Edition</span> Staff Engineer Prep</div>
-  <h1 style="font-size:2.2rem;font-weight:700;color:var(--text-primary);margin:16px 0 12px;">React Native Staff Engineer Manual</h1>
+  <h1 class="sm-cover-title">React Native Staff Engineer Manual</h1>
   <p style="color:var(--text-body);font-size:15px;max-width:680px;margin-bottom:24px;">The definitive Senior → Staff → Tech Lead field manual. Production-grade internals, FAANG-level architecture, native engineering depth, and interview mastery for 2026.</p>
   <div style="display:flex;gap:24px;flex-wrap:wrap;margin-bottom:32px;">
     <div style="text-align:center;"><div style="font-size:2rem;font-weight:700;color:var(--accent-blue);">14</div><div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);">Deep Sections</div></div>
@@ -180,7 +189,7 @@
 </div>
 <section id="android">
 <div class="opener-tag"><span class="num">01</span> Native Platform Deep Dive</div>
-<div class="sm-section-title">Android Native Engineering</div>
+<h2 class="sm-section-title">Android Native Engineering</h2>
 <p class="sm-section-desc">Complete Android internals for React Native engineers moving to Senior/Lead/Staff. From Activity lifecycle to JNI, Gradle, Kotlin coroutines, and production debugging.</p>
 <h2 id="android-architecture-fundamentals">Android Architecture Fundamentals<a aria-label="Permalink" class="anchor-link" href="#android-architecture-fundamentals">¶</a></h2>
 <h3 id="activity-lifecycle-the-complete-picture">Activity Lifecycle — The Complete Picture<a aria-label="Permalink" class="anchor-link" href="#activity-lifecycle-the-complete-picture">¶</a></h3>
@@ -442,7 +451,7 @@ android {
 }</code></pre></div>
 <h3 id="apk-vs-aab-why-this-matters">APK vs AAB: Why This Matters<a aria-label="Permalink" class="anchor-link" href="#apk-vs-aab-why-this-matters">¶</a></h3>
 <div class="diff-grid">
-<div class="diff-col good">
+<div class="diff-good">
 <div class="diff-label">✓ AAB (Android App Bundle) — Recommended</div>
 <ul>
 <li>Upload to Play Store, Google generates optimized APKs per device</li>
@@ -452,7 +461,7 @@ android {
 <li>Device-specific: correct language, density, ABI</li>
 </ul>
 </div>
-<div class="diff-col bad">
+<div class="diff-bad">
 <div class="diff-label">↓ APK — Direct Install Only</div>
 <ul>
 <li>Universal APK includes all ABIs, densities</li>
@@ -663,7 +672,7 @@ RenderThread (hardware acceleration)
 </section>
 <section id="ios">
 <div class="opener-tag"><span class="num">02</span> Native Platform Deep Dive</div>
-<div class="sm-section-title">iOS Native Engineering</div>
+<h2 class="sm-section-title">iOS Native Engineering</h2>
 <p class="sm-section-desc">UIKit internals, Swift concurrency, ARC memory model, how Fabric integrates into UIKit, and production iOS debugging workflows.</p>
 <h2 id="uiapplication-app-delegate-lifecycle">UIApplication &amp; App Delegate Lifecycle<a aria-label="Permalink" class="anchor-link" href="#uiapplication-app-delegate-lifecycle">¶</a></h2>
 <div class="diagram">
@@ -975,7 +984,7 @@ TOKENS:
 </section>
 <section id="react">
 <div class="opener-tag"><span class="num">03</span> Framework Internals</div>
-<div class="sm-section-title">React Internals</div>
+<h2 class="sm-section-title">React Internals</h2>
 <p class="sm-section-desc">Fiber architecture, reconciliation, concurrent rendering, React 19, Suspense, and how React Native uses Fiber internally.</p>
 <h2 id="fiber-architecture-first-principles">Fiber Architecture — First Principles<a aria-label="Permalink" class="anchor-link" href="#fiber-architecture-first-principles">¶</a></h2>
 <p>Before Fiber (React 15 and earlier), reconciliation was synchronous and recursive. Once React started processing an update, it couldn't stop until the entire tree was processed. On complex trees, this caused dropped frames.</p>
@@ -1191,7 +1200,7 @@ countRef.current = count; <span class="cm">// update ref every render</span>
 </section>
 <section id="js-engine">
 <div class="opener-tag"><span class="num">04</span> Runtime Internals</div>
-<div class="sm-section-title">JavaScript Engine Internals</div>
+<h2 class="sm-section-title">JavaScript Engine Internals</h2>
 <p class="sm-section-desc">V8, Hermes, JSC internals. Event loop, GC, hidden classes, JIT, and how these directly impact RN performance.</p>
 <h2 id="v8-vs-hermes-vs-javascriptcore">V8 vs Hermes vs JavaScriptCore<a aria-label="Permalink" class="anchor-link" href="#v8-vs-hermes-vs-javascriptcore">¶</a></h2>
 <div class="table-responsive-custom"><table>
@@ -1369,7 +1378,7 @@ foo(); console.log('C');
 </section>
 <section id="distributed">
 <div class="opener-tag"><span class="num">05</span> Backend Architecture for Mobile</div>
-<div class="sm-section-title">Distributed Systems for Mobile Engineers</div>
+<h2 class="sm-section-title">Distributed Systems for Mobile Engineers</h2>
 <p class="sm-section-desc">What every mobile Staff engineer must understand about the systems their app talks to — from CDN to Kafka to CAP theorem.</p>
 <h2 id="the-mobile-backend-contract">The Mobile ↔ Backend Contract<a aria-label="Permalink" class="anchor-link" href="#the-mobile-backend-contract">¶</a></h2>
 <div class="diagram">
@@ -1496,7 +1505,7 @@ SECURITY IN RN:
 </div>
 <h2 id="graphql-for-mobile-tradeoffs">GraphQL for Mobile — Tradeoffs<a aria-label="Permalink" class="anchor-link" href="#graphql-for-mobile-tradeoffs">¶</a></h2>
 <div class="diff-grid">
-<div class="diff-col good">
+<div class="diff-good">
 <div class="diff-label">✓ GraphQL Advantages for Mobile</div>
 <ul>
 <li>Fetch exactly needed fields → smaller payloads</li>
@@ -1507,7 +1516,7 @@ SECURITY IN RN:
 <li>Schema-first development (mocking, docs)</li>
 </ul>
 </div>
-<div class="diff-col bad">
+<div class="diff-bad">
 <div class="diff-label">↓ GraphQL Challenges</div>
 <ul>
 <li>N+1 query problem on the server</li>
@@ -1564,7 +1573,7 @@ SECURITY IN RN:
 </section>
 <section id="testing">
 <div class="opener-tag"><span class="num">06</span> Quality Engineering</div>
-<div class="sm-section-title">Full Testing Strategy</div>
+<h2 class="sm-section-title">Full Testing Strategy</h2>
 <p class="sm-section-desc">Jest, RNTL, Detox, Maestro — complete production testing pipeline, CI integration, flaky test debugging, and release confidence.</p>
 <h2 id="the-testing-pyramid-for-react-native">The Testing Pyramid for React Native<a aria-label="Permalink" class="anchor-link" href="#the-testing-pyramid-for-react-native">¶</a></h2>
 <div class="diagram">
@@ -1804,7 +1813,7 @@ PR Opened
 </section>
 <section id="architecture">
 <div class="opener-tag"><span class="num">07</span> Software Design</div>
-<div class="sm-section-title">Software Architecture Patterns</div>
+<h2 class="sm-section-title">Software Architecture Patterns</h2>
 <p class="sm-section-desc">Clean Architecture, MVVM, MVI, feature-based monorepo design, DI, SOLID, and real-world scalable RN folder structures.</p>
 <h2 id="clean-architecture-for-react-native">Clean Architecture for React Native<a aria-label="Permalink" class="anchor-link" href="#clean-architecture-for-react-native">¶</a></h2>
 <div class="diagram">
@@ -2017,7 +2026,7 @@ turbo.json:
 </section>
 <section id="incidents">
 <div class="opener-tag"><span class="num">08</span> Production Engineering</div>
-<div class="sm-section-title">Production Incidents &amp; Debugging</div>
+<h2 class="sm-section-title">Production Incidents &amp; Debugging</h2>
 <p class="sm-section-desc">Real crash debugging, memory leak hunts, ANR analysis, OTA rollbacks, and how Staff engineers lead incident response.</p>
 <h2 id="incident-response-framework">Incident Response Framework<a aria-label="Permalink" class="anchor-link" href="#incident-response-framework">¶</a></h2>
 <div class="diagram">
@@ -2184,7 +2193,7 @@ transaction.finish();</code></pre></div>
 </section>
 <section id="ai">
 <div class="opener-tag"><span class="num">09</span> Modern Engineering</div>
-<div class="sm-section-title">AI-Assisted Engineering</div>
+<h2 class="sm-section-title">AI-Assisted Engineering</h2>
 <p class="sm-section-desc">Cursor, Claude Code, Copilot, MCPs — responsible use of AI tools in production engineering, agentic workflows, and prompt engineering for engineers.</p>
 <h2 id="senior-engineers-ai-toolkit-2026">Senior Engineer's AI Toolkit (2026)<a aria-label="Permalink" class="anchor-link" href="#senior-engineers-ai-toolkit-2026">¶</a></h2>
 <div class="sm-card-grid">
@@ -2211,7 +2220,7 @@ transaction.finish();</code></pre></div>
 </div>
 <h2 id="effective-prompt-engineering-for-engineers">Effective Prompt Engineering for Engineers<a aria-label="Permalink" class="anchor-link" href="#effective-prompt-engineering-for-engineers">¶</a></h2>
 <div class="diff-grid">
-<div class="diff-col bad">
+<div class="diff-bad">
 <div class="diff-label">↓ Weak Prompts</div>
 <div class="code-block"><div class="code-block__topbar"><span class="code-block__badge">Text</span><button aria-label="Copy code" class="copy-btn" type="button">📋</button></div><pre><code>"Fix my bug"
 
@@ -2221,7 +2230,7 @@ transaction.finish();</code></pre></div>
 
 "Review my code"</code></pre></div>
 </div>
-<div class="diff-col good">
+<div class="diff-good">
 <div class="diff-label">✓ Production-Grade Prompts</div>
 <div class="code-block"><div class="code-block__topbar"><span class="code-block__badge">Text</span><button aria-label="Copy code" class="copy-btn" type="button">📋</button></div><pre><code>"You are a React Native performance engineer.
 This FlatList renders 1000 items and drops to 45fps
@@ -2277,7 +2286,7 @@ Flag with severity: [CRITICAL], [MAJOR], [MINOR], [SUGGESTION]
 </section>
 <section id="leadership">
 <div class="opener-tag"><span class="num">10</span> Staff Engineering</div>
-<div class="sm-section-title">Tech Lead / Staff Engineer Leadership</div>
+<h2 class="sm-section-title">Tech Lead / Staff Engineer Leadership</h2>
 <p class="sm-section-desc">From code review philosophy to RFC writing, technical roadmaps, cross-team influence, and what separates Senior from Staff from Principal.</p>
 <h2 id="the-levels-senior-lead-staff-principal">The Levels: Senior → Lead → Staff → Principal<a aria-label="Permalink" class="anchor-link" href="#the-levels-senior-lead-staff-principal">¶</a></h2>
 <div class="table-responsive-custom"><table>
@@ -2422,7 +2431,7 @@ EXAMPLES:
 </section>
 <section id="system-design">
 <div class="opener-tag"><span class="num">11</span> Architecture at Scale</div>
-<div class="sm-section-title">Advanced Mobile System Design</div>
+<h2 class="sm-section-title">Advanced Mobile System Design</h2>
 <p class="sm-section-desc">Offline sync, CRDTs, real-time chat, healthcare SaaS, multi-tenant architecture, and complete whiteboard interview walkthroughs.</p>
 <h2 id="system-design-build-a-chat-app-like-whatsapp">System Design: Build a Chat App Like WhatsApp<a aria-label="Permalink" class="anchor-link" href="#system-design-build-a-chat-app-like-whatsapp">¶</a></h2>
 <div class="diagram">
@@ -2629,7 +2638,7 @@ Performance:
 </section>
 <section id="performance">
 <div class="opener-tag"><span class="num">12</span> Performance Engineering</div>
-<div class="sm-section-title">Advanced Performance Engineering</div>
+<h2 class="sm-section-title">Advanced Performance Engineering</h2>
 <p class="sm-section-desc">React render optimization, Fabric internals, bundle splitting, startup optimization, FlashList, Reanimated, Skia, and production profiling workflows.</p>
 <h2 id="react-render-optimization-complete-guide">React Render Optimization — Complete Guide<a aria-label="Permalink" class="anchor-link" href="#react-render-optimization-complete-guide">¶</a></h2>
 <div class="code-block"><div class="code-block__topbar"><span class="code-block__badge">Text</span><button aria-label="Copy code" class="copy-btn" type="button">📋</button></div><pre data-lang="TypeScript"><code>// The render optimization checklist
@@ -2879,7 +2888,7 @@ const rootView = RCTFabricSurfaceHostingProxyRootView(
 </section>
 <section id="interview">
 <div class="opener-tag"><span class="num">13</span> Interview Preparation</div>
-<div class="sm-section-title">Complete Interview Question Bank</div>
+<h2 class="sm-section-title">Complete Interview Question Bank</h2>
 <p class="sm-section-desc">200+ questions with answers across all domains — Senior, Staff, and FAANG levels. Red flags, follow-ups, and what interviewers actually evaluate.</p>
 <h2 id="react-native-core">React Native Core<a aria-label="Permalink" class="anchor-link" href="#react-native-core">¶</a></h2>
 <div class="qa-question" style="display:flex;flex-direction:column;gap:8px;"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;"><span class="badge-level senior">Senior</span><span style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);">Interview Q</span></div>What is the difference between the Old Architecture and New Architecture in React Native?</div><div class="qa-answer">
@@ -3055,7 +3064,7 @@ function LivePrice({ symbol }: { symbol: string }) {
 </section>
 <section id="roadmap">
 <div class="opener-tag"><span class="num">14</span> Career Development</div>
-<div class="sm-section-title">Staff-Level Roadmap</div>
+<h2 class="sm-section-title">Staff-Level Roadmap</h2>
 <p class="sm-section-desc">6-month and 12-month plans with weekly milestones, mock interview cadence, GitHub projects, and FAANG-specific preparation tracks.</p>
 <h2 id="6-month-roadmap-to-staff-engineer">6-Month Roadmap to Staff Engineer<a aria-label="Permalink" class="anchor-link" href="#6-month-roadmap-to-staff-engineer">¶</a></h2>
 <div class="timeline">

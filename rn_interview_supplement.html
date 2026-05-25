@@ -4,6 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>RN Staff Interview — Missing Pieces Supplement</title>
+    <meta name="description" content="DSA supplement for React Native staff interviews — sliding window, trees & graphs, dynamic programming, and a high-frequency pattern cheatsheet." />
+    <meta property="og:title" content="RN Staff Interview — Missing Pieces Supplement" />
+    <meta property="og:description" content="DSA supplement for React Native staff interviews — sliding window, trees & graphs, dynamic programming, and a high-frequency pattern cheatsheet." />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230A84FF'/%3E%3Ctext x='50%25' y='57%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='15' font-weight='700' fill='white'%3ERN%3C/text%3E%3C/svg%3E" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;650;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -11,6 +16,8 @@
     <link rel="stylesheet" href="_theme.css" />
   </head>
   <body class="interview-supplement">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
     <div id="reading-progress"></div>
     <header class="navbar-custom">
       <div class="navbar-inner">
@@ -20,6 +27,7 @@
         </a>
         <nav class="navbar-links" aria-label="Primary navigation">
           <a class="navbar-link" href="index.html">Home</a>
+          <a class="navbar-link" href="rn_engineering_reference_2025.html">Reference</a>
           <a class="navbar-link" href="rn_interview_field_manual.html">Interview</a>
           <a class="navbar-link active" href="rn_interview_supplement.html">DSA</a>
           <a class="navbar-link" href="rn-staff-manual-2026.html">Staff Manual</a>
@@ -33,7 +41,7 @@
     <div class="app-shell d-flex align-items-start">
       <aside class="sidebar" aria-label="Sidebar navigation">
         <div class="sidebar-section">
-          <label>Sections</label>
+          <span class="sidebar-label">Sections</span>
           <a class="sidebar-link" href="#dsa-problem-bank">DSA Problem Bank</a>
           <a class="sidebar-link" href="#mobile-system-design-worked-examples">Mobile System Design Worked Examples</a>
           <a class="sidebar-link" href="#behavioral-star-stories">Behavioral STAR Stories</a>
@@ -44,7 +52,7 @@
         </div>
       </aside>
 
-      <main class="main" role="main">
+      <main id="main-content" class="main" role="main">
 
 <div class="cover">
   <div class="cover-lines"></div>
@@ -52,7 +60,7 @@
   <div class="cover-glow2"></div>
   <div class="cover-inner">
     <div class="cover-tag">React Native <span class="badge-level staff">Staff</span>/<span class="badge-level principal">Principal</span> · Interview Supplement · 2026</div>
-    <div class="cover-title">The <em>Missing</em><br>Pieces</div>
+    <h1 class="cover-title">The <em>Missing</em><br>Pieces</h1>
     <p class="cover-sub">Everything your existing prep documents didn't cover — DSA problem sets, worked system design examples, written STAR stories, 40+ technical Q&A, negotiation scripts, and questions to ask your interviewers.</p>
     <div class="cover-pills">
       <span class="pill pill-gold">DSA Problem Bank</span>
@@ -1254,7 +1262,7 @@ seenAt: number | null   <span class="c-cm">// for "new posts" badge</span>
       </div>
       <div class="p-3">
         <div class="sidebar-section">
-          <label>Sections</label>
+          <span class="sidebar-label">Sections</span>
           <a class="sidebar-link" href="#dsa-problem-bank">DSA Problem Bank</a>
           <a class="sidebar-link" href="#mobile-system-design-worked-examples">Mobile System Design Worked Examples</a>
           <a class="sidebar-link" href="#behavioral-star-stories">Behavioral STAR Stories</a>

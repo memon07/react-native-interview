@@ -4,6 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Staff/Principal React Native Engineering Reference 2025–2026</title>
+    <meta name="description" content="Deep-dive reference: Android & iOS native architecture, New Architecture (JSI/Fabric), performance patterns, and principal-level engineering decisions." />
+    <meta property="og:title" content="Staff/Principal RN Engineering Reference 2025–2026" />
+    <meta property="og:description" content="Deep-dive reference: Android & iOS native architecture, New Architecture (JSI/Fabric), performance patterns, and principal-level engineering decisions." />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230A84FF'/%3E%3Ctext x='50%25' y='57%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='15' font-weight='700' fill='white'%3ERN%3C/text%3E%3C/svg%3E" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;650;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -11,6 +16,8 @@
     <link rel="stylesheet" href="_theme.css" />
   </head>
   <body class="engineering-reference">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
     <div id="reading-progress"></div>
     <header class="navbar-custom">
       <div class="navbar-inner">
@@ -20,6 +27,7 @@
         </a>
         <nav class="navbar-links" aria-label="Primary navigation">
           <a class="navbar-link" href="index.html">Home</a>
+          <a class="navbar-link active" href="rn_engineering_reference_2025.html">Reference</a>
           <a class="navbar-link" href="rn_interview_field_manual.html">Interview</a>
           <a class="navbar-link" href="rn_interview_supplement.html">DSA</a>
           <a class="navbar-link" href="rn-staff-manual-2026.html">Staff Manual</a>
@@ -32,7 +40,7 @@
     <div class="app-shell d-flex align-items-start">
       <aside class="sidebar" aria-label="Sidebar navigation">
         <div class="sidebar-section">
-          <label>Sections</label>
+          <span class="sidebar-label">Sections</span>
           <a class="sidebar-link" href="#tl-dr-key-findings">TL;DR & Key Findings</a>
           <a class="sidebar-link" href="#android-native-engineering">Android Native Engineering</a>
           <a class="sidebar-link" href="#ios-native-engineering">iOS Native Engineering</a>
@@ -55,14 +63,14 @@
           <a class="sidebar-link" href="#principal-engineer-thinking">Principal Engineer Thinking</a>
         </div>
       </aside>
-      <main class="main" role="main">
+      <main id="main-content" class="main" role="main">
 <!-- COVER -->
 <div class="cover">
 <div class="cover-grid">
 <div class="cover-left">
 <div>
 <div class="cover-eyebrow">React Native Engineering · 2025–2026</div>
-<div class="cover-title">Staff &amp; <em>Principal</em> React Native Reference</div>
+<h1 class="cover-title">Staff &amp; <em>Principal</em> React Native Reference</h1>
 <div class="cover-subtitle">The definitive guide to production-grade<br/>React Native at scale — 19 sections,<br/>600M+ users, C++/JSI/native interop.</div>
 </div>
 <div class="cover-bottom">
@@ -766,15 +774,6 @@ packages/
 </div>
 </div>
 
-      <footer class="main-footer">
-        <div class="footer-links">
-          <a href="index.html">Home</a>
-          <a href="rn_engineering_reference_2025.html">Engineering Reference</a>
-          <a href="rn_interview_field_manual.html">Interview Field Manual</a>
-          <a href="rn_interview_supplement.html">Interview Supplement</a>
-          <a href="rn-staff-manual-2026.html">Staff Manual</a>
-        </div>
-      </footer>
       </main>
       <aside class="toc" aria-label="Table of contents">
 <div class="toc-content">
@@ -870,6 +869,17 @@ packages/
     </div>
       </aside>
     </div>
+
+    <footer class="container-fluid">
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="rn_engineering_reference_2025.html">Engineering Reference</a>
+        <a href="rn_interview_field_manual.html">Interview Field Manual</a>
+        <a href="rn_interview_supplement.html">Interview Supplement</a>
+        <a href="rn-staff-manual-2026.html">Staff Manual</a>
+      </div>
+    </footer>
+
     <button id="contents-btn" type="button" aria-label="Open contents">
       Contents
     </button>

@@ -4,6 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>RN Engineering — Knowledge Base</title>
+    <meta name="description" content="Staff/Senior React Native engineering knowledge base — technical references, interview prep, and engineering playbooks." />
+    <meta property="og:title" content="RN Engineering — Knowledge Base" />
+    <meta property="og:description" content="Staff/Senior React Native engineering knowledge base — technical references, interview prep, and engineering playbooks." />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230A84FF'/%3E%3Ctext x='50%25' y='57%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='15' font-weight='700' fill='white'%3ERN%3C/text%3E%3C/svg%3E" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;650;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -11,6 +16,8 @@
     <link rel="stylesheet" href="_theme.css" />
   </head>
   <body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
     <div id="reading-progress"></div>
     <header class="navbar-custom">
       <div class="navbar-inner">
@@ -19,10 +26,11 @@
           <span class="brand-label">Docs</span>
         </a>
         <nav class="navbar-links" aria-label="Primary navigation">
-          <a class="navbar-link active" href="#">Overview</a>
-          <a class="navbar-link" href="#">Guides</a>
-          <a class="navbar-link" href="#">Components</a>
-          <a class="navbar-link" href="#">Patterns</a>
+          <a class="navbar-link active" href="index.html">Home</a>
+          <a class="navbar-link" href="rn_engineering_reference_2025.html">Reference</a>
+          <a class="navbar-link" href="rn_interview_field_manual.html">Interview</a>
+          <a class="navbar-link" href="rn_interview_supplement.html">DSA</a>
+          <a class="navbar-link" href="rn-staff-manual-2026.html">Staff Manual</a>
         </nav>
         <button id="drawer-toggle" class="navbar-toggler" type="button" aria-label="Open navigation">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
@@ -32,10 +40,16 @@
 
     <div class="app-shell no-sidebars d-flex align-items-start">
       <aside class="sidebar" aria-label="Sidebar navigation">
-        <!-- SIDEBAR TOC HERE -->
+        <div class="sidebar-section">
+          <span class="sidebar-label">Documents</span>
+          <a class="sidebar-link" href="rn_engineering_reference_2025.html">Engineering Reference</a>
+          <a class="sidebar-link" href="rn_interview_field_manual.html">Interview Field Manual</a>
+          <a class="sidebar-link" href="rn_interview_supplement.html">DSA Supplement</a>
+          <a class="sidebar-link" href="rn-staff-manual-2026.html">Staff Manual 2026</a>
+        </div>
       </aside>
 
-      <main class="main" role="main">
+      <main id="main-content" class="main" role="main">
         <section class="hero-banner">
           <p class="caption">// React Native Engineering — Knowledge Base</p>
           <h1 class="hero-title">Staff-Level <span>RN Docs</span><br>& Interview Prep</h1>
@@ -135,7 +149,13 @@
       </main>
 
       <aside class="toc" aria-label="Table of contents">
-        <!-- RIGHT TOC HERE -->
+        <nav class="toc-nav" aria-label="Page contents">
+          <span class="toc-heading">Documents</span>
+          <a class="toc-link" href="rn_engineering_reference_2025.html">01 — Engineering Reference</a>
+          <a class="toc-link" href="rn_interview_field_manual.html">02 — Interview Field Manual</a>
+          <a class="toc-link" href="rn_interview_supplement.html">03 — DSA Supplement</a>
+          <a class="toc-link" href="rn-staff-manual-2026.html">04 — Staff Manual 2026</a>
+        </nav>
       </aside>
     </div>
 
@@ -149,7 +169,13 @@
         <button id="drawer-close" class="drawer-close" type="button" aria-label="Close navigation">✕</button>
       </div>
       <div class="p-3">
-        <!-- SIDEBAR TOC HERE -->
+        <div class="sidebar-section">
+          <span class="sidebar-label">Documents</span>
+          <a class="sidebar-link" href="rn_engineering_reference_2025.html">Engineering Reference</a>
+          <a class="sidebar-link" href="rn_interview_field_manual.html">Interview Field Manual</a>
+          <a class="sidebar-link" href="rn_interview_supplement.html">DSA Supplement</a>
+          <a class="sidebar-link" href="rn-staff-manual-2026.html">Staff Manual 2026</a>
+        </div>
       </div>
     </div>
     <div id="drawer-overlay" class="overlay" aria-hidden="true"></div>
@@ -160,7 +186,13 @@
         <button class="drawer-close" type="button" aria-label="Close contents">✕</button>
       </div>
       <div class="p-3">
-        <!-- RIGHT TOC HERE -->
+        <nav class="toc-nav" aria-label="Page contents">
+          <span class="toc-heading">Documents</span>
+          <a class="toc-link" href="rn_engineering_reference_2025.html">01 — Engineering Reference</a>
+          <a class="toc-link" href="rn_interview_field_manual.html">02 — Interview Field Manual</a>
+          <a class="toc-link" href="rn_interview_supplement.html">03 — DSA Supplement</a>
+          <a class="toc-link" href="rn-staff-manual-2026.html">04 — Staff Manual 2026</a>
+        </nav>
       </div>
     </div>
     <div id="toc-overlay" class="overlay" aria-hidden="true"></div>
@@ -179,7 +211,7 @@
       </div>
       <div class="d-flex flex-column flex-sm-row gap-3 mt-3" style="color: var(--text-muted);">
         <p class="mb-0">RN Engineering Knowledge Base — Staff / Senior Level</p>
-        <p class="mb-0"><a href="https://github.com" target="_blank" rel="noopener">GitHub ↗</a></p>
+        <p class="mb-0"><a href="https://github.com/memon07/react-native-interview" target="_blank" rel="noopener">GitHub ↗</a></p>
       </div>
     </footer>
 
